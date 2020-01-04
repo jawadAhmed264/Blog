@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="BlogScript-first.sql" />
     <Content Include="Model\BlogModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BlogModel.edmx</DependentUpon>
