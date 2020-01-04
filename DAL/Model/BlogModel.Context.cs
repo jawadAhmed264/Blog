@@ -35,6 +35,7 @@ namespace DAL.Model
         public virtual DbSet<BlogPost> BlogPosts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Logger> Loggers { get; set; }
         public virtual DbSet<Medium> Media { get; set; }
         public virtual DbSet<MediaType> MediaTypes { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }

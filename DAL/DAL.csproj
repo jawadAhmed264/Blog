@@ -95,6 +95,9 @@
     <Compile Include="Model\C__MigrationHistory.cs">
       <DependentUpon>BlogModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Logger.cs">
+      <DependentUpon>BlogModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\MediaType.cs">
       <DependentUpon>BlogModel.tt</DependentUpon>
     </Compile>
@@ -128,7 +131,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="BlogScript-first.sql" />
+    <Content Include="Scripts\BlogScript-first.sql" />
     <Content Include="Model\BlogModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BlogModel.edmx</DependentUpon>
