@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Service.Utilities
 {
-    class Session
+    public class Session
     {
     }
 }
