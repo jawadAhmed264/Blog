@@ -405,6 +405,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Content\Images\blogBanners\" />
+    <Folder Include="Content\Images\blogImages\" />
+    <Folder Include="Content\Images\tempImages\" />
+    <Folder Include="Content\Images\thumbnails\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
