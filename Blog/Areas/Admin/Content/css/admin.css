@@ -1,10 +1,13 @@
 @font-face {
     font-family: 'sofia_prolight';
-    src: url('sofiapro-light-webfont.woff2') format('woff2'),
-         url('sofiapro-light-webfont.woff') format('woff');
+    src: url('../font/sofiapro-light-webfont.woff2') format('woff2'),
+         url('../font/sofiapro-light-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
+}
+@font-face {
+    font-family: 'sofiapro-light-webfont';
+    src: url('../font/sofiapro-light-webfont.woff2') format('woff2');
 }
 html,head,body{
     width: 100%;

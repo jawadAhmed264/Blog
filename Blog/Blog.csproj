@@ -194,6 +194,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -207,13 +208,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Content\addblog.html" />
-    <Content Include="Areas\Admin\Content\Adminform.html" />
-    <Content Include="Areas\Admin\Content\blog.html" />
-    <Content Include="Areas\Admin\Content\Categorylist.html" />
     <Content Include="Areas\Admin\Content\css\admin.css" />
     <Content Include="Areas\Admin\Content\css\Login.css" />
-    <Content Include="Areas\Admin\Content\Dashboard.html" />
     <Content Include="Areas\Admin\Content\images\admin.png" />
     <Content Include="Areas\Admin\Content\images\adminrole.png" />
     <Content Include="Areas\Admin\Content\images\Avatar-1 1.png" />
@@ -241,8 +237,6 @@
     <Content Include="Areas\Admin\Content\images\writeapost-icon.png" />
     <Content Include="Areas\Admin\Content\js\jquery-3.4.1.min.js" />
     <Content Include="Areas\Admin\Content\js\script.js" />
-    <Content Include="Areas\Admin\Content\login.html" />
-    <Content Include="Areas\Admin\Content\UsersList.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -278,6 +272,7 @@
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LoginPartialAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -409,7 +404,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
   <ItemGroup>
