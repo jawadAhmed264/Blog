@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'sofia_prolight';
+    src: url('sofiapro-light-webfont.woff2') format('woff2'),
+         url('sofiapro-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+html,head,body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: url('../images/login-bg.png');
+    position: relative;
+}
+body{
+    padding: 37px 0;
+}
+h1,h2,h3,h4,h5,h6,p,span,label{
+    font-family: 'sofia_prolight', sans-serif;
+}
+p{
+    font-size:14px;
+}
+.primary-blue-color{
+    color: #2372EA;
+}
+.subtext-color{
+    color:#7C777F;
+}
+.subtext-color2{
+    color: #CFCFCF;
+}
+.main-bg{
+    background: #fff;
+    width: 82%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 50px 85px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 20px 1px #0000004f;
+}
+.flex-container{
+    width: 100%;
+    display: flex;
+}
+.container-half{
+    width: 50%;
+}
+.logo{
+    font-size: 30px;
+}
+.content p{
+    color: #7C777F;
+}
+.form{
+    padding: 68px 0 0 0;
+    position: relative;
+}
+.form-boxes {
+    padding: 0px 0 0 0;
+}
+.txtUsername{
+    width: 425px;
+    height: 55px;
+    padding: 0 0 0 15px;
+    font-size: 14px;
+}
+.float-lbl1{
+    font-size: 14px;
+    position: absolute;
+    left: 17px;
+    top: 22px;
+}
+.txtUsername:focus {
+    border: 1px solid #ddd;
+    height: 57px;
+    outline: none;
+    box-shadow: 0px 0px 10px 0px #ddd;
+    transition: 0.5s easein;
+}
+.txtUsername:focus + .float-lbl1 {
+    color: #2372ea;
+    position: absolute;
+    top: 6px;
+    font-size: 12px;
+    transition: 0.2s ease-in-out;
+}
+.float-lbl1-focus {
+    color: #2372ea;
+    position: absolute;
+    top: 6px;
+    font-size: 12px;
+}
+.txtPassword{
+    width: 425px;
+    height: 55px;
+    padding: 0 0 0 15px;
+    font-size: 14px;
+}
+.float-lbl2{
+    font-size: 14px;
+    position: absolute;
+    left: 17px;
+    top: 22px;
+}
+.txtPassword:focus {
+    border: 1px solid #ddd;
+    height: 57px;
+    outline: none;
+    box-shadow: 0px 0px 10px 0px #ddd;
+    transition: 0.5s easein;
+}
+.txtPassword:focus + .float-lbl2 {
+    color: #2372ea;
+    position: absolute;
+    top: 6px;
+    font-size: 12px;
+    transition: 0.2s ease-in-out;
+}
+.float-lbl2-focus {
+    color: #2372ea;
+    position: absolute;
+    top: 6px;
+    font-size: 12px;
+}
+.form-input{
+    position: relative;
+    margin-top: 34px;
+}
+.login-btn {
+    padding: 10px 40px;
+    background: #2372ea;
+    border: 1px solid #2372ea;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.login-btn:hover {
+    box-shadow: 0px 11px 20px 1px #71a9ff;
+    transition: 0.3s;
+}
+.form-conditions{
+    margin-top: 105px;
+}

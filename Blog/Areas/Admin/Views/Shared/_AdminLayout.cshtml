@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewBag.Title - Todays Trending</title>
+    <link href="~/Areas/Admin/Content/css/admin.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="https://kit.fontawesome.com/e74ee50f7e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="menu">
+                <img src="~/Areas/Admin/Content/images/Menubar-icon.png" alt="">
+            </div>
+            <div class="search">
+                <img src="~/Areas/Admin/Content/images/search-icon.png" alt="">
+                <div class="search-box">
+                    <Input type="search" placeholder="Search" />
+                    <div class="hiddenbar-bg">
+                        <div class="hidden-bar">
+                            <div class="hidden-select">
+                                <select name="" id="">
+                                    <option value="">Category</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                </select>
+                            </div>
+                            <div class="hidden-select">
+                                <select name="" id="">
+                                    <option value="">Date</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            @Html.Partial("_LoginPartialAdmin")
+        </div>
+    </header>
+
+    <main class="main">
+        @RenderBody()
+    </main>
+
+    <aside class="aside">
+        <div class="logo">
+            <a href="Dashboard.html">
+                <img src="~/Areas/Admin/Content/images/logo-icon.png" alt="">
+            </a>
+        </div>
+        <div class="aside-menu">
+            <ul>
+                <li class="active"><a href="Dashboard.html"><img src="~/Areas/Admin/Content/images/dashboard-icon.png" alt=""></a></li>
+                <li><a href="blog.html"><img src="~/Areas/Admin/Content/images/writeapost-icon.png" alt=""></a></li>
+                <li><a href="UsersList.html"><img src="~/Areas/Admin/Content/images/admin.png" alt=""></a></li>
+                <li><a href="Adminform.html"><img src="~/Areas/Admin/Content/images/adminrole.png" alt=""></a></li>
+                <li><a href="Categorylist.html"><img src="~/Areas/Admin/Content/images/categorylist.png" alt=""></a></li>
+            </ul>
+        </div>
+    </aside>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Areas/Admin/Content/js/script.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

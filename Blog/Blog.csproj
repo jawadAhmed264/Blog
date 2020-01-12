@@ -207,6 +207,42 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Content\addblog.html" />
+    <Content Include="Areas\Admin\Content\Adminform.html" />
+    <Content Include="Areas\Admin\Content\blog.html" />
+    <Content Include="Areas\Admin\Content\Categorylist.html" />
+    <Content Include="Areas\Admin\Content\css\admin.css" />
+    <Content Include="Areas\Admin\Content\css\Login.css" />
+    <Content Include="Areas\Admin\Content\Dashboard.html" />
+    <Content Include="Areas\Admin\Content\images\admin.png" />
+    <Content Include="Areas\Admin\Content\images\adminrole.png" />
+    <Content Include="Areas\Admin\Content\images\Avatar-1 1.png" />
+    <Content Include="Areas\Admin\Content\images\Avatar-2 1.png" />
+    <Content Include="Areas\Admin\Content\images\Avatar-3 1.png" />
+    <Content Include="Areas\Admin\Content\images\Avatar-4 1.png" />
+    <Content Include="Areas\Admin\Content\images\Avatar-5 1.png" />
+    <Content Include="Areas\Admin\Content\images\Avatar-6 1.png" />
+    <Content Include="Areas\Admin\Content\images\avatar-icon.png" />
+    <Content Include="Areas\Admin\Content\images\categorylist.png" />
+    <Content Include="Areas\Admin\Content\images\dashboard-icon.png" />
+    <Content Include="Areas\Admin\Content\images\Edit Option clicked.png" />
+    <Content Include="Areas\Admin\Content\images\Edit-icon.png" />
+    <Content Include="Areas\Admin\Content\images\login-bg.png" />
+    <Content Include="Areas\Admin\Content\images\loginform-bg.png" />
+    <Content Include="Areas\Admin\Content\images\logo-icon.png" />
+    <Content Include="Areas\Admin\Content\images\logo1-dark.jpg" />
+    <Content Include="Areas\Admin\Content\images\logo1.jpg" />
+    <Content Include="Areas\Admin\Content\images\logo2-dark.jpg" />
+    <Content Include="Areas\Admin\Content\images\logo2.jpg" />
+    <Content Include="Areas\Admin\Content\images\logo3-dark.jpg" />
+    <Content Include="Areas\Admin\Content\images\logo3.jpg" />
+    <Content Include="Areas\Admin\Content\images\Menubar-icon.png" />
+    <Content Include="Areas\Admin\Content\images\search-icon.png" />
+    <Content Include="Areas\Admin\Content\images\writeapost-icon.png" />
+    <Content Include="Areas\Admin\Content\js\jquery-3.4.1.min.js" />
+    <Content Include="Areas\Admin\Content\js\script.js" />
+    <Content Include="Areas\Admin\Content\login.html" />
+    <Content Include="Areas\Admin\Content\UsersList.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -235,6 +271,13 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Content\font\roboto-regular-webfont.woff" />
+    <Content Include="Areas\Admin\Content\font\roboto-regular-webfont.woff2" />
+    <Content Include="Areas\Admin\Content\font\sofiapro-light-webfont.woff" />
+    <Content Include="Areas\Admin\Content\font\sofiapro-light-webfont.woff2" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LoginPartialAdmin.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -368,7 +411,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
