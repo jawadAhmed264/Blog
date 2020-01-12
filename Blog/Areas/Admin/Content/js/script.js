@@ -29,7 +29,7 @@ $(document).ready(function(){
 
     //menu-bar
     $('.user').click(function(){
-             
+        debugger;     
         if($('.dropdown').css('display') == 'none')
         {
             $('.dropdown').slideDown();
