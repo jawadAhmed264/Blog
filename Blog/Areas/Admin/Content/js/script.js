@@ -195,11 +195,4 @@ $(document).ready(function(){
       
       var input = new TagsInput('.tags-input');
 
-
-      //Tiny MCI
-      tinymce.init({
-        selector: '#mytextarea',
-        resize: false,
-        height : "465"
-      });
 });//Document.ready

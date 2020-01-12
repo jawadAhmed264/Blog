@@ -1,0 +1,62 @@
+﻿@model ViewModel.AdminViewModels.BlogPostViewModels.AddBlogViewModel
+
+@{
+    ViewBag.Title = "AddBlog";
+}
+
+<article class="article">
+    <div class="main-bg">
+        @using (Html.BeginForm())
+        {
+            <div class="main-header">
+                <div class="main-content">
+                    <div class="container">
+                        <div class="blog-input">
+                            <h1 class="primary-blue">Blog Post</h1>
+                            <input type="text" class="title-txt" id="" placeholder="Blog Title" />
+                            <div class="tags-input title-txt"></div>
+                            <textarea name="" id="" class="title-txt" placeholder="Add summery"></textarea>
+                            <select id="">
+                                <option selected>Select Category</option>
+                                <option value="">Technology</option>
+                                <option value="">Sports</option>
+                                <option value="">News</option>
+                                <option value="">Career</option>
+                                <option value="">Entertainment</option>
+                                <option value="">Science</option>
+                            </select>
+                            <label class="custom-file-upload">
+                                <input type="file" />
+                                <i class="fa fa-cloud-upload"></i> Upload Cover image
+                            </label>
+                        </div>
+                        <div class="btns">
+                            <button type="submit" class="blog-btn2">Publish</button>
+                            <button type="submit" class="blog-btn2">Save</button>
+                            <a href="login.html" class="blog-btn">Preview</a>
+                            <a href="blog.html" class="blog-btn">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-mr">
+                <textarea id="mytextarea"></textarea>
+            </div>
+
+        }
+    </div>
+</article>
+
+@section scripts{
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script type="text/javascript">
+        $(function () {
+            //Tiny MCI
+            tinymce.init({
+                selector: '#mytextarea',
+                resize: false,
+                height: "465"
+            });
+        })
+    </script>
+}
