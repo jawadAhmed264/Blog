@@ -27,6 +27,7 @@ namespace Blog.Areas.Admin.Controllers
             return View(model);
         }
 
+        //Upload for TinyMCE
         public ActionResult Upload()
         {
             var file = Request.Files["file"];
