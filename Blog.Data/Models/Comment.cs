@@ -16,7 +16,7 @@ namespace Blog.Data.Models
     {
         public long Id { get; set; }
         public Nullable<long> ParentId { get; set; }
-        public string Comment1 { get; set; }
+        public string CommentText { get; set; }
         public Nullable<long> UserId { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }

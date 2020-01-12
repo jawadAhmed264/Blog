@@ -5,35 +5,35 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c275729b5c3d445a888b78dacca30975" Name="Diagram1">
-        <EntityTypeShape EntityType="BlogModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.AspNetRole" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.AspNetUser" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Author" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.BlogContent" Width="1.5" PointX="9.75" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.BlogPost" Width="1.5" PointX="7.5" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Category" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Comment" Width="1.5" PointX="7.5" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Logger" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Medium" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.MediaType" Width="1.5" PointX="10.5" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Tag" Width="1.5" PointX="9.75" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.User" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.View" Width="1.5" PointX="7.5" PointY="19" IsExpanded="true" />
-        <AssociationConnector Association="BlogModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__Author__AspnetUs__47DBAE45" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__User__AspnetUser__5AEE82B9" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__BlogPost__Auther__4AB81AF0" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__BlogConte__BlogP__4F7CD00D" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__BlogPost__Catego__4BAC3F29" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__Media__BlogPostI__571DF1D5" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__Tag__BlogPostId__52593CB8" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__Comments__UserId__656C112C" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__Media__MediaType__5812160E" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.FK__Views__UserId__5DCAEF64" ManuallyRouted="false" />
-        <AssociationConnector Association="BlogModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BlogModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BlogModel.AspNetRole" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="BlogModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="BlogModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.25" />
+        <EntityTypeShape EntityType="BlogModel.AspNetUser" Width="1.5" PointX="3" PointY="11.375" />
+        <EntityTypeShape EntityType="BlogModel.Author" Width="1.5" PointX="5.25" PointY="17.875" />
+        <EntityTypeShape EntityType="BlogModel.BlogContent" Width="1.5" PointX="9.75" PointY="16.75" />
+        <EntityTypeShape EntityType="BlogModel.BlogPost" Width="1.5" PointX="7.5" PointY="18" />
+        <EntityTypeShape EntityType="BlogModel.Category" Width="1.5" PointX="5.25" PointY="23.375" />
+        <EntityTypeShape EntityType="BlogModel.Comment" Width="1.5" PointX="7.5" PointY="14.125" />
+        <EntityTypeShape EntityType="BlogModel.Logger" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BlogModel.MediaFile" Width="1.5" PointX="12.75" PointY="18.125" />
+        <EntityTypeShape EntityType="BlogModel.MediaType" Width="1.5" PointX="10.5" PointY="20.5" />
+        <EntityTypeShape EntityType="BlogModel.Tag" Width="1.5" PointX="9.75" PointY="24.5" />
+        <EntityTypeShape EntityType="BlogModel.User" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="BlogModel.View" Width="1.5" PointX="7.5" PointY="10.5" />
+        <AssociationConnector Association="BlogModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="BlogModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="BlogModel.FK__Author__AspnetUs__47DBAE45" />
+        <AssociationConnector Association="BlogModel.FK__User__AspnetUser__5AEE82B9" />
+        <AssociationConnector Association="BlogModel.FK__BlogPost__Auther__4AB81AF0" />
+        <AssociationConnector Association="BlogModel.FK__BlogConte__BlogP__4F7CD00D" />
+        <AssociationConnector Association="BlogModel.FK__BlogPost__Catego__4BAC3F29" />
+        <AssociationConnector Association="BlogModel.FK__Media__BlogPostI__571DF1D5" />
+        <AssociationConnector Association="BlogModel.FK__Tag__BlogPostId__52593CB8" />
+        <AssociationConnector Association="BlogModel.FK__Comments__UserId__656C112C" />
+        <AssociationConnector Association="BlogModel.FK__Media__MediaType__5812160E" />
+        <AssociationConnector Association="BlogModel.FK__Views__UserId__5DCAEF64" />
+        <AssociationConnector Association="BlogModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

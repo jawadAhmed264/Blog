@@ -17,11 +17,11 @@ namespace Blog.Data.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MediaType()
         {
-            this.Media = new HashSet<Medium>();
+            this.MediaFiles = new HashSet<MediaFile>();
         }
     
         public int Id { get; set; }
-        public string MediaType1 { get; set; }
+        public string TypeName { get; set; }
         public string FileType { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
@@ -30,6 +30,6 @@ namespace Blog.Data.Models
         public Nullable<bool> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Medium> Media { get; set; }
+        public virtual ICollection<MediaFile> MediaFiles { get; set; }
     }
 }

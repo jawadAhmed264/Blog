@@ -12,7 +12,7 @@ namespace Blog.Data.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Medium
+    public partial class MediaFile
     {
         public long Id { get; set; }
         public string FileName { get; set; }

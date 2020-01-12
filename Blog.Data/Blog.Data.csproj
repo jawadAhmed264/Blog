@@ -98,10 +98,10 @@
     <Compile Include="Models\Logger.cs">
       <DependentUpon>BlogModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MediaType.cs">
+    <Compile Include="Models\MediaFile.cs">
       <DependentUpon>BlogModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Medium.cs">
+    <Compile Include="Models\MediaType.cs">
       <DependentUpon>BlogModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tag.cs">

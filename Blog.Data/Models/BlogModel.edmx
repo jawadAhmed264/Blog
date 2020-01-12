@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BlogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BlogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -134,7 +134,7 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentId" Type="bigint" />
-          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="CommentText" Type="nvarchar(max)" />
           <Property Name="UserId" Type="bigint" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
@@ -154,7 +154,7 @@
           <Property Name="CreatedBy" Type="datetime" />
           <Property Name="Active" Type="bit" />
         </EntityType>
-        <EntityType Name="Media">
+        <EntityType Name="MediaFile">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -175,7 +175,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MediaType" Type="nvarchar" MaxLength="200" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="200" />
           <Property Name="FileType" Type="nvarchar" MaxLength="200" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
@@ -288,24 +288,24 @@
         </Association>
         <Association Name="FK__Media__BlogPostI__571DF1D5">
           <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
-          <End Role="Media" Type="Self.Media" Multiplicity="*" />
+          <End Role="MediaFile" Type="Self.MediaFile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BlogPost">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Media">
+            <Dependent Role="MediaFile">
               <PropertyRef Name="BlogPostId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Media__MediaType__5812160E">
           <End Role="MediaType" Type="Self.MediaType" Multiplicity="0..1" />
-          <End Role="Media" Type="Self.Media" Multiplicity="*" />
+          <End Role="MediaFile" Type="Self.MediaFile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MediaType">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Media">
+            <Dependent Role="MediaFile">
               <PropertyRef Name="MediaTypeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -415,7 +415,7 @@
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logger" EntityType="Self.Logger" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaFile" EntityType="Self.MediaFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MediaType" EntityType="Self.MediaType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -442,11 +442,11 @@
           </AssociationSet>
           <AssociationSet Name="FK__Media__BlogPostI__571DF1D5" Association="Self.FK__Media__BlogPostI__571DF1D5">
             <End Role="BlogPost" EntitySet="BlogPost" />
-            <End Role="Media" EntitySet="Media" />
+            <End Role="MediaFile" EntitySet="MediaFile" />
           </AssociationSet>
           <AssociationSet Name="FK__Media__MediaType__5812160E" Association="Self.FK__Media__MediaType__5812160E">
             <End Role="MediaType" EntitySet="MediaType" />
-            <End Role="Media" EntitySet="Media" />
+            <End Role="MediaFile" EntitySet="MediaFile" />
           </AssociationSet>
           <AssociationSet Name="FK__Tag__BlogPostId__52593CB8" Association="Self.FK__Tag__BlogPostId__52593CB8">
             <End Role="BlogPost" EntitySet="BlogPost" />
@@ -477,38 +477,107 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BlogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="BlogModel.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="BlogModel.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="BlogModel.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="BlogModel.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="BlogModel.AspNetUser" />
+          <EntitySet Name="Authors" EntityType="BlogModel.Author" />
+          <EntitySet Name="BlogContents" EntityType="BlogModel.BlogContent" />
+          <EntitySet Name="BlogPosts" EntityType="BlogModel.BlogPost" />
+          <EntitySet Name="Categories" EntityType="BlogModel.Category" />
+          <EntitySet Name="Comments" EntityType="BlogModel.Comment" />
+          <EntitySet Name="Loggers" EntityType="BlogModel.Logger" />
+          <EntitySet Name="MediaFiles" EntityType="BlogModel.MediaFile" />
+          <EntitySet Name="MediaTypes" EntityType="BlogModel.MediaType" />
+          <EntitySet Name="Tags" EntityType="BlogModel.Tag" />
+          <EntitySet Name="Users" EntityType="BlogModel.User" />
+          <EntitySet Name="Views" EntityType="BlogModel.View" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="BlogModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="BlogModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Author__AspnetUs__47DBAE45" Association="BlogModel.FK__Author__AspnetUs__47DBAE45">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Author" EntitySet="Authors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__AspnetUser__5AEE82B9" Association="BlogModel.FK__User__AspnetUser__5AEE82B9">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BlogPost__Auther__4AB81AF0" Association="BlogModel.FK__BlogPost__Auther__4AB81AF0">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BlogConte__BlogP__4F7CD00D" Association="BlogModel.FK__BlogConte__BlogP__4F7CD00D">
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+            <End Role="BlogContent" EntitySet="BlogContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BlogPost__Catego__4BAC3F29" Association="BlogModel.FK__BlogPost__Catego__4BAC3F29">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Media__BlogPostI__571DF1D5" Association="BlogModel.FK__Media__BlogPostI__571DF1D5">
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+            <End Role="MediaFile" EntitySet="MediaFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tag__BlogPostId__52593CB8" Association="BlogModel.FK__Tag__BlogPostId__52593CB8">
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comments__UserId__656C112C" Association="BlogModel.FK__Comments__UserId__656C112C">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Media__MediaType__5812160E" Association="BlogModel.FK__Media__MediaType__5812160E">
+            <End Role="MediaType" EntitySet="MediaTypes" />
+            <End Role="MediaFile" EntitySet="MediaFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Views__UserId__5DCAEF64" Association="BlogModel.FK__Views__UserId__5DCAEF64">
+            <End Role="User" EntitySet="Users" />
+            <End Role="View" EntitySet="Views" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="BlogModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
             <PropertyRef Name="ContextKey" />
           </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="BlogModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="BlogModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -516,16 +585,16 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="BlogModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -536,12 +605,12 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Authors" Relationship="Self.FK__Author__AspnetUs__47DBAE45" FromRole="AspNetUsers" ToRole="Author" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__User__AspnetUser__5AEE82B9" FromRole="AspNetUsers" ToRole="User" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="BlogModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="BlogModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="Authors" Relationship="BlogModel.FK__Author__AspnetUs__47DBAE45" FromRole="AspNetUser" ToRole="Author" />
+          <NavigationProperty Name="Users" Relationship="BlogModel.FK__User__AspnetUser__5AEE82B9" FromRole="AspNetUser" ToRole="User" />
+          <NavigationProperty Name="AspNetRoles" Relationship="BlogModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="Author">
           <Key>
@@ -561,8 +630,8 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK__Author__AspnetUs__47DBAE45" FromRole="Author" ToRole="AspNetUsers" />
-          <NavigationProperty Name="BlogPosts" Relationship="Self.FK__BlogPost__Auther__4AB81AF0" FromRole="Author" ToRole="BlogPost" />
+          <NavigationProperty Name="AspNetUser1" Relationship="BlogModel.FK__Author__AspnetUs__47DBAE45" FromRole="Author" ToRole="AspNetUser" />
+          <NavigationProperty Name="BlogPosts" Relationship="BlogModel.FK__BlogPost__Auther__4AB81AF0" FromRole="Author" ToRole="BlogPost" />
         </EntityType>
         <EntityType Name="BlogContent">
           <Key>
@@ -576,7 +645,7 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="BlogPost" Relationship="Self.FK__BlogConte__BlogP__4F7CD00D" FromRole="BlogContent" ToRole="BlogPost" />
+          <NavigationProperty Name="BlogPost" Relationship="BlogModel.FK__BlogConte__BlogP__4F7CD00D" FromRole="BlogContent" ToRole="BlogPost" />
         </EntityType>
         <EntityType Name="BlogPost">
           <Key>
@@ -592,11 +661,11 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="Author" Relationship="Self.FK__BlogPost__Auther__4AB81AF0" FromRole="BlogPost" ToRole="Author" />
-          <NavigationProperty Name="BlogContents" Relationship="Self.FK__BlogConte__BlogP__4F7CD00D" FromRole="BlogPost" ToRole="BlogContent" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__BlogPost__Catego__4BAC3F29" FromRole="BlogPost" ToRole="Category" />
-          <NavigationProperty Name="Media" Relationship="Self.FK__Media__BlogPostI__571DF1D5" FromRole="BlogPost" ToRole="Media" />
-          <NavigationProperty Name="Tags" Relationship="Self.FK__Tag__BlogPostId__52593CB8" FromRole="BlogPost" ToRole="Tag" />
+          <NavigationProperty Name="Author" Relationship="BlogModel.FK__BlogPost__Auther__4AB81AF0" FromRole="BlogPost" ToRole="Author" />
+          <NavigationProperty Name="BlogContents" Relationship="BlogModel.FK__BlogConte__BlogP__4F7CD00D" FromRole="BlogPost" ToRole="BlogContent" />
+          <NavigationProperty Name="Category" Relationship="BlogModel.FK__BlogPost__Catego__4BAC3F29" FromRole="BlogPost" ToRole="Category" />
+          <NavigationProperty Name="MediaFiles" Relationship="BlogModel.FK__Media__BlogPostI__571DF1D5" FromRole="BlogPost" ToRole="MediaFile" />
+          <NavigationProperty Name="Tags" Relationship="BlogModel.FK__Tag__BlogPostId__52593CB8" FromRole="BlogPost" ToRole="Tag" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -612,7 +681,7 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="BlogPosts" Relationship="Self.FK__BlogPost__Catego__4BAC3F29" FromRole="Category" ToRole="BlogPost" />
+          <NavigationProperty Name="BlogPosts" Relationship="BlogModel.FK__BlogPost__Catego__4BAC3F29" FromRole="Category" ToRole="BlogPost" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -620,14 +689,14 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentId" Type="Int64" />
-          <Property Name="Comment1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Int64" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Comments__UserId__656C112C" FromRole="Comments" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="BlogModel.FK__Comments__UserId__656C112C" FromRole="Comment" ToRole="User" />
         </EntityType>
         <EntityType Name="Logger">
           <Key>
@@ -641,7 +710,7 @@
           <Property Name="CreatedBy" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
         </EntityType>
-        <EntityType Name="Medium">
+        <EntityType Name="MediaFile">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -656,22 +725,22 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="BlogPost" Relationship="Self.FK__Media__BlogPostI__571DF1D5" FromRole="Media" ToRole="BlogPost" />
-          <NavigationProperty Name="MediaType" Relationship="Self.FK__Media__MediaType__5812160E" FromRole="Media" ToRole="MediaType" />
+          <NavigationProperty Name="BlogPost" Relationship="BlogModel.FK__Media__BlogPostI__571DF1D5" FromRole="MediaFile" ToRole="BlogPost" />
+          <NavigationProperty Name="MediaType" Relationship="BlogModel.FK__Media__MediaType__5812160E" FromRole="MediaFile" ToRole="MediaType" />
         </EntityType>
         <EntityType Name="MediaType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MediaType1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TypeName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FileType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="Media" Relationship="Self.FK__Media__MediaType__5812160E" FromRole="MediaType" ToRole="Media" />
+          <NavigationProperty Name="MediaFiles" Relationship="BlogModel.FK__Media__MediaType__5812160E" FromRole="MediaType" ToRole="MediaFile" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -685,7 +754,7 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="BlogPost" Relationship="Self.FK__Tag__BlogPostId__52593CB8" FromRole="Tag" ToRole="BlogPost" />
+          <NavigationProperty Name="BlogPost" Relationship="BlogModel.FK__Tag__BlogPostId__52593CB8" FromRole="Tag" ToRole="BlogPost" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -702,9 +771,9 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK__User__AspnetUser__5AEE82B9" FromRole="User" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__UserId__656C112C" FromRole="User" ToRole="Comments" />
-          <NavigationProperty Name="Views" Relationship="Self.FK__Views__UserId__5DCAEF64" FromRole="User" ToRole="Views" />
+          <NavigationProperty Name="AspNetUser1" Relationship="BlogModel.FK__User__AspnetUser__5AEE82B9" FromRole="User" ToRole="AspNetUser" />
+          <NavigationProperty Name="Comments" Relationship="BlogModel.FK__Comments__UserId__656C112C" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Views" Relationship="BlogModel.FK__Views__UserId__5DCAEF64" FromRole="User" ToRole="View" />
         </EntityType>
         <EntityType Name="View">
           <Key>
@@ -719,41 +788,41 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Views__UserId__5DCAEF64" FromRole="Views" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="BlogModel.FK__Views__UserId__5DCAEF64" FromRole="View" ToRole="User" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+          <End Type="BlogModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <End Type="BlogModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserClaims">
+            <Dependent Role="AspNetUserClaim">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+          <End Type="BlogModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <End Type="BlogModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserLogins">
+            <Dependent Role="AspNetUserLogin">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Author__AspnetUs__47DBAE45">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
-          <End Role="Author" Type="Self.Author" Multiplicity="*" />
+          <End Type="BlogModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="BlogModel.Author" Role="Author" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Author">
@@ -762,10 +831,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__User__AspnetUser__5AEE82B9">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Type="BlogModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="BlogModel.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="User">
@@ -774,8 +843,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__BlogPost__Auther__4AB81AF0">
-          <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
-          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
+          <End Type="BlogModel.Author" Role="Author" Multiplicity="0..1" />
+          <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Author">
               <PropertyRef Name="Id" />
@@ -786,8 +855,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__BlogConte__BlogP__4F7CD00D">
-          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
-          <End Role="BlogContent" Type="Self.BlogContent" Multiplicity="*" />
+          <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="0..1" />
+          <End Type="BlogModel.BlogContent" Role="BlogContent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BlogPost">
               <PropertyRef Name="Id" />
@@ -798,8 +867,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__BlogPost__Catego__4BAC3F29">
-          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
-          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
+          <End Type="BlogModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
               <PropertyRef Name="Id" />
@@ -810,20 +879,20 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Media__BlogPostI__571DF1D5">
-          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
-          <End Role="Media" Type="Self.Medium" Multiplicity="*" />
+          <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="0..1" />
+          <End Type="BlogModel.MediaFile" Role="MediaFile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BlogPost">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Media">
+            <Dependent Role="MediaFile">
               <PropertyRef Name="BlogPostId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Tag__BlogPostId__52593CB8">
-          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
-          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+          <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="0..1" />
+          <End Type="BlogModel.Tag" Role="Tag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BlogPost">
               <PropertyRef Name="Id" />
@@ -834,115 +903,45 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Comments__UserId__656C112C">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <End Type="BlogModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="BlogModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Comments">
+            <Dependent Role="Comment">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Media__MediaType__5812160E">
-          <End Role="MediaType" Type="Self.MediaType" Multiplicity="0..1" />
-          <End Role="Media" Type="Self.Medium" Multiplicity="*" />
+          <End Type="BlogModel.MediaType" Role="MediaType" Multiplicity="0..1" />
+          <End Type="BlogModel.MediaFile" Role="MediaFile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MediaType">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Media">
+            <Dependent Role="MediaFile">
               <PropertyRef Name="MediaTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Views__UserId__5DCAEF64">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Views" Type="Self.View" Multiplicity="*" />
+          <End Type="BlogModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="BlogModel.View" Role="View" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Views">
+            <Dependent Role="View">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <End Type="BlogModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="BlogModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Authors" EntityType="Self.Author" />
-          <EntitySet Name="BlogContents" EntityType="Self.BlogContent" />
-          <EntitySet Name="BlogPosts" EntityType="Self.BlogPost" />
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Comments" EntityType="Self.Comment" />
-          <EntitySet Name="Loggers" EntityType="Self.Logger" />
-          <EntitySet Name="Media" EntityType="Self.Medium" />
-          <EntitySet Name="MediaTypes" EntityType="Self.MediaType" />
-          <EntitySet Name="Tags" EntityType="Self.Tag" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="Views" EntityType="Self.View" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Author__AspnetUs__47DBAE45" Association="Self.FK__Author__AspnetUs__47DBAE45">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Author" EntitySet="Authors" />
-          </AssociationSet>
-          <AssociationSet Name="FK__User__AspnetUser__5AEE82B9" Association="Self.FK__User__AspnetUser__5AEE82B9">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BlogPost__Auther__4AB81AF0" Association="Self.FK__BlogPost__Auther__4AB81AF0">
-            <End Role="Author" EntitySet="Authors" />
-            <End Role="BlogPost" EntitySet="BlogPosts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BlogConte__BlogP__4F7CD00D" Association="Self.FK__BlogConte__BlogP__4F7CD00D">
-            <End Role="BlogPost" EntitySet="BlogPosts" />
-            <End Role="BlogContent" EntitySet="BlogContents" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BlogPost__Catego__4BAC3F29" Association="Self.FK__BlogPost__Catego__4BAC3F29">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="BlogPost" EntitySet="BlogPosts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Media__BlogPostI__571DF1D5" Association="Self.FK__Media__BlogPostI__571DF1D5">
-            <End Role="BlogPost" EntitySet="BlogPosts" />
-            <End Role="Media" EntitySet="Media" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tag__BlogPostId__52593CB8" Association="Self.FK__Tag__BlogPostId__52593CB8">
-            <End Role="BlogPost" EntitySet="BlogPosts" />
-            <End Role="Tag" EntitySet="Tags" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comments__UserId__656C112C" Association="Self.FK__Comments__UserId__656C112C">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Media__MediaType__5812160E" Association="Self.FK__Media__MediaType__5812160E">
-            <End Role="MediaType" EntitySet="MediaTypes" />
-            <End Role="Media" EntitySet="Media" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Views__UserId__5DCAEF64" Association="Self.FK__Views__UserId__5DCAEF64">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Views" EntitySet="Views" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -952,235 +951,235 @@
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="BlogModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="BlogModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="BlogModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="BlogModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="BlogModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Authors">
             <EntityTypeMapping TypeName="BlogModel.Author">
               <MappingFragment StoreEntitySet="Author">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
-                <ScalarProperty Name="LeaveDate" ColumnName="LeaveDate" />
-                <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
+                <ScalarProperty Name="LeaveDate" ColumnName="LeaveDate" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BlogContents">
             <EntityTypeMapping TypeName="BlogModel.BlogContent">
               <MappingFragment StoreEntitySet="BlogContent">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BlogPosts">
             <EntityTypeMapping TypeName="BlogModel.BlogPost">
               <MappingFragment StoreEntitySet="BlogPost">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Summary" ColumnName="Summary" />
-                <ScalarProperty Name="AutherId" ColumnName="AutherId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="AutherId" ColumnName="AutherId" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="BlogModel.Category">
               <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CSSStyle" ColumnName="CSSStyle" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CSSStyle" ColumnName="CSSStyle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="BlogModel.Comment">
               <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="Comment1" ColumnName="Comment" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Loggers">
             <EntityTypeMapping TypeName="BlogModel.Logger">
               <MappingFragment StoreEntitySet="Logger">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Controller" ColumnName="Controller" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="Exception" ColumnName="Exception" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Media">
-            <EntityTypeMapping TypeName="BlogModel.Medium">
-              <MappingFragment StoreEntitySet="Media">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
-                <ScalarProperty Name="MediaTypeId" ColumnName="MediaTypeId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+          <EntitySetMapping Name="MediaFiles">
+            <EntityTypeMapping TypeName="BlogModel.MediaFile">
+              <MappingFragment StoreEntitySet="MediaFile">
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MediaTypeId" ColumnName="MediaTypeId" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MediaTypes">
             <EntityTypeMapping TypeName="BlogModel.MediaType">
               <MappingFragment StoreEntitySet="MediaType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="MediaType1" ColumnName="MediaType" />
-                <ScalarProperty Name="FileType" ColumnName="FileType" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="BlogModel.Tag">
               <MappingFragment StoreEntitySet="Tag">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TagName" ColumnName="TagName" />
-                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="BlogModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
-                <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Views">
             <EntityTypeMapping TypeName="BlogModel.View">
               <MappingFragment StoreEntitySet="Views">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserIP" ColumnName="UserIP" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserIP" ColumnName="UserIP" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="BlogModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
+            <EndProperty Name="AspNetUser">
               <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
