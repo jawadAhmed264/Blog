@@ -3,10 +3,9 @@
 @{
     ViewBag.Title = "AddBlog";
 }
-
 <article class="article">
     <div class="main-bg">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("AddBlog", "BlogPost", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="main-header">
                 <div class="main-content">
@@ -39,6 +38,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="edit-mr">
                 <textarea id="mytextarea"></textarea>
             </div>
@@ -55,23 +55,26 @@
             //Tiny MCI
             tinymce.init({
                 selector: '#mytextarea',
-                resize: false,
-                height: "600",
-                menubar: false,
+                height: 600,
+
+                images_upload_url: "../BlogPost/Upload",
                 plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount'
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen',
+                    'insertdatetime media nonbreaking save table contextmenu directionality',
+                    'emoticons template paste textcolor colorpicker textpattern imagetools'
                 ],
-                toolbar: 'undo redo | formatselect | ' +
-                    ' bold italic backcolor | alignleft aligncenter ' +
-                    ' alignright alignjustify | bullist numlist outdent indent |' +
-                    ' removeformat | Table',
-                content_css: [
-                    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                    '//www.tiny.cloud/css/codepen.min.css'
-                ]
+                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | Table | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons ',
+                image_advtab: true,
             });
-        })
+
+            function upload(form) {
+                tinymce.activeEditor.uploadImages(function (success) {
+                    tinymce.activeEditor.execCommand("mceInsertContent", true, "<img src='" + data + "' alt='Uploaded Image' class='img-responsive' />");
+                });
+                return false;
+            }
+        });
     </script>
 }
