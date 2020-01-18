@@ -42,11 +42,11 @@
                         <div class="blog-input">
                             <h1 class="primary-blue">Blog Post</h1>
                             @Html.TextBoxFor(m => m.Title, new { @class = "title-txt", placeholder = "Blog Title" })
-                            @Html.TextBoxFor(m => m.Tags, new { @class = "title-txt", @data_role = "tagsinput",@placeholder="Tags"})
+                            @Html.TextBoxFor(m => m.Tags, new { @class = "title-txt", @data_role = "tagsinput", @placeholder = "Tags" })
                             @Html.TextAreaFor(m => m.Summary, new { @class = "title-txt", placeholder = "Add summery" })
                             @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "CategoryId", "CategoryName"), "Select Category", new { @class = "" })
                             <label class="custom-file-upload">
-                                <input type="file" name="BannerImage" id="BannerImage"/>
+                                <input type="file" name="BannerImage" id="BannerImage" />
                                 <i class="fa fa-cloud-upload"></i> <span class="coverImg">Upload Cover image</span>
                             </label>
                         </div>
@@ -76,6 +76,7 @@
 
             var link = '@Url.Action("Upload", "BlogPost", new { name = "-1" })';
             link = link.replace("-1", "temp");
+
             //Tiny MCI
             tinymce.init({
                 selector: '#mytextarea',
@@ -104,6 +105,9 @@
             var Uploadfile = document.getElementById("BannerImage");
             if (Uploadfile.files.length != 0) {
                 $(".coverImg").text("Image is Selected");
+            }
+            else {
+                $(".coverImg").text("Upload Cover image");
             }
         });
     </script>
