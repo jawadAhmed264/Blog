@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Blog.Service.CategoryServices;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -8,8 +10,15 @@ using ViewModel.AdminViewModels.BlogPostViewModels;
 
 namespace Blog.Areas.Admin.Controllers
 {
+    [RoutePrefix("BlogPost")]
     public class BlogPostController : Controller
     {
+        private ICategoryService catService;
+        public BlogPostController(ICategoryService _catService) 
+        {
+            catService = _catService;  
+        }
+
         // GET: Admin/BlogPost
         public ActionResult Index()
         {
@@ -18,7 +27,9 @@ namespace Blog.Areas.Admin.Controllers
 
         [HttpGet]
         public ActionResult AddBlog() {
-            return View();
+            AddBlogViewModel model = new AddBlogViewModel();
+            model.CategoryList = catService.getAll();
+            return View(model);
         }
         
         [HttpPost]
@@ -27,13 +38,15 @@ namespace Blog.Areas.Admin.Controllers
             return View(model);
         }
 
+        
         //Upload for TinyMCE
-        public ActionResult Upload()
+        [Route("{controller}/{action}/{name}")]
+        public ActionResult Upload(string name)
         {
             var file = Request.Files["file"];
 
             string extension = Path.GetExtension(file.FileName);
-            string fileid = Guid.NewGuid().ToString();
+            string fileid = name+"_"+Guid.NewGuid().ToString();
             fileid = Path.ChangeExtension(fileid, extension);
 
             var draft = new { location = "" };
@@ -57,11 +70,11 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     throw new InvalidOperationException("File size limit exceeded.");
                 }
-
-                string savePath = Server.MapPath(@"/Content/Images/tempImages/" + fileid);
+                string path = ConfigurationManager.AppSettings["tempImagesPath"];
+                string savePath = Server.MapPath(@"/"+path+fileid);
                 file.SaveAs(savePath);
 
-                draft = new { location = Path.Combine("/Content/Images/tempImages/", fileid).Replace('\\', '/') };
+                draft = new { location = Path.Combine("/"+path, fileid).Replace('\\', '/') };
             }
 
 

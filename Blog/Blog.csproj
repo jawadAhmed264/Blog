@@ -209,6 +209,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.css" />
+    <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.js" />
+    <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.min.js" />
     <Content Include="Areas\Admin\Content\css\admin.css" />
     <Content Include="Areas\Admin\Content\css\Login.css" />
     <Content Include="Areas\Admin\Content\images\admin.png" />
@@ -345,6 +348,9 @@
     <Content Include="Areas\Admin\Content\tinymce\js\tinymce\langs\readme.md" />
     <Content Include="Areas\Admin\Content\tinymce\js\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Areas\Admin\Content\tinymce\js\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
+    <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.less" />
+    <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.min.js.map" />
+    <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.zip" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

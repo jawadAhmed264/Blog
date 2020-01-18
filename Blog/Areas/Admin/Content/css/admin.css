@@ -595,6 +595,7 @@ input:checked + .slider:before {
       opacity: 0;
     }
   }
-.edit-mr{
-    margin: 30px;
+.edit-mr {
+    width: 100%;
+    margin-top: 72px;
 }

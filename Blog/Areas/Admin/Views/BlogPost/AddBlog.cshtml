@@ -3,6 +3,35 @@
 @{
     ViewBag.Title = "AddBlog";
 }
+<link href="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+<style>
+    .bootstrap-tagsinput .tag {
+        margin-right: 2px;
+        color: white;
+        background-color: #2372ea;
+        padding: 3px;
+        border-radius: 10px;
+        font-size: 15px;
+    }
+
+    .bootstrap-tagsinput {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        display: inline-block;
+        padding: 4px 6px;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 4px;
+        max-width: 100%;
+        line-height: 22px;
+        cursor: text;
+        height: 27px;
+        width: 14.3%;
+        margin: 14px;
+    }
+</style>
+
 <article class="article">
     <div class="main-bg">
         @using (Html.BeginForm("AddBlog", "BlogPost", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -12,27 +41,19 @@
                     <div class="container">
                         <div class="blog-input">
                             <h1 class="primary-blue">Blog Post</h1>
-                            <input type="text" class="title-txt" id="" placeholder="Blog Title" />
-                            <div class="tags-input title-txt"></div>
-                            <textarea name="" id="" class="title-txt" placeholder="Add summery"></textarea>
-                            <select id="">
-                                <option selected>Select Category</option>
-                                <option value="">Technology</option>
-                                <option value="">Sports</option>
-                                <option value="">News</option>
-                                <option value="">Career</option>
-                                <option value="">Entertainment</option>
-                                <option value="">Science</option>
-                            </select>
+                            @Html.TextBoxFor(m => m.Title, new { @class = "title-txt", placeholder = "Blog Title" })
+                            @Html.TextBoxFor(m => m.Tags, new { @class = "title-txt", @data_role = "tagsinput" })
+                            @Html.TextAreaFor(m => m.Summary, new { @class = "title-txt", placeholder = "Add summery" })
+                            @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "CategoryId", "CategoryName"), "Select Category", new { @class = "" })
                             <label class="custom-file-upload">
-                                <input type="file" />
-                                <i class="fa fa-cloud-upload"></i> Upload Cover image
+                                <input type="file" name="BannerImage" id="BannerImage"/>
+                                <i class="fa fa-cloud-upload"></i> <span class="coverImg">Upload Cover image</span>
                             </label>
                         </div>
                         <div class="btns">
-                            <button type="submit" class="blog-btn2">Publish</button>
-                            <button type="submit" class="blog-btn2">Save</button>
-                            <a href="#" class="blog-btn">Preview</a>
+                            <button type="submit" name="btnSumit" class="blog-btn2">Publish</button>
+                            <button type="submit" name="btnSumit" class="blog-btn2">Save</button>
+                            @*<a href="#" class="blog-btn">Preview</a>*@
                             <a href="#" class="blog-btn">Close</a>
                         </div>
                     </div>
@@ -48,16 +69,18 @@
 </article>
 
 @section scripts{
-
+    <script src="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js"></script>
     <script src="~/Areas/Admin/Content/tinymce/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
         $(function () {
+
+            var link = '@Url.Action("Upload", "BlogPost", new { name = "-1" })';
+            link = link.replace("-1", "temp");
             //Tiny MCI
             tinymce.init({
                 selector: '#mytextarea',
                 height: 600,
-
-                images_upload_url: "../BlogPost/Upload",
+                images_upload_url: link,
                 plugins: [
                     'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                     'searchreplace wordcount visualblocks visualchars code fullscreen',
@@ -74,6 +97,13 @@
                     tinymce.activeEditor.execCommand("mceInsertContent", true, "<img src='" + data + "' alt='Uploaded Image' class='img-responsive' />");
                 });
                 return false;
+            }
+        });
+
+        $("#BannerImage").change(function () {
+            var Uploadfile = document.getElementById("BannerImage");
+            if (Uploadfile.files.length != 0) {
+                $(".coverImg").text("Image is Selected");
             }
         });
     </script>
