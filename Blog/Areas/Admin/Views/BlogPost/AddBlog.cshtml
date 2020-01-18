@@ -42,7 +42,7 @@
                         <div class="blog-input">
                             <h1 class="primary-blue">Blog Post</h1>
                             @Html.TextBoxFor(m => m.Title, new { @class = "title-txt", placeholder = "Blog Title" })
-                            @Html.TextBoxFor(m => m.Tags, new { @class = "title-txt", @data_role = "tagsinput" })
+                            @Html.TextBoxFor(m => m.Tags, new { @class = "title-txt", @data_role = "tagsinput",@placeholder="Tags"})
                             @Html.TextAreaFor(m => m.Summary, new { @class = "title-txt", placeholder = "Add summery" })
                             @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "CategoryId", "CategoryName"), "Select Category", new { @class = "" })
                             <label class="custom-file-upload">
@@ -51,8 +51,8 @@
                             </label>
                         </div>
                         <div class="btns">
-                            <button type="submit" name="btnSumit" class="blog-btn2">Publish</button>
-                            <button type="submit" name="btnSumit" class="blog-btn2">Save</button>
+                            <button type="submit" name="btnSubmit" class="blog-btn2">Publish</button>
+                            <button type="submit" name="btnSubmit" class="blog-btn2">Save</button>
                             @*<a href="#" class="blog-btn">Preview</a>*@
                             <a href="#" class="blog-btn">Close</a>
                         </div>
@@ -79,7 +79,7 @@
             //Tiny MCI
             tinymce.init({
                 selector: '#mytextarea',
-                height: 600,
+                height: 800,
                 images_upload_url: link,
                 plugins: [
                     'advlist autolink lists link image charmap print preview hr anchor pagebreak',

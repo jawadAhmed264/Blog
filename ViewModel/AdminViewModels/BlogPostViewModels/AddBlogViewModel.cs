@@ -25,6 +25,6 @@ namespace ViewModel.AdminViewModels.BlogPostViewModels
         public Nullable<bool> Active { get; set; }
         public HttpPostedFileBase BannerImage{ get; set; }
         public IEnumerable<CategoryViewModel> CategoryList { get; set; }
-        public string btnSumit { get; set; }
+        public string btnSubmit { get; set; }
     }
 }
