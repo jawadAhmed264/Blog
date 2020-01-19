@@ -14,9 +14,9 @@ namespace Blog.Areas.Admin.Controllers
     public class BlogPostController : Controller
     {
         private ICategoryService catService;
-        public BlogPostController(ICategoryService _catService) 
+        public BlogPostController(ICategoryService _catService)
         {
-            catService = _catService;  
+            catService = _catService;
         }
 
         // GET: Admin/BlogPost
@@ -26,18 +26,19 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddBlog() {
+        public ActionResult AddBlog()
+        {
             AddBlogViewModel model = new AddBlogViewModel();
             model.CategoryList = catService.getAll();
             return View(model);
         }
-        
+
         [HttpPost]
         public ActionResult AddBlog(AddBlogViewModel model)
         {
             return View(model);
         }
-        
+
         //Upload for TinyMCE
         [Route("{controller}/{action}/{name}")]
         public ActionResult Upload(string name)
@@ -45,7 +46,7 @@ namespace Blog.Areas.Admin.Controllers
             var file = Request.Files["file"];
 
             string extension = Path.GetExtension(file.FileName);
-            string fileid = name+"_"+Guid.NewGuid().ToString();
+            string fileid = name + "_" + Guid.NewGuid().ToString();
             fileid = Path.ChangeExtension(fileid, extension);
 
             var draft = new { location = "" };
@@ -70,10 +71,10 @@ namespace Blog.Areas.Admin.Controllers
                     throw new InvalidOperationException("File size limit exceeded.");
                 }
                 string path = ConfigurationManager.AppSettings["tempImagesPath"];
-                string savePath = Server.MapPath(@"/"+path+fileid);
+                string savePath = Server.MapPath(@"/" + path + fileid);
                 file.SaveAs(savePath);
 
-                draft = new { location = Path.Combine("/"+path, fileid).Replace('\\', '/') };
+                draft = new { location = Path.Combine("/" + path, fileid).Replace('\\', '/') };
             }
 
 
