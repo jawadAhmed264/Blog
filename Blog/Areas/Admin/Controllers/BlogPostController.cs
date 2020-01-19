@@ -37,7 +37,6 @@ namespace Blog.Areas.Admin.Controllers
         {
             return View(model);
         }
-
         
         //Upload for TinyMCE
         [Route("{controller}/{action}/{name}")]

@@ -1,4 +1,5 @@
 using Blog.Controllers;
+using Blog.Service.BlogServices;
 using Blog.Service.CategoryServices;
 using System.Web.Mvc;
 using Unity;
@@ -18,7 +19,8 @@ namespace Blog
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
             container.RegisterType<ICategoryService, CategoryService>();
-            
+            container.RegisterType<IBlogService, BlogService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
