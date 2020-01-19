@@ -10,7 +10,7 @@ namespace Blog.Service.CategoryServices
     public interface ICategoryService
     {
         IEnumerable<CategoryViewModel> getAll();
-        CategoryViewModel getCategoryById();
+        CategoryViewModel getCategoryById(int Id);
 
     }
 }

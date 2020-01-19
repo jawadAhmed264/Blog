@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Service.Utilities
+namespace ViewModel.Enums
 {
-    public class Logger
+    public enum MediaTypeEnum
     {
+        BlogImage,
+        Thumbnail,
+        Banner
     }
 }

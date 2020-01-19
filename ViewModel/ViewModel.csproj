@@ -65,7 +65,11 @@
   <ItemGroup>
     <Compile Include="AdminViewModels\BlogPostViewModels\AddBlogViewModel.cs" />
     <Compile Include="AdminViewModels\CategoryViewModels\CategoryViewModel.cs" />
+    <Compile Include="Enums\MediaTypeEnum.cs" />
+    <Compile Include="LogViewModel.cs" />
+    <Compile Include="MediaFileViewModels\MediaFileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagViewModels\TagViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

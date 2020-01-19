@@ -38,11 +38,11 @@ namespace Blog.Service.CategoryServices
             return list;
         }
 
-        public CategoryViewModel getCategoryById()
+        public CategoryViewModel getCategoryById(int Id)
         {
             using (DbContext)
             {
-                var model = DbContext.Categories.SingleOrDefault();
+                var model = DbContext.Categories.Where(cat=>cat.Id==Id).SingleOrDefault();
 
                 CategoryViewModel category = new CategoryViewModel
                 {
