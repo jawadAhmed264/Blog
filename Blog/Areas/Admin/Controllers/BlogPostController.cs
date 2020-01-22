@@ -81,7 +81,7 @@ namespace Blog.Areas.Admin.Controllers
                     //moving Images from temp to Blog images folder
                     for (int i = 0; i < imageName.Count; i++)
                     {
-                        System.IO.File.Move(tempPath + imageName[i], blogPath);
+                        System.IO.File.Move(tempPath+imageName[i], blogPath+imageName[i]);
                     }
                 }
                 ModelState.Clear();
