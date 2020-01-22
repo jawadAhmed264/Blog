@@ -45,43 +45,90 @@ namespace Blog.Areas.Admin.Controllers
 
         [HttpPost]
         public ActionResult AddBlog(AddBlogViewModel model)
+
         {
-            List<string> imageSrc = getImageSourceList(model.Content);
-            List<string> imageName = getImageNames(imageSrc);
-            List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName,"");
-            List<TagViewModel> tags = InsertTagsinModel(model.Tags);
-            string tempPath = Server.MapPath(@"/"+ConfigurationManager.AppSettings["tempImagesPath"]);
-            string blogPath = Server.MapPath(@"/"+ConfigurationManager.AppSettings["blogImagesPath"]);
-            string bannerPath = Server.MapPath(@"/"+ConfigurationManager.AppSettings["blogBannerPath"]);
-            string thumbnailPath = Server.MapPath(@"/"+ConfigurationManager.AppSettings["thumbnailsPath"]);
-
-            //Populate Model
-            model.MediaFiles = mediafiles;
-            model.TagList = tags;
-
-            //Call blog Service
-            int res = blogService.AddBlog(model);
-
-            if (res > 0)
+            try
             {
-                //Save BannerImage
-                string bannerUrl = SaveBannerImage(model.BannerImage, bannerPath);
-                
-                //moving Images from temp to Blog images folder
-                for (int i = 0; i < imageName.Count; i++)
-                {
-                    System.IO.File.Move(tempPath+imageName[i],blogPath);
-                }
-            }
+                List<string> imageSrc = getImageSourceList(model.Content);
+                List<string> imageName = getImageNames(imageSrc);
+                List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "");
+                List<TagViewModel> tags = InsertTagsinModel(model.Tags);
 
-            model.CategoryList = catService.getAll();
-            return View(model);
+                string tempPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["tempImagesPath"]);
+                string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
+                string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
+                string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
+
+                //Save BannerImage
+                string bannerUrl = SaveBannerImage(model.BannerImage, model.Title);
+
+                mediafiles.Add(new MediaFileViewModel()
+                {
+                    MediaType = MediaTypeEnum.Banner.ToString(),
+                    Url = bannerUrl,
+                    FileName = bannerUrl,
+                    Description = ""
+                });
+
+                //Populate Model
+                model.MediaFiles = mediafiles;
+                model.TagList = tags;
+
+                //Call blog Service
+                int res = blogService.AddBlog(model);
+
+                if (res > 0)
+                {
+                    //moving Images from temp to Blog images folder
+                    for (int i = 0; i < imageName.Count; i++)
+                    {
+                        System.IO.File.Move(tempPath + imageName[i], blogPath);
+                    }
+                }
+                ModelState.Clear();
+                model.CategoryList = catService.getAll();
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        private string SaveBannerImage(HttpPostedFileBase bannerImage,string path)
+        private string SaveBannerImage(HttpPostedFileBase bannerImage,string blogTitle)
         {
+            HttpPostedFileBase file = bannerImage;
+            string extension = Path.GetExtension(file.FileName);
+            string fileid =  blogTitle+"_"+Guid.NewGuid().ToString();
+            fileid = Path.ChangeExtension(fileid, extension);
 
-            throw new NotImplementedException();
+            var draft = new { location = "" };
+
+            if (file != null && file.ContentLength > 0)
+            {
+                const int megabyte = 1024 * 1024;
+
+                if (!file.ContentType.StartsWith("image/"))
+                {
+                    throw new InvalidOperationException("Invalid MIME content type.");
+                }
+
+                string[] extensions = { ".gif", ".jpg", ".png" };
+                if (!extensions.Contains(extension))
+                {
+                    throw new InvalidOperationException("Invalid file extension.");
+                }
+
+                if (file.ContentLength > (8 * megabyte))
+                {
+                    throw new InvalidOperationException("File size limit exceeded.");
+                }
+                string path =  Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
+                string savePath = Server.MapPath(path+fileid);
+                file.SaveAs(savePath);
+
+            }
+            return fileid;
         }
 
         private List<TagViewModel> InsertTagsinModel(string tags)
@@ -194,7 +241,6 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         //ImageThumbnail
-
         private void CreateThumbnail(int ThumbnailMax, string OriginalImagePath, string ThumbnailImagePath)
         {
             // Loads original image from file
