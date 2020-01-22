@@ -14,7 +14,7 @@ namespace Blog.Data.Models
     
     public partial class MediaFile
     {
-        public long Id { get; set; }
+        public System.Guid Id { get; set; }
         public string FileName { get; set; }
         public string Url { get; set; }
         public Nullable<long> BlogPostId { get; set; }

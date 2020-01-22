@@ -13,6 +13,7 @@ namespace ViewModel.MediaFileViewModels
         public string Url { get; set; }
         public Nullable<long> BlogPostId { get; set; }
         public Nullable<int> MediaTypeId { get; set; }
+        public string MediaType { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }

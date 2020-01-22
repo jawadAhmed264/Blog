@@ -51,8 +51,8 @@
                             </label>
                         </div>
                         <div class="btns">
-                            <button type="submit" name="btnSubmit" class="blog-btn2">Publish</button>
-                            <button type="submit" name="btnSubmit" class="blog-btn2">Save</button>
+                            <button type="submit" name="btnSubmit" value="Publish" class="blog-btn2">Publish</button>
+                            <button type="submit" name="btnSubmit" value="Save" class="blog-btn2">Save</button>
                             @*<a href="#" class="blog-btn">Preview</a>*@
                             <a href="#" class="blog-btn">Close</a>
                         </div>
@@ -61,7 +61,7 @@
             </div>
 
             <div class="edit-mr">
-                <textarea id="mytextarea"></textarea>
+                @Html.TextAreaFor(m => m.Content, new { @class = "mytextarea"})
             </div>
 
         }
@@ -74,12 +74,11 @@
     <script type="text/javascript">
         $(function () {
 
-            var link = '@Url.Action("Upload", "BlogPost", new { name = "-1" })';
-            link = link.replace("-1", "temp");
+            var link = '@Url.Action("Upload", "BlogPost")';
 
             //Tiny MCI
             tinymce.init({
-                selector: '#mytextarea',
+                selector: '.mytextarea',
                 height: 800,
                 images_upload_url: link,
                 plugins: [

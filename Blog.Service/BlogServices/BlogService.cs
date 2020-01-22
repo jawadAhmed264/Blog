@@ -29,7 +29,7 @@ namespace Blog.Service.BlogServices
                     ICollection<MediaFile> mediaFiles = model.MediaFiles.Select(mf => new MediaFile
                     {
                         FileName = mf.FileName,
-                        MediaTypeId = DbContext.MediaTypes.FirstOrDefault(mt => mt.TypeName == MediaTypeEnum.BlogImage.ToString()).Id,
+                        MediaTypeId = DbContext.MediaTypes.FirstOrDefault(mt => mt.TypeName == mf.MediaType).Id,
                         Url = mf.Url,
                         Active = model.Active,
                         Description = mf.Description,

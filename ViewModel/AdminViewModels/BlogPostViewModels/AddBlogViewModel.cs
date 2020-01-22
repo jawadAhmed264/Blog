@@ -17,7 +17,7 @@ namespace ViewModel.AdminViewModels.BlogPostViewModels
         public string Title { get; set; }
         public string Summary { get; set; }
         [AllowHtml]
-        public string Content { get; set; }
+        public String Content { get; set; }
         public string Tags{ get; set; }
         public Nullable<int> AutherId { get; set; }
         public Nullable<int> CategoryId { get; set; }
