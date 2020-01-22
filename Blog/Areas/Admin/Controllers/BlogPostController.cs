@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using ViewModel.AdminViewModels.BlogPostViewModels;
@@ -124,7 +123,7 @@ namespace Blog.Areas.Admin.Controllers
                     throw new InvalidOperationException("File size limit exceeded.");
                 }
                 string path =  Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
-                string savePath = Server.MapPath(path+fileid);
+                string savePath = path+fileid;
                 file.SaveAs(savePath);
 
             }

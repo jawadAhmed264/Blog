@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="BlogModel.Category" Width="1.5" PointX="5.25" PointY="0.75" />
         <EntityTypeShape EntityType="BlogModel.Comment" Width="1.5" PointX="7.5" PointY="13.75" />
         <EntityTypeShape EntityType="BlogModel.Logger" Width="1.5" PointX="0.75" PointY="3.875" />
-        <EntityTypeShape EntityType="BlogModel.MediaFile" Width="1.5" PointX="12.75" PointY="5.5" />
         <EntityTypeShape EntityType="BlogModel.MediaType" Width="1.5" PointX="10.5" PointY="8" />
         <EntityTypeShape EntityType="BlogModel.Tag" Width="1.5" PointX="9.75" PointY="4.25" />
         <EntityTypeShape EntityType="BlogModel.User" Width="1.5" PointX="5.25" PointY="11.625" />
@@ -28,12 +27,13 @@
         <AssociationConnector Association="BlogModel.FK__BlogPost__Auther__4AB81AF0" />
         <AssociationConnector Association="BlogModel.FK__BlogConte__BlogP__4F7CD00D" />
         <AssociationConnector Association="BlogModel.FK__BlogPost__Catego__4BAC3F29" />
-        <AssociationConnector Association="BlogModel.FK__MediaFile__BlogP__08B54D69" />
         <AssociationConnector Association="BlogModel.FK__Tag__BlogPostId__52593CB8" />
         <AssociationConnector Association="BlogModel.FK__Comments__UserId__656C112C" />
-        <AssociationConnector Association="BlogModel.FK__MediaFile__Media__09A971A2" />
         <AssociationConnector Association="BlogModel.FK__Views__UserId__5DCAEF64" />
         <AssociationConnector Association="BlogModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="BlogModel.MediaFile" Width="1.5" PointX="12.75" PointY="6.25" />
+        <AssociationConnector Association="BlogModel.FK__MediaFile__BlogP__693CA210" />
+        <AssociationConnector Association="BlogModel.FK__MediaFile__Media__6A30C649" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

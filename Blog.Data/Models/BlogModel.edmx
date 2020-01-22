@@ -158,7 +158,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FileName" Type="nvarchar" MaxLength="200" />
           <Property Name="Url" Type="nvarchar(max)" />
           <Property Name="BlogPostId" Type="bigint" />
@@ -226,7 +226,7 @@
           <Property Name="ModifyBy" Type="nvarchar" MaxLength="200" />
           <Property Name="Active" Type="bit" />
         </EntityType>
-        <Association Name="FK__Author__AspnetUs__47DBAE45">
+        <Association Name="FK__Author__AspnetUs__34C8D9D1">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Author" Type="Self.Author" Multiplicity="*" />
           <ReferentialConstraint>
@@ -238,7 +238,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BlogConte__BlogP__4F7CD00D">
+        <Association Name="FK__Author__AspnetUs__4F7CD00D">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Author" Type="Self.Author" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Author">
+              <PropertyRef Name="AspnetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BlogConte__BlogP__35BCFE0A">
           <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
           <End Role="BlogContent" Type="Self.BlogContent" Multiplicity="*" />
           <ReferentialConstraint>
@@ -250,7 +262,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BlogPost__Auther__4AB81AF0">
+        <Association Name="FK__BlogConte__BlogP__5070F446">
+          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
+          <End Role="BlogContent" Type="Self.BlogContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPost">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlogContent">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BlogPost__Auther__36B12243">
           <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
           <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
           <ReferentialConstraint>
@@ -262,7 +286,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BlogPost__Catego__4BAC3F29">
+        <Association Name="FK__BlogPost__Auther__5165187F">
+          <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlogPost">
+              <PropertyRef Name="AutherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BlogPost__Catego__37A5467C">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
           <ReferentialConstraint>
@@ -274,7 +310,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comments__UserId__656C112C">
+        <Association Name="FK__BlogPost__Catego__52593CB8">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlogPost">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comments__UserId__38996AB5">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -286,7 +334,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MediaFile__BlogP__08B54D69">
+        <Association Name="FK__Comments__UserId__534D60F1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MediaFile__BlogP__693CA210">
           <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
           <End Role="MediaFile" Type="Self.MediaFile" Multiplicity="*" />
           <ReferentialConstraint>
@@ -298,7 +358,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MediaFile__Media__09A971A2">
+        <Association Name="FK__MediaFile__Media__6A30C649">
           <End Role="MediaType" Type="Self.MediaType" Multiplicity="0..1" />
           <End Role="MediaFile" Type="Self.MediaFile" Multiplicity="*" />
           <ReferentialConstraint>
@@ -310,7 +370,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tag__BlogPostId__52593CB8">
+        <Association Name="FK__Tag__BlogPostId__3B75D760">
           <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
           <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
           <ReferentialConstraint>
@@ -322,7 +382,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__AspnetUser__5AEE82B9">
+        <Association Name="FK__Tag__BlogPostId__5629CD9C">
+          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
+          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPost">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tag">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__AspnetUser__3C69FB99">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -334,7 +406,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Views__UserId__5DCAEF64">
+        <Association Name="FK__User__AspnetUser__571DF1D5">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AspnetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Views__UserId__3D5E1FD2">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Views" Type="Self.Views" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Views">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Views__UserId__5812160E">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Views" Type="Self.Views" Multiplicity="*" />
           <ReferentialConstraint>
@@ -420,43 +516,75 @@
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Views" EntityType="Self.Views" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Author__AspnetUs__47DBAE45" Association="Self.FK__Author__AspnetUs__47DBAE45">
+          <AssociationSet Name="FK__Author__AspnetUs__34C8D9D1" Association="Self.FK__Author__AspnetUs__34C8D9D1">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Author" EntitySet="Author" />
           </AssociationSet>
-          <AssociationSet Name="FK__BlogConte__BlogP__4F7CD00D" Association="Self.FK__BlogConte__BlogP__4F7CD00D">
+          <AssociationSet Name="FK__Author__AspnetUs__4F7CD00D" Association="Self.FK__Author__AspnetUs__4F7CD00D">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Author" EntitySet="Author" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BlogConte__BlogP__35BCFE0A" Association="Self.FK__BlogConte__BlogP__35BCFE0A">
             <End Role="BlogPost" EntitySet="BlogPost" />
             <End Role="BlogContent" EntitySet="BlogContent" />
           </AssociationSet>
-          <AssociationSet Name="FK__BlogPost__Auther__4AB81AF0" Association="Self.FK__BlogPost__Auther__4AB81AF0">
+          <AssociationSet Name="FK__BlogConte__BlogP__5070F446" Association="Self.FK__BlogConte__BlogP__5070F446">
+            <End Role="BlogPost" EntitySet="BlogPost" />
+            <End Role="BlogContent" EntitySet="BlogContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BlogPost__Auther__36B12243" Association="Self.FK__BlogPost__Auther__36B12243">
             <End Role="Author" EntitySet="Author" />
             <End Role="BlogPost" EntitySet="BlogPost" />
           </AssociationSet>
-          <AssociationSet Name="FK__BlogPost__Catego__4BAC3F29" Association="Self.FK__BlogPost__Catego__4BAC3F29">
+          <AssociationSet Name="FK__BlogPost__Auther__5165187F" Association="Self.FK__BlogPost__Auther__5165187F">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="BlogPost" EntitySet="BlogPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BlogPost__Catego__37A5467C" Association="Self.FK__BlogPost__Catego__37A5467C">
             <End Role="Category" EntitySet="Category" />
             <End Role="BlogPost" EntitySet="BlogPost" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comments__UserId__656C112C" Association="Self.FK__Comments__UserId__656C112C">
+          <AssociationSet Name="FK__BlogPost__Catego__52593CB8" Association="Self.FK__BlogPost__Catego__52593CB8">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="BlogPost" EntitySet="BlogPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comments__UserId__38996AB5" Association="Self.FK__Comments__UserId__38996AB5">
             <End Role="User" EntitySet="User" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__MediaFile__BlogP__08B54D69" Association="Self.FK__MediaFile__BlogP__08B54D69">
+          <AssociationSet Name="FK__Comments__UserId__534D60F1" Association="Self.FK__Comments__UserId__534D60F1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MediaFile__BlogP__693CA210" Association="Self.FK__MediaFile__BlogP__693CA210">
             <End Role="BlogPost" EntitySet="BlogPost" />
             <End Role="MediaFile" EntitySet="MediaFile" />
           </AssociationSet>
-          <AssociationSet Name="FK__MediaFile__Media__09A971A2" Association="Self.FK__MediaFile__Media__09A971A2">
+          <AssociationSet Name="FK__MediaFile__Media__6A30C649" Association="Self.FK__MediaFile__Media__6A30C649">
             <End Role="MediaType" EntitySet="MediaType" />
             <End Role="MediaFile" EntitySet="MediaFile" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tag__BlogPostId__52593CB8" Association="Self.FK__Tag__BlogPostId__52593CB8">
+          <AssociationSet Name="FK__Tag__BlogPostId__3B75D760" Association="Self.FK__Tag__BlogPostId__3B75D760">
             <End Role="BlogPost" EntitySet="BlogPost" />
             <End Role="Tag" EntitySet="Tag" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__AspnetUser__5AEE82B9" Association="Self.FK__User__AspnetUser__5AEE82B9">
+          <AssociationSet Name="FK__Tag__BlogPostId__5629CD9C" Association="Self.FK__Tag__BlogPostId__5629CD9C">
+            <End Role="BlogPost" EntitySet="BlogPost" />
+            <End Role="Tag" EntitySet="Tag" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__AspnetUser__3C69FB99" Association="Self.FK__User__AspnetUser__3C69FB99">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__Views__UserId__5DCAEF64" Association="Self.FK__Views__UserId__5DCAEF64">
+          <AssociationSet Name="FK__User__AspnetUser__571DF1D5" Association="Self.FK__User__AspnetUser__571DF1D5">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Views__UserId__3D5E1FD2" Association="Self.FK__Views__UserId__3D5E1FD2">
+            <End Role="User" EntitySet="User" />
+            <End Role="Views" EntitySet="Views" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Views__UserId__5812160E" Association="Self.FK__Views__UserId__5812160E">
             <End Role="User" EntitySet="User" />
             <End Role="Views" EntitySet="Views" />
           </AssociationSet>
@@ -493,7 +621,6 @@
           <EntitySet Name="Categories" EntityType="BlogModel.Category" />
           <EntitySet Name="Comments" EntityType="BlogModel.Comment" />
           <EntitySet Name="Loggers" EntityType="BlogModel.Logger" />
-          <EntitySet Name="MediaFiles" EntityType="BlogModel.MediaFile" />
           <EntitySet Name="MediaTypes" EntityType="BlogModel.MediaType" />
           <EntitySet Name="Tags" EntityType="BlogModel.Tag" />
           <EntitySet Name="Users" EntityType="BlogModel.User" />
@@ -526,10 +653,6 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="BlogPost" EntitySet="BlogPosts" />
           </AssociationSet>
-          <AssociationSet Name="FK__MediaFile__BlogP__08B54D69" Association="BlogModel.FK__MediaFile__BlogP__08B54D69">
-            <End Role="BlogPost" EntitySet="BlogPosts" />
-            <End Role="MediaFile" EntitySet="MediaFiles" />
-          </AssociationSet>
           <AssociationSet Name="FK__Tag__BlogPostId__52593CB8" Association="BlogModel.FK__Tag__BlogPostId__52593CB8">
             <End Role="BlogPost" EntitySet="BlogPosts" />
             <End Role="Tag" EntitySet="Tags" />
@@ -538,10 +661,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__MediaFile__Media__09A971A2" Association="BlogModel.FK__MediaFile__Media__09A971A2">
-            <End Role="MediaType" EntitySet="MediaTypes" />
-            <End Role="MediaFile" EntitySet="MediaFiles" />
-          </AssociationSet>
           <AssociationSet Name="FK__Views__UserId__5DCAEF64" Association="BlogModel.FK__Views__UserId__5DCAEF64">
             <End Role="User" EntitySet="Users" />
             <End Role="View" EntitySet="Views" />
@@ -549,6 +668,15 @@
           <AssociationSet Name="AspNetUserRoles" Association="BlogModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="MediaFiles" EntityType="BlogModel.MediaFile" />
+          <AssociationSet Name="FK__MediaFile__BlogP__693CA210" Association="BlogModel.FK__MediaFile__BlogP__693CA210">
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+            <End Role="MediaFile" EntitySet="MediaFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MediaFile__Media__6A30C649" Association="BlogModel.FK__MediaFile__Media__6A30C649">
+            <End Role="MediaType" EntitySet="MediaTypes" />
+            <End Role="MediaFile" EntitySet="MediaFiles" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
@@ -664,8 +792,8 @@
           <NavigationProperty Name="Author" Relationship="BlogModel.FK__BlogPost__Auther__4AB81AF0" FromRole="BlogPost" ToRole="Author" />
           <NavigationProperty Name="BlogContents" Relationship="BlogModel.FK__BlogConte__BlogP__4F7CD00D" FromRole="BlogPost" ToRole="BlogContent" />
           <NavigationProperty Name="Category" Relationship="BlogModel.FK__BlogPost__Catego__4BAC3F29" FromRole="BlogPost" ToRole="Category" />
-          <NavigationProperty Name="MediaFiles" Relationship="BlogModel.FK__MediaFile__BlogP__08B54D69" FromRole="BlogPost" ToRole="MediaFile" />
           <NavigationProperty Name="Tags" Relationship="BlogModel.FK__Tag__BlogPostId__52593CB8" FromRole="BlogPost" ToRole="Tag" />
+          <NavigationProperty Name="MediaFiles" Relationship="BlogModel.FK__MediaFile__BlogP__693CA210" FromRole="BlogPost" ToRole="MediaFile" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -710,24 +838,6 @@
           <Property Name="CreatedBy" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
         </EntityType>
-        <EntityType Name="MediaFile">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="FileName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BlogPostId" Type="Int64" />
-          <Property Name="MediaTypeId" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="BlogPost" Relationship="BlogModel.FK__MediaFile__BlogP__08B54D69" FromRole="MediaFile" ToRole="BlogPost" />
-          <NavigationProperty Name="MediaType" Relationship="BlogModel.FK__MediaFile__Media__09A971A2" FromRole="MediaFile" ToRole="MediaType" />
-        </EntityType>
         <EntityType Name="MediaType">
           <Key>
             <PropertyRef Name="Id" />
@@ -740,7 +850,7 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="MediaFiles" Relationship="BlogModel.FK__MediaFile__Media__09A971A2" FromRole="MediaType" ToRole="MediaFile" />
+          <NavigationProperty Name="MediaFiles" Relationship="BlogModel.FK__MediaFile__Media__6A30C649" FromRole="MediaType" ToRole="MediaFile" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -878,18 +988,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MediaFile__BlogP__08B54D69">
-          <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="0..1" />
-          <End Type="BlogModel.MediaFile" Role="MediaFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BlogPost">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MediaFile">
-              <PropertyRef Name="BlogPostId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Tag__BlogPostId__52593CB8">
           <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="0..1" />
           <End Type="BlogModel.Tag" Role="Tag" Multiplicity="*" />
@@ -914,18 +1012,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MediaFile__Media__09A971A2">
-          <End Type="BlogModel.MediaType" Role="MediaType" Multiplicity="0..1" />
-          <End Type="BlogModel.MediaFile" Role="MediaFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MediaType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MediaFile">
-              <PropertyRef Name="MediaTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Views__UserId__5DCAEF64">
           <End Type="BlogModel.User" Role="User" Multiplicity="0..1" />
           <End Type="BlogModel.View" Role="View" Multiplicity="*" />
@@ -941,6 +1027,48 @@
         <Association Name="AspNetUserRoles">
           <End Type="BlogModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="BlogModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="MediaFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BlogPostId" Type="Int64" />
+          <Property Name="MediaTypeId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="BlogPost" Relationship="BlogModel.FK__MediaFile__BlogP__693CA210" FromRole="MediaFile" ToRole="BlogPost" />
+          <NavigationProperty Name="MediaType" Relationship="BlogModel.FK__MediaFile__Media__6A30C649" FromRole="MediaFile" ToRole="MediaType" />
+        </EntityType>
+        <Association Name="FK__MediaFile__BlogP__693CA210">
+          <End Type="BlogModel.BlogPost" Role="BlogPost" Multiplicity="0..1" />
+          <End Type="BlogModel.MediaFile" Role="MediaFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPost">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediaFile">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MediaFile__Media__6A30C649">
+          <End Type="BlogModel.MediaType" Role="MediaType" Multiplicity="0..1" />
+          <End Type="BlogModel.MediaFile" Role="MediaFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediaFile">
+              <PropertyRef Name="MediaTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1097,23 +1225,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MediaFiles">
-            <EntityTypeMapping TypeName="BlogModel.MediaFile">
-              <MappingFragment StoreEntitySet="MediaFile">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="MediaTypeId" ColumnName="MediaTypeId" />
-                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MediaTypes">
             <EntityTypeMapping TypeName="BlogModel.MediaType">
               <MappingFragment StoreEntitySet="MediaType">
@@ -1182,6 +1293,23 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="MediaFiles">
+            <EntityTypeMapping TypeName="BlogModel.MediaFile">
+              <MappingFragment StoreEntitySet="MediaFile">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MediaTypeId" ColumnName="MediaTypeId" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
