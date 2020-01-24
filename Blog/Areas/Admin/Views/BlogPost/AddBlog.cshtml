@@ -32,38 +32,100 @@
         overflow-x: scroll;
         overflow-y: hidden;
     }
+
+    .info, .success, .warning, .error, .validation {
+        border: 1px solid;
+        margin: 10px 0px;
+        padding: 15px 10px 15px 50px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        width: 53%;
+        margin: 0 auto;
+        border-radius: .3em;
+        margin-bottom: 50px;
+        position: fixed;
+        bottom: 0;
+        right: 16px;
+        z-index: 1;
+        text-align: left;
+        display:none;
+    }
+
+    .info {
+        color: #00529B;
+        background-color: #BDE5F8;
+        background-image: url('info.png');
+    }
+
+    .success {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+        background-image: url('success.png');
+
+    }
+
+    .warning {
+        color: #9F6000;
+        background-color: #FEEFB3;
+        background-image: url('warning.png');
+    }
+
+    .error {
+        color: #D8000C;
+        background-color: #FFBABA;
+        background-image: url('error.png');
+    }
+    .errorMessage {
+      color:red;
+    }
+    .cross {
+     position:absolute;
+     top: 5px;
+     left: 10px;
+     cursor:pointer;
+    }
 </style>
+
+<div class="error"><i class="fa fa-times cross"></i></div>
+@Html.ValidationSummary(true, "", new { @class = "error" })
 
 <article class="article">
     <div class="main-bg">
         @using (Html.BeginForm("AddBlog", "BlogPost", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+            @Html.AntiForgeryToken()
             <div class="main-header">
                 <div class="main-content">
                     <div class="container">
                         <div class="blog-input">
                             <h1 class="primary-blue">Blog Post</h1>
                             @Html.TextBoxFor(m => m.Title, new { @class = "title-txt", placeholder = "Blog Title" })
+                            @Html.ValidationMessageFor(m => m.Title, null, new { @class = "errorMessage" })
                             @Html.TextBoxFor(m => m.Tags, new { @class = "title-txt", @data_role = "tagsinput", @placeholder = "Tags" })
+                            @Html.ValidationMessageFor(m => m.Tags,null, new { @class = "error" })
                             @Html.TextAreaFor(m => m.Summary, new { @class = "title-txt", placeholder = "Add summery" })
+                            @Html.ValidationMessageFor(m => m.Summary, null, new { @class = "errorMessage" })
                             @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "CategoryId", "CategoryName"), "Select Category", new { @class = "" })
+                            @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "errorMessage" })
                             <label class="custom-file-upload">
                                 <input type="file" name="BannerImage" id="BannerImage" />
-                                <i class="fa fa-cloud-upload"></i> <span class="coverImg">Upload Cover image</span>
+                                <i class="fa fa-cloud-upload"></i> <span class="coverImg">Upload Backgroung</span>
                             </label>
+                            @Html.ValidationMessageFor(m => m.BannerImage, null, new { @class = "errorMessage" })
                         </div>
                         <div class="btns">
                             <button type="submit" name="btnSubmit" value="Publish" class="blog-btn2">Publish</button>
                             <button type="submit" name="btnSubmit" value="Save" class="blog-btn2">Save</button>
                             @*<a href="#" class="blog-btn">Preview</a>*@
-                            <a href="#" class="blog-btn">Close</a>
+                            @Html.ActionLink("Close", "Index", "BlogPost", new { @class= "blog-btn" })
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="edit-mr">
-                @Html.TextAreaFor(m => m.Content, new { @class = "mytextarea"})
+                @Html.ValidationMessageFor(m => m.Content, null, new { @class = "errorMessage" })
+                @Html.TextAreaFor(m => m.Content, new { @class = "mytextarea" })
             </div>
 
         }
@@ -100,6 +162,9 @@
                 });
                 return false;
             }
+            $(".cross").click(function () {
+                $(".info .success, .warning, .error, .validation").fadeOut(1000);
+            });
         });
 
         $("#BannerImage").change(function () {

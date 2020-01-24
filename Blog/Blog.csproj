@@ -490,7 +490,6 @@
     <Folder Include="Content\Images\blogBanners\" />
     <Folder Include="Content\Images\blogImages\" />
     <Folder Include="Content\Images\CategoryImages\" />
-    <Folder Include="Content\Images\tempImages\" />
     <Folder Include="Content\Images\thumbnails\" />
   </ItemGroup>
   <ItemGroup>

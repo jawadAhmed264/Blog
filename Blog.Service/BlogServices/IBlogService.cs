@@ -11,6 +11,8 @@ namespace Blog.Service.BlogServices
     {
         int AddBlog(AddBlogViewModel model);
         int EditBlog(AddBlogViewModel model,long Id);
+        AddBlogViewModel getBlogById(long? Id);
+        IList<AddBlogViewModel> getAllBlogs();
 
     }
 }

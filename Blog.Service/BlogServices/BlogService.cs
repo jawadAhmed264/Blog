@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ViewModel;
 using ViewModel.AdminViewModels.BlogPostViewModels;
 using ViewModel.Enums;
+using ViewModel.TagViewModels;
 
 namespace Blog.Service.BlogServices
 {
@@ -99,7 +100,7 @@ namespace Blog.Service.BlogServices
                     ICollection<MediaFile> mediaFiles = model.MediaFiles.Select(mf => new MediaFile
                     {
                         FileName = mf.FileName,
-                        MediaTypeId = DbContext.MediaTypes.FirstOrDefault(mt => mt.TypeName == MediaTypeEnum.BlogImage.ToString()).Id,
+                        MediaTypeId = DbContext.MediaTypes.FirstOrDefault(mt => mt.TypeName == mf.MediaType).Id,
                         Url = mf.Url,
                         Active = model.Active,
                         Description = mf.Description,
@@ -142,6 +143,40 @@ namespace Blog.Service.BlogServices
                     LogManagement.LogError(new LogViewModel { Exception = exString, Controller = "BlogService(ServiceLayer)", Action = "EditBlog", Active = true, CreatedDate = DateTime.Now });
                     throw ex;
                 }
+            }
+        }
+
+        public IList<AddBlogViewModel> getAllBlogs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public AddBlogViewModel getBlogById(long? Id)
+        {
+            using (DbContext) {
+                BlogPost bp = DbContext.BlogPosts.SingleOrDefault(m => m.Id == Id);
+                int BannerId = DbContext.MediaTypes.FirstOrDefault(m => m.TypeName == MediaTypeEnum.Banner.ToString()).Id;
+
+                AddBlogViewModel blogViewModel = new AddBlogViewModel
+                {
+                    Active = bp.Active,
+                    CreateBy = bp.CreateBy,
+                    CreateDate = bp.CreateDate,
+                    Content = bp.BlogContents.FirstOrDefault(content => content.BlogPostId == Id).Content,
+                    Summary = bp.Summary,
+                    CategoryId = bp.CategoryId,
+                    BannerUrl = bp.MediaFiles.FirstOrDefault(mf => mf.BlogPostId == Id && mf.MediaTypeId == BannerId).Url,
+                    AutherId = bp.AutherId,
+                    TagList = bp.Tags.Where(tags=>tags.BlogPostId==Id).Select(t => new TagViewModel() {
+                        Active=t.Active,
+                        Id=t.Id,
+                        TagName=t.TagName,
+                        BlogPostId=t.BlogPostId
+                    }).ToList(),
+                    
+                };
+
+                return blogViewModel;
             }
         }
     }

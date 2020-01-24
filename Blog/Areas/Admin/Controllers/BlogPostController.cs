@@ -37,54 +37,56 @@ namespace Blog.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult AddBlog()
         {
-            AddBlogViewModel model = new AddBlogViewModel();
-            model.CategoryList = catService.getAll();
-            return View(model);
+             AddBlogViewModel model = new AddBlogViewModel();
+             model.CategoryList = catService.getAll();
+             return View(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddBlog(AddBlogViewModel model)
-
         {
             try
             {
-                List<string> imageSrc = getImageSourceList(model.Content);
-                List<string> imageName = getImageNames(imageSrc);
-                List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "");
-                List<TagViewModel> tags = InsertTagsinModel(model.Tags);
-
-                string tempPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["tempImagesPath"]);
-                string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
-                string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
-                string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
-
-                //Save BannerImage
-                string bannerUrl = SaveBannerImage(model.BannerImage, model.Title);
-
-                mediafiles.Add(new MediaFileViewModel()
+                if (ModelState.IsValid)
                 {
-                    MediaType = MediaTypeEnum.Banner.ToString(),
-                    Url = bannerUrl,
-                    FileName = bannerUrl,
-                    Description = ""
-                });
+                    List<string> imageSrc = getImageSourceList(model.Content);
+                    List<string> imageName = getImageNames(imageSrc);
+                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "");
+                    List<TagViewModel> tags = InsertTagsinModel(model.Tags);
 
-                //Populate Model
-                model.MediaFiles = mediafiles;
-                model.TagList = tags;
+                    string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
+                    string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
+                    string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
 
-                //Call blog Service
-                int res = blogService.AddBlog(model);
+                    //Save BannerImage
+                    string bannerUrl = SaveBannerImage(model.BannerImage, bannerPath, model.Title);
 
-                if (res > 0)
-                {
-                    //moving Images from temp to Blog images folder
-                    for (int i = 0; i < imageName.Count; i++)
+                    mediafiles.Add(new MediaFileViewModel()
                     {
-                        System.IO.File.Move(tempPath+imageName[i], blogPath+imageName[i]);
+                        MediaType = MediaTypeEnum.Banner.ToString(),
+                        Url = bannerUrl,
+                        FileName = bannerUrl,
+                        Description = ""
+                    });
+
+                    //Populate Model
+                    model.MediaFiles = mediafiles;
+                    model.TagList = tags;
+                    model.Active = false;
+                    model.CreateBy = "Admin";
+                    model.CreateDate = DateTime.Now;
+
+                    //Call blog Service
+                    int res = blogService.AddBlog(model);
+
+                    if (res > 0) {
+                        ModelState.Clear();
+                        return RedirectToAction("Index");
                     }
+                    model.CategoryList = catService.getAll();
+                    return View(model);
                 }
-                ModelState.Clear();
                 model.CategoryList = catService.getAll();
                 return View(model);
             }
@@ -94,11 +96,12 @@ namespace Blog.Areas.Admin.Controllers
             }
         }
 
-        private string SaveBannerImage(HttpPostedFileBase bannerImage,string blogTitle)
+
+        private string SaveBannerImage(HttpPostedFileBase bannerImage,string bannerPath,string blogTitle)
         {
             HttpPostedFileBase file = bannerImage;
             string extension = Path.GetExtension(file.FileName);
-            string fileid =  blogTitle+"_"+Guid.NewGuid().ToString();
+            string fileid =  Guid.NewGuid().ToString();
             fileid = Path.ChangeExtension(fileid, extension);
 
             var draft = new { location = "" };
@@ -122,8 +125,8 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     throw new InvalidOperationException("File size limit exceeded.");
                 }
-                string path =  Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
-                string savePath = path+fileid;
+                
+                string savePath = bannerPath+fileid;
                 file.SaveAs(savePath);
 
             }
@@ -228,7 +231,7 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     throw new InvalidOperationException("File size limit exceeded.");
                 }
-                string path = ConfigurationManager.AppSettings["tempImagesPath"];
+                string path = ConfigurationManager.AppSettings["blogImagesPath"];
                 string savePath = Server.MapPath(@"/" + path + fileid);
                 file.SaveAs(savePath);
 
