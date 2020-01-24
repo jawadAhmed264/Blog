@@ -80,12 +80,12 @@ namespace Blog.Areas.Admin.Controllers
                     //Call blog Service
                     int res = blogService.AddBlog(model);
 
-                    if (res > 0) {
+                    if (res > 0)
+                    {
                         ModelState.Clear();
                         return RedirectToAction("Index");
                     }
-                    model.CategoryList = catService.getAll();
-                    return View(model);
+                    
                 }
                 model.CategoryList = catService.getAll();
                 return View(model);
@@ -231,7 +231,8 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     throw new InvalidOperationException("File size limit exceeded.");
                 }
-                string path = ConfigurationManager.AppSettings["blogImagesPath"];
+
+                string path = ConfigurationManager.AppSettings["blogImagesPath"].ToString();
                 string savePath = Server.MapPath(@"/" + path + fileid);
                 file.SaveAs(savePath);
 
