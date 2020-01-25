@@ -2,6 +2,7 @@
 using Blog.Service.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,11 +85,16 @@ namespace Blog.Service.BlogServices
                 }
                 catch (Exception ex)
                 {
-                    string exString = "Message: "+ex.Message+" StackTrace: "+ex.StackTrace;
-                    LogManagement.LogError(new LogViewModel { Exception = exString,Controller= "BlogService(ServiceLayer)", Action="AddBlog",Active=true,CreatedDate=DateTime.Now});
+                    string exString = "Message: " + ex.Message + " StackTrace: " + ex.StackTrace;
+                    LogManagement.LogError(new LogViewModel { Exception = exString, Controller = "BlogService(ServiceLayer)", Action = "AddBlog", Active = true, CreatedDate = DateTime.Now });
                     throw ex;
                 }
             }
+        }
+
+        public int DeleteBlog(long Id)
+        {
+            throw new NotImplementedException();
         }
 
         public int EditBlog(AddBlogViewModel model, long Id)
@@ -134,7 +140,9 @@ namespace Blog.Service.BlogServices
                     blogContent.ModifyBy = model.ModifyBy;
                     blogContent.ModifyDate = model.ModifyDate;
 
-                    int res= DbContext.SaveChanges();
+                    DbContext.Entry(blogPost).State = EntityState.Modified;
+                    DbContext.Entry(blogContent).State = EntityState.Modified;
+                    int res = DbContext.SaveChanges();
                     return 0;
                 }
                 catch (Exception ex)
@@ -148,35 +156,114 @@ namespace Blog.Service.BlogServices
 
         public IList<AddBlogViewModel> getAllBlogs()
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (DbContext)
+                {
+                    IList<BlogPost> list = DbContext.BlogPosts.ToList();
+
+                    IList<AddBlogViewModel> blogViewModel = list.Select(bp => new AddBlogViewModel
+                    {
+                        BlogPostId = bp.Id,
+                        Active = bp.Active,
+                        CreateBy = bp.CreateBy,
+                        CreateDate = bp.CreateDate,
+                        Summary = bp.Summary,
+                        CategoryId = bp.CategoryId,
+                        AutherId = bp.AutherId,
+                    }).ToList();
+
+                    return blogViewModel;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IList<AddBlogViewModel> getAllBlogsByAuthor(int? AuthorId)
+        {
+            try
+            {
+                using (DbContext)
+                {
+                    IList<BlogPost> list = DbContext.BlogPosts.Where(m=>m.AutherId==AuthorId).ToList();
+
+                    IList<AddBlogViewModel> blogViewModel = list.Select(bp => new AddBlogViewModel
+                    {
+                        BlogPostId = bp.Id,
+                        Active = bp.Active,
+                        CreateBy = bp.CreateBy,
+                        CreateDate = bp.CreateDate,
+                        Summary = bp.Summary,
+                        CategoryId = bp.CategoryId,
+                        AutherId = bp.AutherId,
+                    }).ToList();
+
+                    return blogViewModel;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IList<AddBlogViewModel> getAllBlogsByCategory(int? CategoryId)
+        {
+            try
+            {
+                using (DbContext)
+                {
+                    IList<BlogPost> list = DbContext.BlogPosts.Where(m => m.CategoryId == CategoryId).ToList();
+
+                    IList<AddBlogViewModel> blogViewModel = list.Select(bp => new AddBlogViewModel
+                    {
+                        BlogPostId = bp.Id,
+                        Active = bp.Active,
+                        CreateBy = bp.CreateBy,
+                        CreateDate = bp.CreateDate,
+                        Summary = bp.Summary,
+                        CategoryId = bp.CategoryId,
+                        AutherId = bp.AutherId,
+                    }).ToList();
+
+                    return blogViewModel;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public AddBlogViewModel getBlogById(long? Id)
         {
-            using (DbContext) {
-                BlogPost bp = DbContext.BlogPosts.SingleOrDefault(m => m.Id == Id);
-                int BannerId = DbContext.MediaTypes.FirstOrDefault(m => m.TypeName == MediaTypeEnum.Banner.ToString()).Id;
-
-                AddBlogViewModel blogViewModel = new AddBlogViewModel
+            try
+            {
+                using (DbContext)
                 {
-                    Active = bp.Active,
-                    CreateBy = bp.CreateBy,
-                    CreateDate = bp.CreateDate,
-                    Content = bp.BlogContents.FirstOrDefault(content => content.BlogPostId == Id).Content,
-                    Summary = bp.Summary,
-                    CategoryId = bp.CategoryId,
-                    BannerUrl = bp.MediaFiles.FirstOrDefault(mf => mf.BlogPostId == Id && mf.MediaTypeId == BannerId).Url,
-                    AutherId = bp.AutherId,
-                    TagList = bp.Tags.Where(tags=>tags.BlogPostId==Id).Select(t => new TagViewModel() {
-                        Active=t.Active,
-                        Id=t.Id,
-                        TagName=t.TagName,
-                        BlogPostId=t.BlogPostId
-                    }).ToList(),
-                    
-                };
+                    BlogPost bp = DbContext.BlogPosts.SingleOrDefault(m => m.Id == Id);
+                    AddBlogViewModel blogViewModel = new AddBlogViewModel
+                    {
+                        BlogPostId = bp.Id,
+                        Active = bp.Active,
+                        CreateBy = bp.CreateBy,
+                        CreateDate = bp.CreateDate,
+                        ModifyBy = bp.ModifyBy,
+                        ModifyDate = bp.ModifyDate,
+                        Summary = bp.Summary,
+                        CategoryId = bp.CategoryId,
+                        AutherId = bp.AutherId,
+                    };
 
-                return blogViewModel;
+                    return blogViewModel;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

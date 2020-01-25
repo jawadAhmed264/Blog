@@ -1,6 +1,7 @@
 ﻿using Blog.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,48 +17,136 @@ namespace Blog.Service.CategoryServices
         {
             DbContext = _DbContext;
         }
+
+        public int AddTag(CategoryViewModel model)
+        {
+            try
+            {
+                using (DbContext)
+                {
+                    Category category = new Category()
+                    {
+                        Active = model.Active,
+                        CreateBy = model.CreateBy,
+                        CreateDate = model.CreateDate,
+                        CategoryName = model.CategoryName,
+                        CSSStyle = model.CSSStyle,
+                        Description = model.Description,
+                        ImageUrl = model.ImageUrl,
+                    };
+                    DbContext.Categories.Add(category);
+                    int res = DbContext.SaveChanges();
+                    return res;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public int DeleteTag(int Id)
+        {
+            try
+            {
+                using (DbContext)
+                {
+                    Category category = DbContext.Categories.Find(Id);
+                    DbContext.Categories.Remove(category);
+                    int res = DbContext.SaveChanges();
+                    return res;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public int EditTag(CategoryViewModel model, int Id)
+        {
+            try
+            {
+                using (DbContext)
+                {
+
+                    Category category = DbContext.Categories.Find(Id);
+                    category.Active = model.Active;
+                    category.ModifyBy = model.ModifyBy;
+                    category.ModifyDate = model.ModifyDate;
+                    category.CategoryName = model.CategoryName;
+                    category.CSSStyle = model.CSSStyle;
+                    category.Description = model.Description;
+                    category.ImageUrl = model.ImageUrl;
+                    DbContext.Entry(category).State = EntityState.Modified;
+                    int res = DbContext.SaveChanges();
+                    return res;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public IEnumerable<CategoryViewModel> getAll()
         {
-            IEnumerable<CategoryViewModel> list = new List<CategoryViewModel>();
-            using (DbContext)
+            try
             {
-                list = DbContext.Categories.ToList().Select(m => new CategoryViewModel
+                IEnumerable<CategoryViewModel> list = new List<CategoryViewModel>();
+                using (DbContext)
                 {
-                    CategoryId = m.Id,
-                    CategoryName = m.CategoryName,
-                    Description = m.Description,
-                    CreateBy = m.CreateBy,
-                    CreateDate = m.CreateDate,
-                    ModifyBy = m.ModifyBy,
-                    ModifyDate = m.ModifyDate,
-                    Active = m.Active,
-                    CSSStyle = m.CSSStyle,
-                    ImageUrl = m.ImageUrl
-                });
+                    list = DbContext.Categories.ToList().Select(m => new CategoryViewModel
+                    {
+                        CategoryId = m.Id,
+                        CategoryName = m.CategoryName,
+                        Description = m.Description,
+                        CreateBy = m.CreateBy,
+                        CreateDate = m.CreateDate,
+                        ModifyBy = m.ModifyBy,
+                        ModifyDate = m.ModifyDate,
+                        Active = m.Active,
+                        CSSStyle = m.CSSStyle,
+                        ImageUrl = m.ImageUrl
+                    });
+                }
+                return list;
             }
-            return list;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public CategoryViewModel getCategoryById(int Id)
         {
-            using (DbContext)
+            try
             {
-                var model = DbContext.Categories.Where(cat=>cat.Id==Id).SingleOrDefault();
-
-                CategoryViewModel category = new CategoryViewModel
+                using (DbContext)
                 {
-                    CategoryId = model.Id,
-                    CategoryName = model.CategoryName,
-                    Description = model.Description,
-                    CreateBy = model.CreateBy,
-                    CreateDate = model.CreateDate,
-                    ModifyBy = model.ModifyBy,
-                    ModifyDate = model.ModifyDate,
-                    Active = model.Active,
-                    CSSStyle = model.CSSStyle,
-                    ImageUrl = model.ImageUrl
-                };
-                return category;
+                    var model = DbContext.Categories.SingleOrDefault(cat => cat.Id == Id);
+
+                    CategoryViewModel category = new CategoryViewModel
+                    {
+                        CategoryId = model.Id,
+                        CategoryName = model.CategoryName,
+                        Description = model.Description,
+                        CreateBy = model.CreateBy,
+                        CreateDate = model.CreateDate,
+                        ModifyBy = model.ModifyBy,
+                        ModifyDate = model.ModifyDate,
+                        Active = model.Active,
+                        CSSStyle = model.CSSStyle,
+                        ImageUrl = model.ImageUrl
+                    };
+                    return category;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
 
         }

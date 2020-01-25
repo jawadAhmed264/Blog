@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ViewModel.AdminViewModels.BlogPostViewModels;
@@ -37,9 +38,9 @@ namespace Blog.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult AddBlog()
         {
-             AddBlogViewModel model = new AddBlogViewModel();
-             model.CategoryList = catService.getAll();
-             return View(model);
+            AddBlogViewModel model = new AddBlogViewModel();
+            model.CategoryList = catService.getAll();
+            return View(model);
         }
 
         [HttpPost]
@@ -73,6 +74,14 @@ namespace Blog.Areas.Admin.Controllers
                     //Populate Model
                     model.MediaFiles = mediafiles;
                     model.TagList = tags;
+                    if (model.btnSubmit == "Publish")
+                    {
+                        model.Active = true;
+                    }
+                    if (model.btnSubmit == "Save")
+                    {
+                        model.Active = false;
+                    }
                     model.Active = false;
                     model.CreateBy = "Admin";
                     model.CreateDate = DateTime.Now;
@@ -85,23 +94,99 @@ namespace Blog.Areas.Admin.Controllers
                         ModelState.Clear();
                         return RedirectToAction("Index");
                     }
-                    
+
                 }
                 model.CategoryList = catService.getAll();
                 return View(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
+        [HttpGet]
+        public ActionResult EditBlog(long Id)
+        {
+            if (Id == 0) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid Route");
+            }
 
-        private string SaveBannerImage(HttpPostedFileBase bannerImage,string bannerPath,string blogTitle)
+            AddBlogViewModel model = blogService.getBlogById(Id);
+            if (model == null) {
+                return HttpNotFound();
+            }
+            model.CategoryList = catService.getAll();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditBlog(AddBlogViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    List<string> imageSrc = getImageSourceList(model.Content);
+                    List<string> imageName = getImageNames(imageSrc);
+                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "");
+                    List<TagViewModel> tags = InsertTagsinModel(model.Tags);
+
+                    string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
+                    string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
+                    string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
+
+                    //Save BannerImage
+                    string bannerUrl = SaveBannerImage(model.BannerImage, bannerPath, model.Title);
+
+                    mediafiles.Add(new MediaFileViewModel()
+                    {
+                        MediaType = MediaTypeEnum.Banner.ToString(),
+                        Url = bannerUrl,
+                        FileName = bannerUrl,
+                        Description = ""
+                    });
+
+                    //Populate Model
+                    model.MediaFiles = mediafiles;
+                    model.TagList = tags;
+                    if (model.btnSubmit == "Publish")
+                    {
+                        model.Active = true;
+                    }
+                    if (model.btnSubmit == "Save")
+                    {
+                        model.Active = false;
+                    }
+                    model.Active = false;
+                    model.CreateBy = "Admin";
+                    model.CreateDate = DateTime.Now;
+
+                    //Call blog Service
+                    int res = blogService.AddBlog(model);
+
+                    if (res > 0)
+                    {
+                        ModelState.Clear();
+                        return RedirectToAction("Index");
+                    }
+
+                }
+                model.CategoryList = catService.getAll();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private string SaveBannerImage(HttpPostedFileBase bannerImage, string bannerPath, string blogTitle)
         {
             HttpPostedFileBase file = bannerImage;
             string extension = Path.GetExtension(file.FileName);
-            string fileid =  Guid.NewGuid().ToString();
+            string fileid = Guid.NewGuid().ToString();
             fileid = Path.ChangeExtension(fileid, extension);
 
             var draft = new { location = "" };
@@ -125,8 +210,8 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     throw new InvalidOperationException("File size limit exceeded.");
                 }
-                
-                string savePath = bannerPath+fileid;
+
+                string savePath = bannerPath + fileid;
                 file.SaveAs(savePath);
 
             }
@@ -207,7 +292,7 @@ namespace Blog.Areas.Admin.Controllers
             var file = Request.Files["file"];
 
             string extension = Path.GetExtension(file.FileName);
-            string fileid =  Guid.NewGuid().ToString();
+            string fileid = Guid.NewGuid().ToString();
             fileid = Path.ChangeExtension(fileid, extension);
 
             var draft = new { location = "" };

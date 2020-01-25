@@ -44,11 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorService\AuthorService.cs" />
+    <Compile Include="AuthorService\IAuthorService.cs" />
+    <Compile Include="BlogContentService\BlogContentService.cs" />
+    <Compile Include="BlogContentService\IBlogContentService.cs" />
     <Compile Include="BlogServices\BlogService.cs" />
     <Compile Include="BlogServices\IBlogService.cs" />
     <Compile Include="CategoryServices\CategoryService.cs" />
     <Compile Include="CategoryServices\ICategoryService.cs" />
+    <Compile Include="MediaFileService\IMediaFileService.cs" />
+    <Compile Include="MediaFileService\MediaFileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagService\ITagService.cs" />
+    <Compile Include="TagService\TagService.cs" />
     <Compile Include="Utilities\LogManagement.cs" />
     <Compile Include="Utilities\Session.cs" />
   </ItemGroup>
@@ -62,5 +70,6 @@
       <Name>ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

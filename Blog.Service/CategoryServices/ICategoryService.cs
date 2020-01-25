@@ -11,6 +11,8 @@ namespace Blog.Service.CategoryServices
     {
         IEnumerable<CategoryViewModel> getAll();
         CategoryViewModel getCategoryById(int Id);
-
+        int AddTag(CategoryViewModel model);
+        int EditTag(CategoryViewModel model, int Id);
+        int DeleteTag(int Id);
     }
 }
