@@ -88,8 +88,8 @@ namespace Blog.Service.BlogContentService
 
                     BlogContent blogContent = DbContext.BlogContents.Find(Id);
                     blogContent.Active = model.Active;
-                    blogContent.CreateBy = model.CreateBy;
-                    blogContent.CreateDate = model.CreateDate;
+                    blogContent.ModifyBy = model.ModifyBy;
+                    blogContent.ModifyDate = model.ModifyDate;
                     blogContent.BlogPostId = model.BlogPostId;
                     blogContent.Content = model.Content;
                     DbContext.Entry(blogContent).State = EntityState.Modified;

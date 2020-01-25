@@ -76,8 +76,8 @@ namespace Blog.Service.AuthorService
 
                     Author author = DbContext.Authors.Find(Id);
                     author.Active = model.Active;
-                    author.ModifyBy = model.CreateBy;
-                    author.ModifyDate = model.CreateDate;
+                    author.ModifyBy = model.ModifyBy;
+                    author.ModifyDate = model.ModifyDate;
                     author.Email = model.Email;
                     author.Contact = model.Contact;
                     author.ImageUrl = model.ImageUrl;
