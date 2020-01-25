@@ -155,6 +155,7 @@ namespace Blog.Service.MediaFileService
                         Description = mf.Description,
                         FileName = mf.FileName,
                         MediaTypeId = mf.MediaTypeId,
+                        MediaType=mf.MediaType.TypeName,
                         Url = mf.Url
                     }).ToList();
                     return mediaFileList;

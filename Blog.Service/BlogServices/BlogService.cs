@@ -73,15 +73,8 @@ namespace Blog.Service.BlogServices
                     DbContext.BlogContents.Add(blogContent);
 
                     int res = DbContext.SaveChanges();
-                    if (res > 0)
-                    {
-                        return res;
-                    }
-                    else
-                    {
-                        DbContext.Dispose();
-                        return 0;
-                    }
+                    return res;
+               
                 }
                 catch (Exception ex)
                 {
@@ -143,7 +136,7 @@ namespace Blog.Service.BlogServices
                     DbContext.Entry(blogPost).State = EntityState.Modified;
                     DbContext.Entry(blogContent).State = EntityState.Modified;
                     int res = DbContext.SaveChanges();
-                    return 0;
+                    return res;
                 }
                 catch (Exception ex)
                 {
