@@ -64,8 +64,8 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     List<string> imageSrc = getImageSourceList(model.Content);
                     List<string> imageName = getImageNames(imageSrc);
-                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "");
-                    List<TagViewModel> tags = InsertTagsinModel(model.Tags);
+                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "",null);
+                    List<TagViewModel> tags = InsertTagsinModel(model.Tags,null);
 
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
                     string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
@@ -181,8 +181,8 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     List<string> imageSrc = getImageSourceList(model.Content);
                     List<string> imageName = getImageNames(imageSrc);
-                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "");
-                    List<TagViewModel> tags = InsertTagsinModel(model.Tags);
+                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "",BlogId);
+                    List<TagViewModel> tags = InsertTagsinModel(model.Tags,BlogId);
 
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
                     string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
@@ -327,7 +327,7 @@ namespace Blog.Areas.Admin.Controllers
 
         }
 
-        private List<TagViewModel> InsertTagsinModel(string tags)
+        private List<TagViewModel> InsertTagsinModel(string tags,long? BlogId)
         {
             List<TagViewModel> list = new List<TagViewModel>();
             list.Clear();
@@ -339,25 +339,32 @@ namespace Blog.Areas.Admin.Controllers
                     TagName = tag,
                     Active = true,
                 };
+                if (BlogId != null)
+                {
+                    tvm.BlogPostId = BlogId;
+                }
                 list.Add(tvm);
             }
             return list;
         }
 
-        private List<MediaFileViewModel> InsertMediaFilesInModel(List<string> imageName, string Description)
+        private List<MediaFileViewModel> InsertMediaFilesInModel(List<string> imageName, string Description,long? BlogId)
         {
             List<MediaFileViewModel> list = new List<MediaFileViewModel>();
             list.Clear();
             foreach (var img in imageName)
             {
-             
+
                 MediaFileViewModel mf = new MediaFileViewModel()
                 {
                     MediaType = MediaTypeEnum.BlogImage.ToString(),
                     Url = "/Content/Images/blogImages/",
                     FileName = img,
-                    Description = Description
+                    Description = Description,
                 };
+                if (BlogId != null) {
+                    mf.BlogPostId = BlogId;
+                }
                 list.Add(mf);
             }
             return list;
