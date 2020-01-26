@@ -147,19 +147,33 @@ namespace Blog.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-
-            model.Content = blogContentService.getBlogContentByBlogId(model.BlogPostId).Content;
+            
             IList<MediaFileViewModel> mediafiles = mediaFileService.GetAllMediaFilesByBlogId(model.BlogPostId);
-            model.BannerUrl = mediafiles.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).Url;
             IList<TagViewModel> tags = tagService.GetAllTagsByBlogId(model.BlogPostId);
+            string html = blogContentService.getBlogContentByBlogId(model.BlogPostId).Content;
+            int count = 0;
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            foreach (HtmlNode img in doc.DocumentNode.SelectNodes("//img[@src]"))
+            {
+                img.SetAttributeValue("src",mediafiles[count].Url+mediafiles[count].FileName);
+                count++;
+            }
+            count = 0;
+
+            var newHtml = doc.DocumentNode.WriteTo();
+            model.Content = newHtml;
+            model.BannerUrl = mediafiles.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).Url;
             model.Tags = String.Join(",", tags.Select(m => m.TagName));
             model.CategoryList = catService.getAll();
             return View(model);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditBlog(AddBlogViewModel model)
+        public ActionResult EditBlog(AddBlogViewModel model,long BlogId)
         {
             try
             {
@@ -176,14 +190,77 @@ namespace Blog.Areas.Admin.Controllers
                     string Error, bannerUrl;
 
                     //Save BannerImage
-                    SaveBannerImage(model.BannerImage, bannerPath, model.Title, out Error, out bannerUrl);
-                    if (Error != null)
+
+                    if (model.BannerImage != null)
                     {
-                        ModelState.AddModelError("Invalid Image", Error);
-                        return View(model);
+                        SaveBannerImage(model.BannerImage, bannerPath, model.Title, out Error, out bannerUrl);
+
+                        if (Error != null)
+                        {
+                            ModelState.AddModelError("Invalid Image", Error);
+                            return View(model);
+                        }
+
+                        if (bannerUrl == null)
+                        {
+                            mediafiles.Add(new MediaFileViewModel()
+                            {
+                                MediaType = MediaTypeEnum.Banner.ToString(),
+                                Description = ""
+                            });
+
+                        }
+                        else
+                        {
+                            mediafiles.Add(new MediaFileViewModel()
+                            {
+                                MediaType = MediaTypeEnum.Banner.ToString(),
+                                Url = bannerUrl,
+                                FileName = bannerUrl,
+                                Description = ""
+                            });
+                        }
+                    }
+                    else 
+                    {
+                        mediafiles.Add(new MediaFileViewModel()
+                        {
+                            MediaType = MediaTypeEnum.Banner.ToString(),
+                            Url = model.BannerUrl,
+                            FileName = model.BannerUrl,
+                            Description = ""
+                        });
+                    }
+
+                    //Populate Model
+                    model.MediaFiles = mediafiles;
+                    model.TagList = tags;
+
+                    if (model.btnSubmit == "Publish")
+                    {
+                        model.Active = true;
+                    }
+
+                    if (model.btnSubmit == "Save")
+                    {
+                        model.Active = false;
+                    }
+
+                    model.Active = false;
+                    model.ModifyBy = "Admin";
+                    model.ModifyDate = DateTime.Now;
+
+                    //Call blog Service
+                    int res = blogService.EditBlog(model,BlogId);
+
+                    if (res > 0)
+                    {
+                        ModelState.Clear();
+                        return RedirectToAction("Index");
                     }
 
                 }
+                model.CategoryList = catService.getAll();
                 return View(model);
             }
             catch (Exception)
@@ -273,15 +350,11 @@ namespace Blog.Areas.Admin.Controllers
             list.Clear();
             foreach (var img in imageName)
             {
-                //string input = img;
-                //string pattern = @"\temp\b";
-                //string replace = title;
-                //string result = Regex.Replace(input, pattern, replace, RegexOptions.IgnoreCase);
-
+             
                 MediaFileViewModel mf = new MediaFileViewModel()
                 {
                     MediaType = MediaTypeEnum.BlogImage.ToString(),
-                    Url = img,
+                    Url = "/Content/Images/blogImages/",
                     FileName = img,
                     Description = Description
                 };

@@ -10,7 +10,7 @@ namespace Blog.Service.BlogServices
     public interface IBlogService
     {
         int AddBlog(AddBlogViewModel model);
-        int EditBlog(AddBlogViewModel model,long Id);
+        int EditBlog(AddBlogViewModel model, long Id);
         int DeleteBlog(long Id);
         AddBlogViewModel getBlogById(long? Id);
         IList<AddBlogViewModel> getAllBlogs();

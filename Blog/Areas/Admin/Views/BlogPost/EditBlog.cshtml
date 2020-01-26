@@ -1,0 +1,132 @@
+﻿@model ViewModel.AdminViewModels.BlogPostViewModels.AddBlogViewModel
+
+@{
+    ViewBag.Title = "EditBlog";
+}
+
+<link href="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+<style>
+    .bootstrap-tagsinput .tag {
+        margin-right: 2px;
+        color: white;
+        background-color: #2372ea;
+        padding: 3px;
+        border-radius: 10px;
+        font-size: 15px;
+    }
+
+    .bootstrap-tagsinput {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        display: inline-block;
+        padding: 4px 6px;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 4px;
+        max-width: 100%;
+        line-height: 22px;
+        cursor: text;
+        height: 60px;
+        width: 14.3%;
+        margin: 14px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+</style>
+
+
+@Html.ValidationSummary()
+<article class="article">
+    <div class="main-bg">
+        @using (Html.BeginForm("EditBlog", "BlogPost",new { BlogId=Model.BlogPostId},FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="main-header">
+                <div class="main-content">
+                    <div class="container">
+                        <div class="blog-input">
+                            <h1 class="primary-blue">Blog Post</h1>
+                            @Html.TextBoxFor(m => m.Title, new { @class = "title-txt", placeholder = "Blog Title" })
+                            @Html.ValidationMessageFor(m => m.Title, null, new { @class = "errorMessage" })
+                            @Html.TextBoxFor(m => m.Tags, new { @class = "title-txt", @data_role = "tagsinput", @placeholder = "Tags" })
+                            @Html.ValidationMessageFor(m => m.Tags, null, new { @class = "error" })
+                            @Html.TextAreaFor(m => m.Summary, new { @class = "title-txt", placeholder = "Add summery" })
+                            @Html.ValidationMessageFor(m => m.Summary, null, new { @class = "errorMessage" })
+                            @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "CategoryId", "CategoryName"), "Select Category", new { @class = "" })
+                            @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "errorMessage" })
+                            <label class="custom-file-upload">
+                                @Html.HiddenFor(m=>m.BannerUrl)
+                                <input type="file" name="BannerImage" id="BannerImage" accept="image/jpeg, image/png" />
+                                <i class="fa fa-cloud-upload"></i> <span class="coverImg">Upload Backgroung</span>
+                            </label>
+                            @Html.ValidationMessageFor(m => m.BannerImage, null, new { @class = "errorMessage" })
+                        </div>
+                        <div class="btns">
+                            <button type="submit" name="btnSubmit" value="Publish" class="blog-btn2">Publish</button>
+                            <button type="submit" name="btnSubmit" value="Save" class="blog-btn2">Save</button>
+                            @*<a href="#" class="blog-btn">Preview</a>*@
+                            @Html.ActionLink("Close", "Index", "BlogPost", new { @class = "blog-btn" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit-mr">
+                @Html.ValidationMessageFor(m => m.Content, null, new { @class = "errorMessage" })
+                @Html.TextAreaFor(m => m.Content, new { @class = "mytextarea" })
+            </div>
+
+        }
+    </div>
+</article>
+
+@section scripts{
+    <script src="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="~/Areas/Admin/Content/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var link = '@Url.Action("Upload", "BlogPost")';
+
+            //Tiny MCI
+            tinymce.init({
+                selector: '.mytextarea',
+                height: 800,
+                images_upload_url: link,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen',
+                    'insertdatetime media nonbreaking save table contextmenu directionality',
+                    'emoticons template paste textcolor colorpicker textpattern imagetools'
+                ],
+                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | Table | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons ',
+                image_advtab: true,
+            });
+
+            function upload(form) {
+                tinymce.activeEditor.uploadImages(function (success) {
+                    tinymce.activeEditor.execCommand("mceInsertContent", true, "<img src='" + data + "' alt='Uploaded Image' class='img-responsive' />");
+                });
+                return false;
+            }
+            $(".cross").click(function () {
+                $(".info .success, .warning, .error, .validation").fadeOut(1000);
+            });
+        });
+
+        $("#BannerImage").change(function () {
+            var Uploadfile = document.getElementById("BannerImage");
+            if (Uploadfile.files.length != 0) {
+                $(".coverImg").text("Image is Selected");
+            }
+            else {
+                $(".coverImg").text("Upload Cover image");
+            }
+        });
+    </script>
+}
+
+
+

@@ -74,7 +74,7 @@ namespace Blog.Service.BlogServices
 
                     int res = DbContext.SaveChanges();
                     return res;
-               
+
                 }
                 catch (Exception ex)
                 {
@@ -87,7 +87,16 @@ namespace Blog.Service.BlogServices
 
         public int DeleteBlog(long Id)
         {
-            throw new NotImplementedException();
+            using (DbContext) {
+                var blog = DbContext.BlogPosts.Where(m => m.Id == Id).Include(m => m.MediaFiles).Include(m => m.Tags).Include(m => m.Category).Include(m => m.BlogContents).SingleOrDefault();
+
+                DbContext.MediaFiles.RemoveRange(blog.MediaFiles);
+                DbContext.Tags.RemoveRange(blog.Tags);
+                DbContext.BlogContents.RemoveRange(blog.BlogContents);
+                DbContext.BlogPosts.Remove(blog);
+                int res = DbContext.SaveChanges();
+                return res;
+            }
         }
 
         public int EditBlog(AddBlogViewModel model, long Id)
@@ -96,45 +105,71 @@ namespace Blog.Service.BlogServices
             {
                 try
                 {
-                    ICollection<MediaFile> mediaFiles = model.MediaFiles.Select(mf => new MediaFile
-                    {
-                        FileName = mf.FileName,
-                        MediaTypeId = DbContext.MediaTypes.FirstOrDefault(mt => mt.TypeName == mf.MediaType).Id,
-                        Url = mf.Url,
-                        Active = model.Active,
-                        Description = mf.Description,
-                        CreateBy = model.CreateBy,
-                        CreateDate = model.CreateDate
-                    }).ToList();
+                    var blog = DbContext.BlogPosts.Where(m => m.Id == Id).Include(m => m.MediaFiles).Include(m => m.Tags).Include(m => m.Category).Include(m => m.BlogContents).SingleOrDefault();
 
-                    ICollection<Tag> Tags = model.TagList.Select(t => new Tag
+                    //Delete Existing Data
+                    foreach (var mediafile in blog.MediaFiles.ToList()) {
+                        if (model.MediaFiles.Any(m => m.BlogPostId == mediafile.BlogPostId)) {
+                            DbContext.MediaFiles.Remove(mediafile);
+                        }
+                    }
+                    foreach (var Tag in blog.Tags.ToList())
                     {
-                        Active = t.Active,
-                        CreateBy = model.CreateBy,
-                        CreateDate = model.CreateDate,
-                        TagName = t.TagName,
-                    }).ToList();
+                        if (model.TagList.Any(m => m.BlogPostId == Tag.BlogPostId))
+                        {
+                            DbContext.Tags.Remove(Tag);
+                        }
+                    }
 
-                    BlogPost blogPost = DbContext.BlogPosts.Find(Id);
-                    blogPost.MediaFiles = mediaFiles;
-                    blogPost.Tags = Tags;
-                    blogPost.AutherId = model.AutherId;
-                    blogPost.CategoryId = model.CategoryId;
-                    blogPost.Active = model.Active;
-                    blogPost.ModifyBy = model.ModifyBy;
-                    blogPost.ModifyDate = model.ModifyDate;
-                    blogPost.Summary = model.Summary;
-                    blogPost.Title = model.Title;
+                    //Adding or Updating Fields
+                    foreach (var mediafile in model.MediaFiles.ToList())
+                    {
+                        MediaFile mediaFile = new MediaFile()
+                        {
+                            FileName = mediafile.FileName,
+                            MediaTypeId = DbContext.MediaTypes.FirstOrDefault(mt => mt.TypeName == mediafile.MediaType).Id,
+                            Url = mediafile.Url,
+                            Active = model.Active,
+                            Description = mediafile.Description,
+                            CreateBy = model.CreateBy,
+                            CreateDate = model.CreateDate,
+                            BlogPostId=model.BlogPostId
+                        };
+                        blog.MediaFiles.Add(mediaFile);
+                    }
+                    foreach (var t in model.TagList.ToList())
+                    {
+                        Tag tag = new Tag()
+                        {
+                            Active = t.Active,
+                            CreateBy = model.CreateBy,
+                            CreateDate = model.CreateDate,
+                            TagName = t.TagName,
+                            BlogPostId=model.BlogPostId
+                        };
+                        blog.Tags.Add(tag);
+                    }
+    
+                    blog.CategoryId = model.CategoryId;
+                    blog.Active = model.Active;
+                    blog.ModifyBy = model.CreateBy;
+                    blog.ModifyDate = model.CreateDate;
+                    blog.Summary = model.Summary;
+                    blog.Title = model.Title;
+
+                    DbContext.Entry(blog).State = EntityState.Modified;
 
                     BlogContent blogContent = DbContext.BlogContents.FirstOrDefault(m => m.BlogPostId == Id);
-                    blogContent.BlogPost = blogPost;
+
+                    blogContent.BlogPost = blog;
                     blogContent.Active = model.Active;
                     blogContent.Content = model.Content;
-                    blogContent.ModifyBy = model.ModifyBy;
-                    blogContent.ModifyDate = model.ModifyDate;
+                    blogContent.CreateBy = model.CreateBy;
+                    blogContent.CreateDate = model.CreateDate;
+                   
 
-                    DbContext.Entry(blogPost).State = EntityState.Modified;
                     DbContext.Entry(blogContent).State = EntityState.Modified;
+
                     int res = DbContext.SaveChanges();
                     return res;
                 }
@@ -164,6 +199,7 @@ namespace Blog.Service.BlogServices
                         Summary = bp.Summary,
                         CategoryId = bp.CategoryId,
                         AutherId = bp.AutherId,
+                        Title = bp.Title
                     }).ToList();
 
                     return blogViewModel;
@@ -181,7 +217,7 @@ namespace Blog.Service.BlogServices
             {
                 using (DbContext)
                 {
-                    IList<BlogPost> list = DbContext.BlogPosts.Where(m=>m.AutherId==AuthorId).ToList();
+                    IList<BlogPost> list = DbContext.BlogPosts.Where(m => m.AutherId == AuthorId).ToList();
 
                     IList<AddBlogViewModel> blogViewModel = list.Select(bp => new AddBlogViewModel
                     {
@@ -192,6 +228,7 @@ namespace Blog.Service.BlogServices
                         Summary = bp.Summary,
                         CategoryId = bp.CategoryId,
                         AutherId = bp.AutherId,
+                        Title = bp.Title
                     }).ToList();
 
                     return blogViewModel;
@@ -220,6 +257,7 @@ namespace Blog.Service.BlogServices
                         Summary = bp.Summary,
                         CategoryId = bp.CategoryId,
                         AutherId = bp.AutherId,
+                        Title = bp.Title
                     }).ToList();
 
                     return blogViewModel;
@@ -237,7 +275,7 @@ namespace Blog.Service.BlogServices
             {
                 using (DbContext)
                 {
-                    BlogPost bp = DbContext.BlogPosts.SingleOrDefault(m => m.Id == Id);
+                    BlogPost bp = DbContext.BlogPosts.Find(Id);
                     AddBlogViewModel blogViewModel = new AddBlogViewModel
                     {
                         BlogPostId = bp.Id,
@@ -249,6 +287,7 @@ namespace Blog.Service.BlogServices
                         Summary = bp.Summary,
                         CategoryId = bp.CategoryId,
                         AutherId = bp.AutherId,
+                        Title = bp.Title
                     };
 
                     return blogViewModel;

@@ -355,6 +355,7 @@
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.less" />
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.min.js.map" />
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.zip" />
+    <Content Include="Areas\Admin\Views\BlogPost\EditBlog.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
