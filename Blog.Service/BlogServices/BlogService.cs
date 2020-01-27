@@ -182,7 +182,7 @@ namespace Blog.Service.BlogServices
             }
         }
 
-        public IList<AddBlogViewModel> getAllBlogs()
+        public IList<IndexBlogViewModel> getAllBlogs()
         {
             try
             {
@@ -190,7 +190,7 @@ namespace Blog.Service.BlogServices
                 {
                     IList<BlogPost> list = DbContext.BlogPosts.ToList();
 
-                    IList<AddBlogViewModel> blogViewModel = list.Select(bp => new AddBlogViewModel
+                    IList<IndexBlogViewModel> blogViewModel = list.Select(bp => new IndexBlogViewModel
                     {
                         BlogPostId = bp.Id,
                         Active = bp.Active,
@@ -199,7 +199,8 @@ namespace Blog.Service.BlogServices
                         Summary = bp.Summary,
                         CategoryId = bp.CategoryId,
                         AutherId = bp.AutherId,
-                        Title = bp.Title
+                        Title = bp.Title,
+                        CategoryName=bp.Category.CategoryName,
                     }).ToList();
 
                     return blogViewModel;

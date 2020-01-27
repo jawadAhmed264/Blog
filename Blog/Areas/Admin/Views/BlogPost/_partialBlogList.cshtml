@@ -1,0 +1,50 @@
+﻿@using ViewModel.AdminViewModels.BlogPostViewModels
+@model IEnumerable<IndexBlogViewModel>
+
+<div class="blog-table">
+    <div class="container">
+        <di class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Blog title</th>
+                        <th>Views</th>
+                        <th>Summary</th>
+                        <th>Category</th>
+                        <th>Created on</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="showbtn">
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox" name="Active" id="Active" checked="@item.Active">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <div class="row status">
+                                    <img src="images/Avatar-1 1.png" alt="">
+                                    <p>@item.Title</p>
+                                    <label class="active-status"></label>
+                                </div>
+                            </td>
+                            <td>1099 </td>
+                            <td>@item.Summary</td>
+                            <td>@item.CategoryName</td>
+                            <td>@item.CreateDate</td>
+                            <td>
+                                <div class="showbtn">
+                                    <div class='edit-btn'><div class='edit-icon'> <img src='images/Edit-icon.png' alt=''></div></div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>

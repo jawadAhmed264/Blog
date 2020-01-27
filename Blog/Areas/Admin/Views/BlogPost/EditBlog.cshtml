@@ -5,38 +5,15 @@
 }
 
 <link href="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet" />
-<style>
-    .bootstrap-tagsinput .tag {
-        margin-right: 2px;
-        color: white;
-        background-color: #2372ea;
-        padding: 3px;
-        border-radius: 10px;
-        font-size: 15px;
-    }
 
-    .bootstrap-tagsinput {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        display: inline-block;
-        padding: 4px 6px;
-        color: #555;
-        vertical-align: middle;
-        border-radius: 4px;
-        max-width: 100%;
-        line-height: 22px;
-        cursor: text;
-        height: 60px;
-        width: 14.3%;
-        margin: 14px;
-        overflow-x: scroll;
-        overflow-y: hidden;
-    }
-</style>
-
-
-@Html.ValidationSummary()
+@if (ViewBag.Error == true)
+{
+    <div class="alert divError">
+        <span class="closebtn">&times;</span>
+        <strong>@ViewBag.ErrorMessage</strong><br />
+        @Html.ValidationSummary()
+    </div>
+}
 <article class="article">
     <div class="main-bg">
         @using (Html.BeginForm("EditBlog", "BlogPost",new { BlogId=Model.BlogPostId},FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -124,6 +101,10 @@
             else {
                 $(".coverImg").text("Upload Cover image");
             }
+        });
+
+        $(".closebtn").click(function () {
+            $(".divError").fadeOut(1000);
         });
     </script>
 }
