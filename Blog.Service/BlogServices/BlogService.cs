@@ -156,7 +156,7 @@ namespace Blog.Service.BlogServices
                     blog.ModifyDate = model.CreateDate;
                     blog.Summary = model.Summary;
                     blog.Title = model.Title;
-
+                    blog.Active = model.Active;
                     DbContext.Entry(blog).State = EntityState.Modified;
 
                     BlogContent blogContent = DbContext.BlogContents.FirstOrDefault(m => m.BlogPostId == Id);
