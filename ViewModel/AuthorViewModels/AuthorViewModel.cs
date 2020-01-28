@@ -21,6 +21,8 @@ namespace ViewModel.AuthorViewModels
         public string CreateBy { get; set; }
         public Nullable<System.DateTime> ModifyDate { get; set; }
         public string ModifyBy { get; set; }
-        public Nullable<bool> Active { get; set; }
+        //public Nullable<bool> Active { get; set; }
+
+        public bool? Active { get; set; }
     }
 }

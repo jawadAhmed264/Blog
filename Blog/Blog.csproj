@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AuthorController.cs" />
     <Compile Include="Areas\Admin\Controllers\BlogPostController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -215,6 +216,9 @@
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.css" />
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.js" />
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.min.js" />
+    <Content Include="Areas\Admin\Content\images\erase.png" />
+    <Content Include="Areas\Admin\Content\images\pencil.png" />
+    <Content Include="Areas\Admin\Content\js\bootstrap-toggle.min.js" />
     <Content Include="Areas\Admin\Content\css\admin.css" />
     <Content Include="Areas\Admin\Content\css\Login.css" />
     <Content Include="Areas\Admin\Content\images\admin.png" />
@@ -356,7 +360,10 @@
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.min.js.map" />
     <Content Include="Areas\Admin\Content\bootstrap-tagsinput-latest\dist\bootstrap-tagsinput.zip" />
     <Content Include="Areas\Admin\Views\BlogPost\EditBlog.cshtml" />
-    <Content Include="Areas\Admin\Views\BlogPost\_partialBlogList.cshtml" />
+    <Content Include="Areas\Admin\Views\Author\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Author\AddAuthor.cshtml" />
+    <Content Include="Areas\Admin\Views\Author\EditAuthor.cshtml" />
+    <Content Include="Areas\Admin\Views\Author\DeleteAuthor.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -533,7 +540,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49825</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44301/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

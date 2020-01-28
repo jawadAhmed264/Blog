@@ -5,17 +5,21 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Services;
 using ViewModel.AuthorViewModels;
 
 namespace Blog.Service.AuthorService
 {
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+
     public class AuthorService : IAuthorService
     {
-        private BlogEntities DbContext;
+        private BlogEntities DbContext = new BlogEntities();
 
-        public AuthorService(BlogEntities _DbContext)
+        public AuthorService(BlogEntities _dbContext)
         {
-            DbContext = _DbContext;
+            DbContext = _dbContext;
         }
 
         public int AddAuthor(AuthorViewModel model)
@@ -53,13 +57,10 @@ namespace Blog.Service.AuthorService
         {
             try
             {
-                using (DbContext)
-                {
-                    Author author = DbContext.Authors.Find(Id);
-                    DbContext.Authors.Remove(author);
-                    int res = DbContext.SaveChanges();
-                    return res;
-                }
+                Author author = DbContext.Authors.Find(Id);
+                DbContext.Authors.Remove(author);
+                int res = DbContext.SaveChanges();
+                return res;
             }
             catch (Exception)
             {
@@ -73,7 +74,6 @@ namespace Blog.Service.AuthorService
             {
                 using (DbContext)
                 {
-
                     Author author = DbContext.Authors.Find(Id);
                     author.Active = model.Active;
                     author.ModifyBy = model.ModifyBy;
@@ -101,27 +101,24 @@ namespace Blog.Service.AuthorService
         {
             try
             {
-                using (DbContext)
+                IList<AuthorViewModel> AuthorList = DbContext.Authors.Select(author => new AuthorViewModel
                 {
-                    IList<AuthorViewModel> AuthorList = DbContext.Authors.Select(author => new AuthorViewModel
-                    {
-                        Id = author.Id,
-                        Active = author.Active,
-                        CreateBy = author.CreateBy,
-                        CreateDate = author.CreateDate,
-                        ModifyBy = author.CreateBy,
-                        ModifyDate = author.CreateDate,
-                        AspnetUser = author.AspnetUser,
-                        Email = author.Email,
-                        Contact = author.Contact,
-                        ImageUrl = author.ImageUrl,
-                        Name = author.Name,
-                        Description = author.Description,
-                        JoinDate = author.JoinDate,
-                        LeaveDate = author.LeaveDate,
-                    }).ToList();
-                    return AuthorList;
-                }
+                    Id = author.Id,
+                    Active = author.Active,
+                    CreateBy = author.CreateBy,
+                    CreateDate = author.CreateDate,
+                    ModifyBy = author.CreateBy,
+                    ModifyDate = author.CreateDate,
+                    AspnetUser = author.AspnetUser,
+                    Email = author.Email,
+                    Contact = author.Contact,
+                    ImageUrl = author.ImageUrl,
+                    Name = author.Name,
+                    Description = author.Description,
+                    JoinDate = author.JoinDate,
+                    LeaveDate = author.LeaveDate,
+                }).ToList();
+                return AuthorList;
             }
             catch (Exception)
             {

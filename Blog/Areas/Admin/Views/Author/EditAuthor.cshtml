@@ -1,0 +1,150 @@
+﻿@model ViewModel.AuthorViewModels.AuthorViewModel
+
+@{
+    ViewBag.Title = "EditAuthor";
+}
+<style>
+    .fa-cloud-upload {
+        margin: 10px 23px 8px 25px !important;
+    }
+
+    .form-bg {
+        height: 800px !important;
+    }
+
+    .submitbtn {
+        height: auto;
+    }
+
+    .togglecheckbox {
+        margin-top: 9px;
+    }
+
+</style>
+<main class="main">
+    <article class="article">
+        <div class="main-bg-2">
+            <div class="form-bg">
+                <!--Form Header-->
+                <div class="main-header">
+                    <div class="main-content">
+                        <div class="cotnainer">
+                            <div class="row">
+                                <div class="container-half">
+                                    <h1 class="primary-blue">Edit Auhtor</h1>
+                                </div>
+                                <div class="container-half contenthead-pd">
+                                    <div class="right pr-2">
+                                        <a href="@Url.Action("Index", "Author")" class="blog-btn">Go back</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Form-->
+                <div class="admin-form">
+                    @using (Html.BeginForm("EditAuthor", "Author", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary(true);
+                        <!--First Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container-half">
+                                    <div class="form-txt">
+                                        <label for="">Author name</label>
+                                        @Html.TextBox("Name", null, new { @class = "textbox" })
+                                        @Html.HiddenFor(model => model.Id)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Second Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container-half">
+                                    <div class="form-txt">
+                                        <label for="">Email Address</label>
+                                        @Html.TextBox("Email", null, new { @class = "textbox" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Third Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container-half">
+                                    <div class="form-txt">
+                                        <div class="form-txt">
+                                            <label for="">Contact</label>
+                                            @Html.TextBox("Contact", null, new { @class = "textbox" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Fourth Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container">
+                                    <div class="form-txt">
+                                        <label for="">Description</label>
+                                        @Html.TextArea("Description", null, new { @class = "textbox", @rows = "5", @cols = "20" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--fifth Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container-half">
+                                    <div class="form-txt showbtn">
+                                        <label for="">Author IsActive</label>
+                                        <div class="slider-td">
+                                            <label class="switch">
+                                                @Html.HiddenFor(model => model.Active, new { @id = "IsActive", @class = "hdncheck" })
+                                                <input name="Active" id="Active" type="checkbox" value="false">
+                                                <div class="slider round togglecheckbox"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-half">
+                                    <div class="form-txt showbtn">
+                                        <label class="custom-file-upload">
+                                            <input type="file" name="ImageUrl" id="ImageUrl" accept="image/jpeg, image/png" />
+                                            <i class="fa fa-cloud-upload"></i>
+                                        </label>
+                                        <span class="coverImg">Upload Image</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--sixth Row-->
+                        <div class="container">
+                            <div class="right">
+                                <input type="submit" class="blog-btn submitbtn" title="Create" />
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </article>
+</main>
+<script src="~/Areas/Admin/Content/js/jquery-3.4.1.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        jQuery('.hdncheck').val(false);
+    });
+    jQuery('#Active').change(function () {
+        if (jQuery('#Active').is(":checked")) {
+            jQuery('.hdncheck').val(true);
+        }
+        else {
+            jQuery('.hdncheck').val(false);
+        }
+    });
+</script>
+

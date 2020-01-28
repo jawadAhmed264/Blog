@@ -1,0 +1,54 @@
+﻿@model ViewModel.AuthorViewModels.AuthorViewModel
+
+@{
+    ViewBag.Title = "DeleteAuthor";
+}
+
+<style>
+    .form-bg {
+        height: 400px !important;
+    }
+
+    .submitbtn {
+        height: auto;
+    }
+</style>
+<main class="main">
+    <article class="article">
+        <div class="main-bg-2">
+            <div class="form-bg">
+                <!--Form Header-->
+                <div class="main-header">
+                    <div class="main-content">
+                        <div class="cotnainer">
+                            <div class="row">
+                                <div class="container-half">
+                                    <br />
+                                    <h1 class="primary-blue">Delete Confirmation</h1>
+                                    <h4>
+                                        Please confirm you want to delete the Author :<br />
+                                        Name : @Html.Encode(Model.Name)<br />
+                                        Email Address : @Html.Encode(Model.Email)<br />
+                                        Description : @Html.Encode(Model.Description)<br />
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-form">
+                    @using (Html.BeginForm("DeleteAuthor", "Author", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary(true);
+                        <div class="container">
+                            <div class="right">
+                                @Html.HiddenFor(Model => Model.Id)
+                                <input type="submit" class="blog-btn submitbtn" title="Confirm Delete" value="Confirm" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
