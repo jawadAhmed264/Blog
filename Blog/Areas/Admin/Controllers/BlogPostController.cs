@@ -43,7 +43,14 @@ namespace Blog.Areas.Admin.Controllers
         // GET: Admin/BlogPost
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult UpdateBlogList() {
+            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
+            return PartialView("_partialBlogList", model);
         }
 
         [HttpGet]
@@ -64,8 +71,8 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     List<string> imageSrc = getImageSourceList(model.Content);
                     List<string> imageName = getImageNames(imageSrc);
-                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "",null);
-                    List<TagViewModel> tags = InsertTagsinModel(model.Tags,null);
+                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "", null);
+                    List<TagViewModel> tags = InsertTagsinModel(model.Tags, null);
 
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
                     string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
@@ -77,7 +84,10 @@ namespace Blog.Areas.Admin.Controllers
 
                     if (Error != null)
                     {
-                        ModelState.AddModelError("Invalid Image", Error);
+                        model.CategoryList = catService.getAll();
+                        ModelState.AddModelError("", Error);
+                        ViewBag.Error = true;
+                        ViewBag.ErrorMessage = "Invalid Form Validation";
                         return View(model);
                     }
                     if (bannerUrl == null)
@@ -125,6 +135,8 @@ namespace Blog.Areas.Admin.Controllers
 
                 }
                 model.CategoryList = catService.getAll();
+                ViewBag.Error = true;
+                ViewBag.ErrorMessage = "Invalid Form Validation";
                 return View(model);
             }
             catch (Exception ex)
@@ -147,21 +159,23 @@ namespace Blog.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             IList<MediaFileViewModel> mediafiles = mediaFileService.GetAllMediaFilesByBlogId(model.BlogPostId);
             IList<TagViewModel> tags = tagService.GetAllTagsByBlogId(model.BlogPostId);
             string html = blogContentService.getBlogContentByBlogId(model.BlogPostId).Content;
             int count = 0;
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
-
-            foreach (HtmlNode img in doc.DocumentNode.SelectNodes("//img[@src]"))
+            var ImageTags = doc.DocumentNode.SelectNodes("//img[@src]");
+            if (ImageTags != null)
             {
-                img.SetAttributeValue("src",mediafiles[count].Url+mediafiles[count].FileName);
-                count++;
+                foreach (HtmlNode img in ImageTags)
+                {
+                    img.SetAttributeValue("src", mediafiles[count].Url + mediafiles[count].FileName);
+                    count++;
+                }
+                count = 0;
             }
-            count = 0;
-
             var newHtml = doc.DocumentNode.WriteTo();
             model.Content = newHtml;
             model.BannerUrl = mediafiles.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).Url;
@@ -170,10 +184,9 @@ namespace Blog.Areas.Admin.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditBlog(AddBlogViewModel model,long BlogId)
+        public ActionResult EditBlog(AddBlogViewModel model, long BlogId)
         {
             try
             {
@@ -181,8 +194,8 @@ namespace Blog.Areas.Admin.Controllers
                 {
                     List<string> imageSrc = getImageSourceList(model.Content);
                     List<string> imageName = getImageNames(imageSrc);
-                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "",BlogId);
-                    List<TagViewModel> tags = InsertTagsinModel(model.Tags,BlogId);
+                    List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "", BlogId);
+                    List<TagViewModel> tags = InsertTagsinModel(model.Tags, BlogId);
 
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
                     string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
@@ -197,7 +210,10 @@ namespace Blog.Areas.Admin.Controllers
 
                         if (Error != null)
                         {
+                            model.CategoryList = catService.getAll();
                             ModelState.AddModelError("Invalid Image", Error);
+                            ViewBag.Error = true;
+                            ViewBag.ErrorMessage = "Invalid Form Validation";
                             return View(model);
                         }
 
@@ -221,7 +237,7 @@ namespace Blog.Areas.Admin.Controllers
                             });
                         }
                     }
-                    else 
+                    else
                     {
                         mediafiles.Add(new MediaFileViewModel()
                         {
@@ -251,7 +267,7 @@ namespace Blog.Areas.Admin.Controllers
                     model.ModifyDate = DateTime.Now;
 
                     //Call blog Service
-                    int res = blogService.EditBlog(model,BlogId);
+                    int res = blogService.EditBlog(model, BlogId);
 
                     if (res > 0)
                     {
@@ -260,6 +276,8 @@ namespace Blog.Areas.Admin.Controllers
                     }
 
                 }
+                ViewBag.Error = true;
+                ViewBag.ErrorMessage = "Invalid Form Validation";
                 model.CategoryList = catService.getAll();
                 return View(model);
             }
@@ -308,9 +326,9 @@ namespace Blog.Areas.Admin.Controllers
                     return;
                 }
 
-                if (width > 1440 && height > 700)
+                if (width != 1440 && height != 700)
                 {
-                    error = "File dimension must be 1440*700";
+                    error = "Background dimension must be 1440*700";
                     url = null;
                     return;
                 }
@@ -327,7 +345,7 @@ namespace Blog.Areas.Admin.Controllers
 
         }
 
-        private List<TagViewModel> InsertTagsinModel(string tags,long? BlogId)
+        private List<TagViewModel> InsertTagsinModel(string tags, long? BlogId)
         {
             List<TagViewModel> list = new List<TagViewModel>();
             list.Clear();
@@ -348,24 +366,29 @@ namespace Blog.Areas.Admin.Controllers
             return list;
         }
 
-        private List<MediaFileViewModel> InsertMediaFilesInModel(List<string> imageName, string Description,long? BlogId)
+        private List<MediaFileViewModel> InsertMediaFilesInModel(List<string> imageName, string Description, long? BlogId)
         {
             List<MediaFileViewModel> list = new List<MediaFileViewModel>();
             list.Clear();
-            foreach (var img in imageName)
+            if (imageName != null)
             {
-
-                MediaFileViewModel mf = new MediaFileViewModel()
+                foreach (var img in imageName)
                 {
-                    MediaType = MediaTypeEnum.BlogImage.ToString(),
-                    Url = "/Content/Images/blogImages/",
-                    FileName = img,
-                    Description = Description,
-                };
-                if (BlogId != null) {
-                    mf.BlogPostId = BlogId;
+
+                    MediaFileViewModel mf = new MediaFileViewModel()
+                    {
+                        MediaType = MediaTypeEnum.BlogImage.ToString(),
+                        Url = "/Content/Images/blogImages/",
+                        FileName = img,
+                        Description = Description,
+                    };
+                    if (BlogId != null)
+                    {
+                        mf.BlogPostId = BlogId;
+                    }
+                    list.Add(mf);
                 }
-                list.Add(mf);
+                return list;
             }
             return list;
         }
@@ -374,11 +397,16 @@ namespace Blog.Areas.Admin.Controllers
         {
             List<string> ImageNames = new List<string>();
             ImageNames.Clear();
-            foreach (string name in imageSrc)
+            if (imageSrc != null)
             {
-                string[] splitArray = name.Split('/');
-                string ImageName = splitArray.Last();
-                ImageNames.Add(ImageName);
+                ImageNames.Clear();
+                foreach (string name in imageSrc)
+                {
+                    string[] splitArray = name.Split('/');
+                    string ImageName = splitArray.Last();
+                    ImageNames.Add(ImageName);
+                }
+                return ImageNames;
             }
             return ImageNames;
         }
@@ -388,12 +416,17 @@ namespace Blog.Areas.Admin.Controllers
 
             List<string> srcList = new List<string>();
             srcList.Clear();
+            srcList.Clear();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(@"" + html);
-            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//img[@src]"))
+            var ImageTags = doc.DocumentNode.SelectNodes("//img[@src]");
+            if (ImageTags != null)
             {
-                string src = link.GetAttributeValue("src", "").ToString();
-                srcList.Add(src);
+                foreach (HtmlNode link in ImageTags)
+                {
+                    string src = link.GetAttributeValue("src", "").ToString();
+                    srcList.Add(src);
+                }
             }
             return srcList;
         }

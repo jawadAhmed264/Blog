@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +15,17 @@ namespace ViewModel.AdminViewModels.BlogPostViewModels
     public class AddBlogViewModel
     {
         public long BlogPostId { get; set; }
+        [Required(ErrorMessage ="Insert suitable title for blog")]
         public string Title { get; set; }
+        [Required(ErrorMessage = "Insert Summary for the blog")]
         public string Summary { get; set; }
         [AllowHtml]
+        [Required(ErrorMessage = "Write Some Blog Content")]
         public String Content { get; set; }
+        [Required]
         public string Tags{ get; set; }
         public Nullable<int> AutherId { get; set; }
+        [Required(ErrorMessage ="Select Category")]
         public Nullable<int> CategoryId { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
