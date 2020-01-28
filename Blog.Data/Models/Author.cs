@@ -33,7 +33,7 @@ namespace Blog.Data.Models
         public string CreateBy { get; set; }
         public Nullable<System.DateTime> ModifyDate { get; set; }
         public string ModifyBy { get; set; }
-        public Nullable<bool> Active { get; set; }
+        public bool? Active { get; set; }
     
         public virtual AspNetUser AspNetUser1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
