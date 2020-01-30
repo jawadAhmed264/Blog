@@ -13,7 +13,6 @@
         @Html.ValidationSummary()
     </div>
 }
-
 <article class="article">
     <div class="main-bg-2 main-content">
         <!--Header-->
@@ -41,10 +40,36 @@
     </div>
 </article>
 
+@section scripts{
 <script type="text/javascript">
     $(function () {
         $(".closebtn").click(function () {
             $(".divError").fadeOut(1000);
         });
     });
+
+    function showdd(id) {
+        
+        if ($('#' + id).css('display') == 'none')
+        {
+            $('#' + id).css('display', 'block');
+        }
+        else {
+            $('#' + id).css('display', 'none');
+        }
+    }
+    function handleDelete(id) {
+        $('.overlay').css('display', 'block');
+        $('.delete---modal').css('display', 'block');
+
+        $('.delete---no').click(function () {
+            $('.overlay').css('display', 'none');
+            $('.delete---modal').css('display', 'none');
+        });
+
+        $('.delete---yes').click(function () {
+                //Code here for Yes btn
+        });
+    }
 </script>
+}

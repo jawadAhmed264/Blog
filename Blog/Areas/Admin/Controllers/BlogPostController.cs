@@ -48,7 +48,8 @@ namespace Blog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateBlogList() {
+        public ActionResult UpdateBlogList()
+        {
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
             return PartialView("_partialBlogList", model);
         }
@@ -120,7 +121,6 @@ namespace Blog.Areas.Admin.Controllers
                     {
                         model.Active = false;
                     }
-                    model.Active = false;
                     model.CreateBy = "Admin";
                     model.CreateDate = DateTime.Now;
 
@@ -262,7 +262,6 @@ namespace Blog.Areas.Admin.Controllers
                         model.Active = false;
                     }
 
-                    model.Active = false;
                     model.ModifyBy = "Admin";
                     model.ModifyDate = DateTime.Now;
 
@@ -430,7 +429,6 @@ namespace Blog.Areas.Admin.Controllers
             }
             return srcList;
         }
-
         //Upload for TinyMCE
         public ActionResult Upload()
         {
@@ -472,7 +470,6 @@ namespace Blog.Areas.Admin.Controllers
 
             return Json(draft, JsonRequestBehavior.AllowGet);
         }
-
         //ImageThumbnail
         private void CreateThumbnail(int ThumbnailMax, string OriginalImagePath, string ThumbnailImagePath)
         {
