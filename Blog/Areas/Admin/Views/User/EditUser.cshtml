@@ -1,22 +1,26 @@
-﻿@model ViewModel.AuthorViewModels.AuthorViewModel
+﻿@model ViewModel.UserViewModel.UserViewModel
+
 @{
-    ViewBag.Title = "AddAuthor";
+    ViewBag.Title = "Edit User";
 }
 <style>
-    .fa-cloud-upload{
+    .fa-cloud-upload {
         margin: 10px 23px 8px 25px !important;
     }
+
     .form-bg {
-        height:800px !important;
+        height: 800px !important;
     }
-    .submitbtn{
+
+    .submitbtn {
         height: auto;
     }
-    .togglecheckbox {
-        margin-top:9px;
-    }
-</style>
 
+    .togglecheckbox {
+        margin-top: 9px;
+    }
+
+</style>
 @if (ViewBag.Error == true)
 {
     <div class="alert divError">
@@ -35,11 +39,11 @@
                         <div class="cotnainer">
                             <div class="row">
                                 <div class="container-half">
-                                    <h1 class="primary-blue">Add Auhtor</h1>
+                                    <h1 class="primary-blue">Edit USer</h1>
                                 </div>
                                 <div class="container-half contenthead-pd">
                                     <div class="right pr-2">
-                                        <a href="@Url.Action("Index", "Author")" class="blog-btn">Go back</a>
+                                        <a href="@Url.Action("Index", "User")" class="blog-btn">Go back</a>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +52,7 @@
                 </div>
                 <!--Form-->
                 <div class="admin-form">
-                    @using (Html.BeginForm("AddAuthor", "Author", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <!--First Row-->
@@ -56,8 +60,9 @@
                             <div class="row">
                                 <div class="container-half">
                                     <div class="form-txt">
-                                        <label for="">Author name</label>
+                                        <label for="">User name</label>
                                         @Html.TextBox("Name", null, new { @class = "textbox" })
+                                        @Html.HiddenFor(model => model.Id)
                                     </div>
                                 </div>
                             </div>
@@ -73,42 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                                                <!--Third Row-->
-                        <div class="container">
-                            <div class="row">
-                                <div class="container-half">
-                                    <div class="form-txt">
-                                        <label for="">Password</label>
-                                        @Html.PasswordFor(model => model.Password, new { @class = "textbox" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Fourth Row-->
-                        <div class="container">
-                            <div class="row">
-                                <div class="container-half">
-                                    <div class="form-txt">
-                                        <label for="">Confirm Password</label>
-                                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "textbox" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <!--Third Row-->
-                        <div class="container">
-                            <div class="row">
-                                <div class="container-half">
-                                    <div class="form-txt">
-                                        <div class="form-txt">
-                                            <label for="">Contact</label>
-                                            @Html.TextBox("Contact", null, new { @class = "textbox" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Fourth Row-->
                         <div class="container">
                             <div class="row">
                                 <div class="container">
@@ -119,12 +89,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!--fifth Row-->
+                        <!--Fourth Row-->
                         <div class="container">
                             <div class="row">
                                 <div class="container-half">
                                     <div class="form-txt showbtn">
-                                        <label for="">Author IsActive</label>
+                                        <label for="">User IsActive</label>
                                         <div class="slider-td">
                                             <label class="switch">
                                                 @Html.HiddenFor(model => model.Active, new { @id = "IsActive", @class = "hdncheck" })
@@ -134,18 +104,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="container-half">
-                                    <div class="form-txt showbtn">
-                                        <label class="custom-file-upload">
-                                            <input type="file" name="ImageUrl" id="ImageUrl" accept="image/jpeg, image/png" />
-                                            <i class="fa fa-cloud-upload"></i>
-                                        </label>
-                                        <span class="coverImg">Upload Image</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <!--sixth Row-->
+                        <!--Fifth Row-->
                         <div class="container">
                             <div class="right">
                                 <input type="submit" class="blog-btn submitbtn" title="Create" />
@@ -175,3 +136,4 @@
         jQuery(".divError").fadeOut(1000);
     });
 </script>
+

@@ -1,0 +1,91 @@
+﻿@using ViewModel.UserViewModel
+@model IEnumerable<UserViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .editImage {
+        width: 25px;
+        padding: 0px 0px 0px 5px;
+    }
+
+    .deleteImage {
+        width: 22px;
+        padding: 0px 5px 0px 0px;
+    }
+</style>
+<main class="main">
+    <article class="article">
+        <div class="main-bg-2 main-content">
+            <!--Header-->
+            <div class="mainHeader-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="container-half">
+                            <h1 class="primary-blue">Users list</h1>
+                        </div>
+                        <div class="container-half">
+                            <div class="right contenthead-pd">
+                                <div class="blog-header">
+                                    <input type="search" placeholder="Search User">
+                                    <a href="@Url.Action("AddUser", "User")" class="blog-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Table-->
+            <div class="blog-table">
+                <div class="container">
+                    <di class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Active</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var d in Model)
+                                {
+                                    <tr>
+                                        <td>@d.Active</td>
+                                        <td>
+                                            <div class="row status">
+                                                <img src="~/Areas/Admin/Content/images/Avatar-1 1.png" alt="" />
+                                                <p class="AutherName">@d.Name</p>
+                                                <label class="active-status"></label>
+                                            </div>
+                                        </td>
+                                        <td>@d.Email</td>
+                                        <td>@d.Description</td>
+                                        <td>
+                                            <a href="@Url.Action("EditUser", "User", new { id = d.Id})">
+                                                <img src="~/Areas/Admin/Content/images/pencil.png" class="editImage" alt="Edit Author" />
+                                            </a>
+
+                                            <a href="@Url.Action("DeleteUser", "User", new { id = d.Id})">
+                                                <img src="~/Areas/Admin/Content/images/erase.png" class="deleteImage" alt="Delete Author" />
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+<script src="~/Areas/Admin/Content/js/jquery-3.4.1.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+
+    });
+</script>

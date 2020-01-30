@@ -5,13 +5,16 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Services;
 using ViewModel.UserViewModel;
 
 namespace Blog.Service.UserService
 {
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class UserService : IUserService
     {
-        private BlogEntities DbContext;
+        private BlogEntities DbContext = new BlogEntities();
 
         public UserService(BlogEntities _DbContext)
         {
@@ -50,13 +53,10 @@ namespace Blog.Service.UserService
         {
             try
             {
-                using (DbContext)
-                {
                     User user = DbContext.Users.Find(Id);
                     DbContext.Users.Remove(user);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
             }
             catch (Exception)
             {
@@ -94,8 +94,6 @@ namespace Blog.Service.UserService
         {
             try
             {
-                using (DbContext)
-                {
                     IList<UserViewModel> users = DbContext.Users.Select(user => new UserViewModel
                     {
                         Id = user.Id,
@@ -111,7 +109,6 @@ namespace Blog.Service.UserService
                         JoinDate = user.JoinDate,
                     }).ToList();
                     return users;
-                }
             }
             catch (Exception)
             {

@@ -1,10 +1,5 @@
 ﻿using Blog.Models;
-using Blog.Service.AuthorService;
-using Blog.Service.BlogContentService;
-using Blog.Service.BlogServices;
-using Blog.Service.CategoryServices;
-using Blog.Service.MediaFileService;
-using Blog.Service.TagService;
+using Blog.Service.UserService;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -12,35 +7,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ViewModel.AuthorViewModels;
+using ViewModel.UserViewModel;
 
 namespace Blog.Areas.Admin.Controllers
 {
-    [RoutePrefix("Author")]
-    public class AuthorController : Controller
+    [RoutePrefix("User")]
+    public class UserController : Controller
     {
-        private IAuthorService authorServices;
-
-        public AuthorController(IAuthorService _authorServices)
+        private IUserService userservice;
+        public UserController(IUserService _userservice)
         {
-            authorServices = _authorServices;
+            userservice = _userservice;
         }
-
         [HttpGet]
         public ActionResult Index()
         {
-            List<AuthorViewModel> model = authorServices.GetAllAuthors().ToList();
-            return View(model);
-
+            IList<UserViewModel> users = userservice.GetAllUsers();
+            return View(users);
         }
         [HttpGet]
-        public ActionResult AddAuthor()
+        public ActionResult AddUser()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddAuthor(AuthorViewModel model)
+        public ActionResult AddUser(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -58,8 +50,7 @@ namespace Blog.Areas.Admin.Controllers
                         {
                             userMngr.AddToRole(user.Id, "User");
                             model.AspnetUser = user.Id;
-
-                            int res = authorServices.AddAuthor(model);
+                            int res = userservice.AddUser(model);
                             if (res == 1)
                             {
                                 return RedirectToAction("Index");
@@ -67,7 +58,7 @@ namespace Blog.Areas.Admin.Controllers
                             else
                             {
                                 ViewBag.Error = true;
-                                ViewBag.ErrorMessage = "Please Validate the form first.";
+                                ViewBag.ErrorMessage = "Please Validate the form First.";
                                 return View(model);
                             }
                         }
@@ -84,21 +75,20 @@ namespace Blog.Areas.Admin.Controllers
             ViewBag.ErrorMessage = "Please Validate the form first.";
             return View(model);
         }
-
         [HttpGet]
-        public ActionResult EditAuthor(int id)
+        public ActionResult EditUser(int id)
         {
-            AuthorViewModel toEdit = authorServices.GetAuthorById(id);
+            UserViewModel toEdit = userservice.GetUserById(id);
             return View(toEdit);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAuthor(AuthorViewModel model)
+        public ActionResult EditUser(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                int res = authorServices.EditAuthor(model, model.Id);
+                int res = userservice.EditUser(model, model.Id);
                 if (res == 1)
                 {
                     return RedirectToAction("Index");
@@ -106,32 +96,31 @@ namespace Blog.Areas.Admin.Controllers
                 else
                 {
                     ViewBag.Error = true;
-                    ViewBag.ErrorMessage = "Please Valodate the form first.";
+                    ViewBag.ErrorMessage = "Please Validate the form first.";
                     return View(model);
                 }
             }
             ViewBag.Error = true;
-            ViewBag.ErrorMessage = "Please Valodate the form first.";
+            ViewBag.ErrorMessage = "Please Validate the form first.";
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult DeleteAuthor(int id)
+        public ActionResult DeleteUser(int id)
         {
-            AuthorViewModel model = authorServices.GetAuthorById(id);
+            UserViewModel model = userservice.GetUserById(id);
             return View(model);
         }
         [HttpPost]
-        public ActionResult DeleteAuthor(AuthorViewModel model)
+        public ActionResult DeleteUser(UserViewModel model)
         {
-            var id = model.Id;
-            int res = authorServices.DeleteAuthor(id);
-            if (res == 1)
-            {
-                return RedirectToAction("Index", "Author");
-            }
-            return RedirectToAction("Index", "Author");
+                var id = model.Id;
+                int res = userservice.DeleteUser(id);
+                if (res == 1)
+                {
+                    return RedirectToAction("Index", "User");
+                }
+            return View(model);
         }
-
     }
 }

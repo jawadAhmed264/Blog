@@ -1,7 +1,7 @@
-﻿@model ViewModel.AuthorViewModels.AuthorViewModel
+﻿@model ViewModel.UserViewModel.UserViewModel
 
 @{
-    ViewBag.Title = "DeleteAuthor";
+    ViewBag.Title = "Delete User";
 }
 
 <style>
@@ -28,7 +28,7 @@
                                     <br />
                                     <h1 class="primary-blue">Delete Confirmation</h1>
                                     <h4>
-                                        Please confirm you want to delete the Author :<br />
+                                        Please confirm you want to delete the User :<br />
                                         Name : @Html.Encode(Model.Name)<br />
                                         Email Address : @Html.Encode(Model.Email)<br />
                                         Description : @Html.Encode(Model.Description)<br />
@@ -36,13 +36,13 @@
                                 </div>
                                 <div class="container-half contenthead-pd">
                                     <div class="right pr-2">
-                                        <a href="@Url.Action("Index", "Author")" class="blog-btn">Go back</a>
+                                        <a href="@Url.Action("Index", "User")" class="blog-btn">Go back</a>
                                     </div>
                                 </div>
                             </div>
                             <div>
 
-                                @using (Html.BeginForm("DeleteAuthor", "Author", FormMethod.Post))
+                                @using (Html.BeginForm("DeleteUser", "User", FormMethod.Post))
                                 {
                                     @Html.ValidationSummary(true);
                                     <div class="container">

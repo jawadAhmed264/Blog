@@ -19,8 +19,16 @@
     .togglecheckbox {
         margin-top: 9px;
     }
-
 </style>
+
+@if (ViewBag.Error == true)
+{
+    <div class="alert divError">
+        <span class="closebtn">&times;</span>
+        <strong>@ViewBag.ErrorMessage</strong><br />
+        @Html.ValidationSummary()
+    </div>
+}
 <main class="main">
     <article class="article">
         <div class="main-bg-2">
@@ -44,9 +52,9 @@
                 </div>
                 <!--Form-->
                 <div class="admin-form">
-                    @using (Html.BeginForm("EditAuthor", "Author", FormMethod.Post))
+                    @using (Html.BeginForm("EditAuthor", "Author", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
-                        @Html.ValidationSummary(true);
+                        @Html.AntiForgeryToken()
                         <!--First Row-->
                         <div class="container">
                             <div class="row">
@@ -145,6 +153,9 @@
         else {
             jQuery('.hdncheck').val(false);
         }
+    });
+    jQuery(".closebtn").click(function () {
+        jQuery(".divError").fadeOut(1000);
     });
 </script>
 
