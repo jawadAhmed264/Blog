@@ -74,10 +74,10 @@
         </div>
         <div class="aside-menu">
             <ul>
-                <li class="active"><a href="Dashboard.html"><img src="~/Areas/Admin/Content/images/dashboard-icon.png" alt=""></a></li>
-                <li><a href="blog.html"><img src="~/Areas/Admin/Content/images/writeapost-icon.png" alt=""></a></li>
-                <li><a href="UsersList.html"><img src="~/Areas/Admin/Content/images/admin.png" alt=""></a></li>
-                <li><a href="Adminform.html"><img src="~/Areas/Admin/Content/images/adminrole.png" alt=""></a></li>
+                <li class="active"><a href="@Url.Action("Index", "Dashboard",new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/dashboard-icon.png" alt=""></a></li>
+                <li><a href="@Url.Action("Index", "BlogPost",new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/writeapost-icon.png" alt=""></a></li>
+                <li><a href="@Url.Action("Index", "Author",new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/admin.png" alt=""></a></li>
+                <li><a href="@Url.Action("Index", "User",new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/adminrole.png" alt=""></a></li>
                 <li><a href="Categorylist.html"><img src="~/Areas/Admin/Content/images/categorylist.png" alt=""></a></li>
             </ul>
         </div>

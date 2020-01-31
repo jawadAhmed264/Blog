@@ -95,7 +95,28 @@
             });
         });
 
-         $('.delete---no').click(function () {
+        function publish(id) {
+            var data={ Id: id }
+            $.ajax({
+               type: "POST",
+               url: '@Url.Action("Publish", "BlogPost",new { Area = "Admin" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                dataType: "html",
+                success: function (response) {
+                    $("#blogTable").empty();
+                    $("#blogTable").html(response);
+                    $('#message').text('Status Updated');
+                    $('.divMsg').fadeIn(1000);
+                    return;
+               },
+               error: function () {
+                   alert("Error");
+               }
+            });
+        }
+
+        $('.delete---no').click(function () {
             $('.overlay').css('display', 'none');
             $('.delete---modal').css('display', 'none');
         });

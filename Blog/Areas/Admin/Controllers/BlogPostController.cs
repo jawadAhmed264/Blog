@@ -55,14 +55,12 @@ namespace Blog.Areas.Admin.Controllers
             }
             return View(model);
         }
-
         [HttpGet]
         public ActionResult UpdateBlogList()
         {
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
             return PartialView("_partialBlogList", model);
         }
-
         [HttpGet]
         public ActionResult AddBlog()
         {
@@ -70,7 +68,6 @@ namespace Blog.Areas.Admin.Controllers
             model.CategoryList = catService.getAll();
             return View(model);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddBlog(AddBlogViewModel model)
@@ -155,7 +152,6 @@ namespace Blog.Areas.Admin.Controllers
                 throw;
             }
         }
-
         [HttpGet]
         public ActionResult EditBlog(long Id)
         {
@@ -194,7 +190,6 @@ namespace Blog.Areas.Admin.Controllers
             model.CategoryList = catService.getAll();
             return View(model);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditBlog(AddBlogViewModel model, long BlogId)
@@ -299,7 +294,6 @@ namespace Blog.Areas.Admin.Controllers
                 throw;
             }
         }
-
         [HttpPost]
         public ActionResult Delete(long Id)
         {
@@ -332,6 +326,13 @@ namespace Blog.Areas.Admin.Controllers
                 throw new InvalidOperationException("Error while deleting blog");
             }
 
+            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
+            return PartialView("_partialBlogList", model);
+        }
+        [HttpPost]
+        public ActionResult Publish(long Id)
+        {
+            int res = blogService.Publish(Id);
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
             return PartialView("_partialBlogList", model);
         }
@@ -398,7 +399,6 @@ namespace Blog.Areas.Admin.Controllers
             url = null;
             return;
         }
-
         private List<TagViewModel> InsertTagsinModel(string tags, long? BlogId)
         {
             List<TagViewModel> list = new List<TagViewModel>();
@@ -419,7 +419,6 @@ namespace Blog.Areas.Admin.Controllers
             }
             return list;
         }
-
         private List<MediaFileViewModel> InsertMediaFilesInModel(List<string> imageName, string Description, long? BlogId)
         {
             List<MediaFileViewModel> list = new List<MediaFileViewModel>();
@@ -446,7 +445,6 @@ namespace Blog.Areas.Admin.Controllers
             }
             return list;
         }
-
         private List<string> getImageNames(List<string> imageSrc)
         {
             List<string> ImageNames = new List<string>();
@@ -464,7 +462,6 @@ namespace Blog.Areas.Admin.Controllers
             }
             return ImageNames;
         }
-
         private List<string> getImageSourceList(string html)
         {
 

@@ -282,5 +282,22 @@ namespace Blog.Service.BlogServices
                 throw;
             }
         }
+
+        public int Publish(long Id)
+        {
+            BlogPost blogPost = DbContext.BlogPosts.SingleOrDefault(m => m.Id == Id);
+            bool? Active = blogPost.Active;
+            if (Active == true)
+            {
+                blogPost.Active = false;
+            }
+            else
+            {
+                blogPost.Active = true;
+            }
+            DbContext.Entry(blogPost).State = EntityState.Modified;
+            int res = DbContext.SaveChanges();
+            return res;
+        }
     }
 }

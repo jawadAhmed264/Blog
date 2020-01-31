@@ -12,6 +12,7 @@ namespace Blog.Service.BlogServices
         int AddBlog(AddBlogViewModel model);
         int EditBlog(AddBlogViewModel model, long Id);
         int DeleteBlog(long Id);
+        int Publish(long Id);
         AddBlogViewModel getBlogById(long? Id);
         IList<IndexBlogViewModel> getAllBlogs();
         IList<AddBlogViewModel> getAllBlogsByAuthor(int? AuthorId);
