@@ -22,8 +22,7 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                using (DbContext)
-                {
+                
                     Category category = new Category()
                     {
                         Active = model.Active,
@@ -37,7 +36,7 @@ namespace Blog.Service.CategoryServices
                     DbContext.Categories.Add(category);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -49,13 +48,12 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                using (DbContext)
-                {
+                
                     Category category = DbContext.Categories.Find(Id);
                     DbContext.Categories.Remove(category);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -67,9 +65,7 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                using (DbContext)
-                {
-
+                
                     Category category = DbContext.Categories.Find(Id);
                     category.Active = model.Active;
                     category.ModifyBy = model.ModifyBy;
@@ -81,7 +77,7 @@ namespace Blog.Service.CategoryServices
                     DbContext.Entry(category).State = EntityState.Modified;
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -94,8 +90,7 @@ namespace Blog.Service.CategoryServices
             try
             {
                 IEnumerable<CategoryViewModel> list = new List<CategoryViewModel>();
-                using (DbContext)
-                {
+                
                     list = DbContext.Categories.ToList().Select(m => new CategoryViewModel
                     {
                         CategoryId = m.Id,
@@ -109,7 +104,7 @@ namespace Blog.Service.CategoryServices
                         CSSStyle = m.CSSStyle,
                         ImageUrl = m.ImageUrl
                     });
-                }
+                
                 return list;
             }
             catch (Exception)
@@ -123,8 +118,7 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                using (DbContext)
-                {
+                
                     var model = DbContext.Categories.SingleOrDefault(cat => cat.Id == Id);
 
                     CategoryViewModel category = new CategoryViewModel
@@ -141,7 +135,7 @@ namespace Blog.Service.CategoryServices
                         ImageUrl = model.ImageUrl
                     };
                     return category;
-                }
+                
             }
             catch (Exception)
             {

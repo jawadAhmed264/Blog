@@ -25,8 +25,7 @@ namespace Blog.Service.UserService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     User user = new User()
                     {
                         Active = model.Active,
@@ -41,7 +40,7 @@ namespace Blog.Service.UserService
                     DbContext.Users.Add(user);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -68,8 +67,7 @@ namespace Blog.Service.UserService
         {
             try
             {
-                using (DbContext)
-                {
+                
 
                     User user = DbContext.Users.Find(Id);
                     user.Active = model.Active;
@@ -82,7 +80,7 @@ namespace Blog.Service.UserService
                     DbContext.Entry(user).State = EntityState.Modified;
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -121,8 +119,7 @@ namespace Blog.Service.UserService
         {
             try
             {
-                using (DbContext)
-                {
+               
                     User user = DbContext.Users.Find(Id);
                     UserViewModel model = new UserViewModel()
                     {
@@ -139,7 +136,7 @@ namespace Blog.Service.UserService
                         JoinDate = user.JoinDate
                     };
                     return model;
-                }
+                
             }
             catch (Exception)
             {

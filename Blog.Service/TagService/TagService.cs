@@ -22,8 +22,7 @@ namespace Blog.Service.TagService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     Tag tag = new Tag()
                     {
                         Active = model.Active,
@@ -35,7 +34,7 @@ namespace Blog.Service.TagService
                     DbContext.Tags.Add(tag);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -47,13 +46,12 @@ namespace Blog.Service.TagService
         {
             try
             {
-                using (DbContext)
-                {
+              
                     Tag tag = DbContext.Tags.Find(Id);
                     DbContext.Tags.Remove(tag);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -65,13 +63,12 @@ namespace Blog.Service.TagService
         {
             try
             {
-                using (DbContext)
-                {
+               
                     IList<Tag> tags = DbContext.Tags.Where(t=>t.BlogPostId==BlogId).ToList();
                     DbContext.Tags.RemoveRange(tags);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -83,8 +80,7 @@ namespace Blog.Service.TagService
         {
             try
             {
-                using (DbContext)
-                {
+               
 
                     Tag tag = DbContext.Tags.Find(Id);
                     tag.Active = model.Active;
@@ -95,7 +91,7 @@ namespace Blog.Service.TagService
                     DbContext.Entry(tag).State = EntityState.Modified;
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -107,8 +103,7 @@ namespace Blog.Service.TagService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     IList<TagViewModel> tags = DbContext.Tags.Select(tag => new TagViewModel
                     {
                         Id = tag.Id,
@@ -122,7 +117,7 @@ namespace Blog.Service.TagService
 
                 }).ToList();
                     return tags;
-                }
+                
             }
             catch (Exception)
             {
@@ -135,8 +130,7 @@ namespace Blog.Service.TagService
         {
             try
             {
-                using (DbContext)
-                {
+               
                     IList<TagViewModel> tags = DbContext.Tags.Where(tag=>tag.BlogPostId==BlogId).Select(tag => new TagViewModel
                     {
                         Id = tag.Id,
@@ -150,7 +144,7 @@ namespace Blog.Service.TagService
 
                     }).ToList();
                     return tags;
-                }
+                
             }
             catch (Exception)
             {
@@ -163,8 +157,7 @@ namespace Blog.Service.TagService
         {
             try
             {
-                using (DbContext)
-                {
+               
                     Tag tag = DbContext.Tags.Find(Id);
                     TagViewModel model = new TagViewModel()
                     {
@@ -178,7 +171,7 @@ namespace Blog.Service.TagService
                         TagName = tag.TagName
                     };
                     return model;
-                }
+                
             }
             catch (Exception)
             {

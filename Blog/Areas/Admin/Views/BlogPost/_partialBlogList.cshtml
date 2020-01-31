@@ -17,40 +17,47 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @if (Model.ToList().Count==0)
                     {
-                        <tr class="showbtn">
-                            <td>
-                                <label class="switch">
-                                    <input type="checkbox" name="Active" id="Active" checked="@item.Active">
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="row status">
-                                    <img src="images/Avatar-1 1.png" alt="">
-                                    <p>@item.Title</p>
-                                    <label class="active-status"></label>
-                                </div>
-                            </td>
-                            <td>1099 </td>
-                            <td>@item.Summary</td>
-                            <td>@item.CategoryName</td>
-                            <td>@item.CreateDate</td>
-                            <td>
-                                <div class="showbtn">
-                                    <div class='edit-btn' onclick="showdd(@item.BlogPostId)"><div class='edit-icon'> <img src='~/Areas/Admin/Content/images/Edit-icon.png' alt=''></div></div>
-                                </div>
-                                <div class="showbtn---dropdown">
-                                    <div class="dropdown---box" id="@item.BlogPostId">
-                                        <ul>
-                                            <li><a href="#">Edit</a></li>
-                                            <li><a href="#" onclick="handleDelete(@item.BlogPostId)">Delete</a></li>
-                                        </ul>
+                        <tr><td colspan="7" style="text-align:center">No Records found</td></tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr class="showbtn">
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" name="Active" id="Active" checked="@item.Active">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="row status">
+                                        <img src="images/Avatar-1 1.png" alt="">
+                                        <p>@item.Title</p>
+                                        <label class="active-status"></label>
                                     </div>
-                                </div> 
-                            </td>
-                        </tr>
+                                </td>
+                                <td>1099 </td>
+                                <td>@item.Summary</td>
+                                <td>@item.CategoryName</td>
+                                <td>@item.CreateDate</td>
+                                <td>
+                                    <div class="showbtn">
+                                        <div class='edit-btn' onclick="showdd(@item.BlogPostId)"><div class='edit-icon'> <img src='~/Areas/Admin/Content/images/Edit-icon.png' alt=''></div></div>
+                                    </div>
+                                    <div class="showbtn---dropdown">
+                                        <div class="dropdown---box" id="@item.BlogPostId">
+                                            <ul>
+                                                <li><a href="@Url.Action("EditBlog", "BlogPost", new { Id = item.BlogPostId })">Edit</a></li>
+                                                <li><a href="#" onclick="handleDelete(@item.BlogPostId)">Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

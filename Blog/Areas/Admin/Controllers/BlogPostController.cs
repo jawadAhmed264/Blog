@@ -30,7 +30,11 @@ namespace Blog.Areas.Admin.Controllers
         private IMediaFileService mediaFileService;
         private IBlogContentService blogContentService;
 
-        public BlogPostController(ICategoryService _catService, IBlogService _blogService, ITagService _tagService, IMediaFileService _mediaFileService, IBlogContentService _blogContentService)
+        public BlogPostController(ICategoryService _catService,
+            IBlogService _blogService,
+            ITagService _tagService,
+            IMediaFileService _mediaFileService,
+            IBlogContentService _blogContentService)
         {
             catService = _catService;
             blogService = _blogService;
@@ -44,6 +48,11 @@ namespace Blog.Areas.Admin.Controllers
         public ActionResult Index()
         {
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
+            if (Convert.ToBoolean(TempData["Error"]) == true)
+            {
+                ViewBag.Error = true;
+                ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+            }
             return View(model);
         }
 
@@ -74,10 +83,10 @@ namespace Blog.Areas.Admin.Controllers
                     List<string> imageName = getImageNames(imageSrc);
                     List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "", null);
                     List<TagViewModel> tags = InsertTagsinModel(model.Tags, null);
-
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
                     string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
                     string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
+
                     string Error, bannerUrl;
 
                     //Save BannerImage
@@ -130,6 +139,8 @@ namespace Blog.Areas.Admin.Controllers
                     if (res > 0)
                     {
                         ModelState.Clear();
+                        TempData["Error"] = true;
+                        TempData["ErrorMessage"] = "New blog created successfully";
                         return RedirectToAction("Index");
                     }
 
@@ -196,14 +207,14 @@ namespace Blog.Areas.Admin.Controllers
                     List<string> imageName = getImageNames(imageSrc);
                     List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "", BlogId);
                     List<TagViewModel> tags = InsertTagsinModel(model.Tags, BlogId);
-
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
                     string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
                     string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
+
+
                     string Error, bannerUrl;
 
                     //Save BannerImage
-
                     if (model.BannerImage != null)
                     {
                         SaveBannerImage(model.BannerImage, bannerPath, model.Title, out Error, out bannerUrl);
@@ -211,12 +222,11 @@ namespace Blog.Areas.Admin.Controllers
                         if (Error != null)
                         {
                             model.CategoryList = catService.getAll();
-                            ModelState.AddModelError("Invalid Image", Error);
+                            ModelState.AddModelError("", Error);
                             ViewBag.Error = true;
                             ViewBag.ErrorMessage = "Invalid Form Validation";
                             return View(model);
                         }
-
                         if (bannerUrl == null)
                         {
                             mediafiles.Add(new MediaFileViewModel()
@@ -239,15 +249,17 @@ namespace Blog.Areas.Admin.Controllers
                     }
                     else
                     {
-                        mediafiles.Add(new MediaFileViewModel()
+                        if (model.BannerUrl != "/Content/Images/defaultBanner.jpg")
                         {
-                            MediaType = MediaTypeEnum.Banner.ToString(),
-                            Url = model.BannerUrl,
-                            FileName = model.BannerUrl,
-                            Description = ""
-                        });
+                            mediafiles.Add(new MediaFileViewModel()
+                            {
+                                MediaType = MediaTypeEnum.Banner.ToString(),
+                                Url = model.BannerUrl,
+                                FileName = model.BannerUrl,
+                                Description = ""
+                            });
+                        }
                     }
-
                     //Populate Model
                     model.MediaFiles = mediafiles;
                     model.TagList = tags;
@@ -271,6 +283,8 @@ namespace Blog.Areas.Admin.Controllers
                     if (res > 0)
                     {
                         ModelState.Clear();
+                        TempData["Error"] = true;
+                        TempData["ErrorMessage"] = "Blog updated successfully";
                         return RedirectToAction("Index");
                     }
 
@@ -286,62 +300,103 @@ namespace Blog.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Delete(long Id)
+        {
+            string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
+            string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
+            string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
+
+            IList<MediaFileViewModel> files = mediaFileService.GetAllMediaFilesByBlogId(Id).ToList();
+            int res = blogService.DeleteBlog(Id);
+            if (res > 0)
+            {
+                if (files.Count > 0)
+                {
+                    if (files.Any(m => m.MediaType == MediaTypeEnum.Banner.ToString()))
+                    {
+                        string bannerName = files.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).FileName;
+                        if (System.IO.File.Exists(bannerPath + bannerName)) { System.IO.File.Delete(bannerPath + bannerName); }
+                    }
+                    foreach (var file in files)
+                    {
+                        if (file.MediaType == MediaTypeEnum.BlogImage.ToString())
+                        {
+                            if (System.IO.File.Exists(blogPath + file.FileName)) { System.IO.File.Delete(blogPath + file.FileName); }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Error while deleting blog");
+            }
+
+            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
+            return PartialView("_partialBlogList", model);
+        }
+
         private void SaveBannerImage(HttpPostedFileBase bannerImage, string bannerPath, string blogTitle, out string error, out string url)
         {
-            HttpPostedFileBase file = bannerImage;
-            string extension = Path.GetExtension(file.FileName);
-            string fileid = Guid.NewGuid().ToString();
-            fileid = Path.ChangeExtension(fileid, extension);
-
-            Image img = Image.FromStream(bannerImage.InputStream, true, true);
-            int width = img.Width;
-            int height = img.Height;
-
-            var draft = new { location = "" };
-
-            if (file != null && file.ContentLength > 0)
+            if (bannerImage != null)
             {
-                const int megabyte = 1024 * 1024;
+                HttpPostedFileBase file = bannerImage;
+                string extension = Path.GetExtension(file.FileName);
+                string fileid = Guid.NewGuid().ToString();
+                fileid = Path.ChangeExtension(fileid, extension);
 
-                if (!file.ContentType.StartsWith("image/"))
+                Image img = Image.FromStream(bannerImage.InputStream, true, true);
+                int width = img.Width;
+                int height = img.Height;
+
+                var draft = new { location = "" };
+
+                if (file != null && file.ContentLength > 0)
                 {
-                    error = "Invalid MIME content type";
-                    url = null;
+                    const int megabyte = 1024 * 1024;
+
+                    if (!file.ContentType.StartsWith("image/"))
+                    {
+                        error = "Invalid MIME content type";
+                        url = null;
+                        return;
+                    }
+
+                    string[] extensions = { ".gif", ".jpg", ".png" };
+                    if (!extensions.Contains(extension))
+                    {
+                        error = "Invalid file extension";
+                        url = null;
+                        return;
+                    }
+
+                    if (file.ContentLength > (8 * megabyte))
+                    {
+                        error = "File size limit exceeded";
+                        url = null;
+                        return;
+                    }
+
+                    if (width != 1440 && height != 700)
+                    {
+                        error = "Background dimension must be 1440*700";
+                        url = null;
+                        return;
+                    }
+
+                    string savePath = bannerPath + fileid;
+                    file.SaveAs(savePath);
+                    error = null;
+                    url = fileid;
                     return;
                 }
-
-                string[] extensions = { ".gif", ".jpg", ".png" };
-                if (!extensions.Contains(extension))
-                {
-                    error = "Invalid file extension";
-                    url = null;
-                    return;
-                }
-
-                if (file.ContentLength > (8 * megabyte))
-                {
-                    error = "File size limit exceeded";
-                    url = null;
-                    return;
-                }
-
-                if (width != 1440 && height != 700)
-                {
-                    error = "Background dimension must be 1440*700";
-                    url = null;
-                    return;
-                }
-
-                string savePath = bannerPath + fileid;
-                file.SaveAs(savePath);
                 error = null;
-                url = fileid;
+                url = null;
                 return;
             }
-            error = "Select Banner Image";
+            error = null;
             url = null;
             return;
-
         }
 
         private List<TagViewModel> InsertTagsinModel(string tags, long? BlogId)

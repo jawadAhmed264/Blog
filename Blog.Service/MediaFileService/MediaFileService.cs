@@ -20,8 +20,7 @@ namespace Blog.Service.MediaFileService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     MediaFile mediaFile = new MediaFile()
                     {
                         Active = model.Active,
@@ -36,7 +35,7 @@ namespace Blog.Service.MediaFileService
                     DbContext.MediaFiles.Add(mediaFile);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -48,13 +47,12 @@ namespace Blog.Service.MediaFileService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     MediaFile mediaFile = DbContext.MediaFiles.Find(Id);
                     DbContext.MediaFiles.Remove(mediaFile);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -66,13 +64,12 @@ namespace Blog.Service.MediaFileService
         {
             try
             {
-                using (DbContext)
-                {
+               
                     var mediaFiles = DbContext.MediaFiles.Where(mf=>mf.BlogPostId==BlogId);
                     DbContext.MediaFiles.RemoveRange(mediaFiles);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -84,8 +81,7 @@ namespace Blog.Service.MediaFileService
         {
             try
             {
-                using (DbContext)
-                {
+                
 
                     MediaFile mediaFile = DbContext.MediaFiles.Find(Id);
                     mediaFile.Active = model.Active;
@@ -99,7 +95,7 @@ namespace Blog.Service.MediaFileService
                     DbContext.Entry(mediaFile).State = EntityState.Modified;
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -111,8 +107,7 @@ namespace Blog.Service.MediaFileService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     IList<MediaFileViewModel> mediaFileList = DbContext.MediaFiles.Select(mf => new MediaFileViewModel
                     {
                         MediaFileId = mf.Id,
@@ -125,10 +120,11 @@ namespace Blog.Service.MediaFileService
                         Description = mf.Description,
                         FileName = mf.FileName,
                         MediaTypeId = mf.MediaTypeId,
+                        MediaType=mf.MediaType.TypeName,
                         Url = mf.Url
                     }).ToList();
                     return mediaFileList;
-                }
+                
             }
             catch (Exception)
             {
@@ -141,8 +137,7 @@ namespace Blog.Service.MediaFileService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     IList<MediaFileViewModel> mediaFileList = DbContext.MediaFiles.Where(mf=>mf.BlogPostId==BlogId).Select(mf => new MediaFileViewModel
                     {
                         MediaFileId = mf.Id,
@@ -159,7 +154,7 @@ namespace Blog.Service.MediaFileService
                         Url = mf.Url
                     }).ToList();
                     return mediaFileList;
-                }
+                
             }
             catch (Exception)
             {
@@ -172,8 +167,7 @@ namespace Blog.Service.MediaFileService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     MediaFile mediaFile = DbContext.MediaFiles.Find(Id);
                     MediaFileViewModel model = new MediaFileViewModel()
                     {
@@ -187,10 +181,11 @@ namespace Blog.Service.MediaFileService
                         Description = mediaFile.Description,
                         FileName = mediaFile.FileName,
                         MediaTypeId = mediaFile.MediaTypeId,
+                        MediaType = mediaFile.MediaType.TypeName,
                         Url = mediaFile.Url
                     };
                     return model;
-                }
+                
             }
             catch (Exception)
             {

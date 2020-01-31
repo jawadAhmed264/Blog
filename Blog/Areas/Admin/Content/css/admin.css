@@ -38,6 +38,10 @@
     overflow-y: hidden;
 }
 
+.divMsg {
+    display:none;
+}
+
 .alert {
     padding: 20px;
     background-color: #f44336;

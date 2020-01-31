@@ -5,14 +5,20 @@
     ViewBag.Title = "Index";
 }
 
+
 @if (ViewBag.Error == true)
 {
     <div class="success divError">
         <span class="closebtn">&times;</span>
         <strong>@ViewBag.ErrorMessage</strong><br />
-        @Html.ValidationSummary()
     </div>
 }
+
+<div class="success divMsg">
+    <span class="closebtn">&times;</span>
+    <strong id="message"></strong><br />
+</div>
+
 <article class="article">
     <div class="main-bg-2 main-content">
         <!--Header-->
@@ -35,21 +41,24 @@
         </div>
         <!--Table-->
         <div id="blogTable">
-            @Html.Partial("_partialBlogList",Model);
+            @Html.Partial("_partialBlogList", Model)
         </div>
     </div>
 </article>
 
 @section scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
         $(".closebtn").click(function () {
             $(".divError").fadeOut(1000);
+            $('.divMsg').fadeOut(1000);
         });
     });
 
+    var DeleteId = null;
+
     function showdd(id) {
-        
+
         if ($('#' + id).css('display') == 'none')
         {
             $('#' + id).css('display', 'block');
@@ -61,15 +70,34 @@
     function handleDelete(id) {
         $('.overlay').css('display', 'block');
         $('.delete---modal').css('display', 'block');
+        DeleteId = id;
+     }
+        $('.delete---yes').click(function () {
+            var data={ Id: DeleteId }
+            $.ajax({
+               type: "POST",
+               url: '@Url.Action("Delete", "BlogPost",new { Area = "Admin" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                dataType: "html",
+                success: function (response) {
+                    $("#blogTable").empty();
+                    $("#blogTable").html(response);
+                    $('.overlay').css('display', 'none');
+                    $('.delete---modal').css('display', 'none');
+                    $('#message').text('Deleted Successfully');
+                    $('.divMsg').fadeIn(1000);
+                    return;
+               },
+               error: function () {
+                   alert("Error");
+               }
+            });
+        });
 
-        $('.delete---no').click(function () {
+         $('.delete---no').click(function () {
             $('.overlay').css('display', 'none');
             $('.delete---modal').css('display', 'none');
         });
-
-        $('.delete---yes').click(function () {
-                //Code here for Yes btn
-        });
-    }
-</script>
+    </script>
 }

@@ -26,8 +26,7 @@ namespace Blog.Service.AuthorService
         {
             try
             {
-                using (DbContext)
-                {
+               
                     Author author = new Author()
                     {
                         Active = model.Active,
@@ -45,7 +44,7 @@ namespace Blog.Service.AuthorService
                     DbContext.Authors.Add(author);
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
@@ -72,8 +71,7 @@ namespace Blog.Service.AuthorService
         {
             try
             {
-                using (DbContext)
-                {
+                
                     Author author = DbContext.Authors.Find(Id);
                     author.Active = model.Active;
                     author.ModifyBy = model.ModifyBy;
@@ -89,7 +87,7 @@ namespace Blog.Service.AuthorService
                     DbContext.Entry(author).State = EntityState.Modified;
                     int res = DbContext.SaveChanges();
                     return res;
-                }
+                
             }
             catch (Exception)
             {
