@@ -18,6 +18,11 @@ namespace Blog
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "BlogCategory",
+                url: "{controller}/{action}/{id}/{category}",
+                defaults: new { controller = "Home", action = "Category", id = UrlParameter.Optional }
+            );
         }
     }
 }

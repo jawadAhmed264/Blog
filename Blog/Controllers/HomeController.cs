@@ -13,17 +13,9 @@ namespace Blog.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [Route(Name = "BlogCategory")]
+        public ActionResult Category(int id,string categort) 
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

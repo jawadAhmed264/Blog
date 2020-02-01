@@ -1,15 +1,73 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Choose Category</title>
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Blog/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Blog/css/style.css" rel="stylesheet" />
+    <link href="~/Content/Blog/css/category-list-blue.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/e74ee50f7e.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="top-ellipse">
+        <img src="~/Content/Blog/images/top-Ellipse-blue.png" />
+    </div>
+    <!--HEADER SECTION STARTS-->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="header-box row">
+                        <!--LOGO BOX-->
+                        <div class="logo col-lg-12 col-sm-12">
+                            <div class="text-center cat-logo">
+                                <h2><strong>Today's Trending</strong></h2>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--HEADER SECTION ENDS-->
+    <div>
+        @RenderBody()
+    </div>
+    <!--ASIDE BAR CATEGORY-->
+    <aside>
+        <div class="aside-slider">
+            <div class="aside-slider-box">
+                <div class="slider-content">
+                    <h6>Choose category</h6>
+                    <div class="slider-menu">
+                        <ul>
+                            <li><a href="">Sports</a></li>
+                            <li><a href="" class="slide-active">Entertainment</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!--ASIDE BAR CATEGORY ENDS-->
+    <div class="bot-ellipse">
+        <img src="~/Content/Blog/images/bot-Ellipse-blue.png" />
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Content/Blog/js/bootstrap.min.js"></script>
+    <script src="~/Content/Blog/js/script.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+@*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -35,10 +93,4 @@
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+    </div>*@
