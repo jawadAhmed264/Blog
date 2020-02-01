@@ -1,23 +1,150 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using ViewModel.AdminViewModels.CategoryViewModels
+@model List<CategoryViewModel>
+
+@{
+    Layout = null;
 }
 
-<main class="cat-main">
-    <div class="cat-main-bg">
-        <img src="~/Content/Blog/images/Entertainment-vectorbg.png" /> <!-- 822x573 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Choose Category</title>
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Blog/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Blog/css/style.css" rel="stylesheet" />
+    <link href="@Model[0].CSSStyle" class="catTheme" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/e74ee50f7e.js" crossorigin="anonymous"></script>
+    <style>
+        li {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-ellipse">
+        <img src="~/Content/Blog/images/top-Ellipse-blue.png" />
     </div>
-    <div class="cat-main-content">
-        <div>
-            <h5>Simple and productive</h5>
+    <!--HEADER SECTION STARTS-->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="header-box row">
+                        <!--LOGO BOX-->
+                        <div class="logo col-lg-12 col-sm-12">
+                            <div class="text-center cat-logo">
+                                <h2><strong>Today's Trending</strong></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="pt-2 pb-4">
-            <h3>A directory of wonderful things</h3>
-        </div>
-        <div>
-            <h4>Read what you want to</h4>
-        </div>
-        <div>
-            <a href="#">Go to sports blogs <i class="fas fa-arrow-right"></i></a>
-        </div>
+    </header>
+    <!--HEADER SECTION ENDS-->
+    <div>
+        <main class="cat-main">
+            <div class="cat-main-bg">
+                <!-- 822x573 -->
+                <img src="@Model[0].ImageUrl" class="cat-img" />
+            </div>
+            <div class="cat-main-content">
+                <div>
+                    <h5>Simple and productive</h5>
+                </div>
+                <div class="pt-2 pb-4">
+                    <h3>A directory of wonderful things</h3>
+                </div>
+                <div>
+                    <h4>Read what you want to</h4>
+                </div>
+                <div>
+                    <a href="@Url.Action("BlogsCategory","Home",new { id=Model[0].CategoryId,category=Model[0].CategoryName})" class="cat-link">Go to <span class="link-text">@Model[0].CategoryName</span> blogs <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </main>
     </div>
-</main>
+    <!--ASIDE BAR CATEGORY-->
+    <aside>
+        <div class="aside-slider">
+            <div class="aside-slider-box">
+                <div class="slider-content">
+                    <h6>Choose category</h6>
+                    <div class="slider-menu">
+                        <ul>
+                            @if (Model.ToList().Count == 0)
+                            {
+                                <li>No Categories</li>
+                            }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <li class="category-select_@item.CategoryId" onclick="changetheme(@item.CategoryId)">@item.CategoryName</li>
+                                }
+                            }
+
+                            @*<li><a href="" class="slide-active">Entertainment</a></li>
+                                <li><a href="">Sports</a></li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!--ASIDE BAR CATEGORY ENDS-->
+    <div class="bot-ellipse">
+        <img src="~/Content/Blog/images/bot-Ellipse-blue.png" />
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Content/Blog/js/bootstrap.min.js"></script>
+    <script src="~/Content/Blog/js/script.js"></script>
+    <script>
+        $(function () {
+            $("li:first").addClass("slide-active");
+        });
+
+        function changetheme(id) {
+            var link = '@Url.Action("Category", "Home", new { id = "-1" })';
+            link = link.replace("-1", id);
+            $("li").removeClass("slide-active");
+            $(".category-select_" + id).addClass("slide-active");
+             $.ajax({
+                type: "GET",
+                url: link,
+                dataType: "json",
+                 success: function (response) {
+                     var obj = response;
+                     var catLink = '@Url.Action("BlogsCategory","Home",new { id="-1",category="-2"})';
+                     catLink = catLink.replace("-1", obj.CategoryId);
+                     catLink = catLink.replace("-2", obj.CategoryName);
+
+                     $(".catTheme").attr("href", obj.CSSStyle);
+                     $(".cat-img").attr("src", obj.ImageUrl);
+                     $(".link-text").text(obj.CategoryName);
+                     $(".cat-link").attr("href", catLink);
+                     if (obj.CSSStyle === "Content/Blog/css/category-list-blue.css")
+                     {
+                         $(".bot-ellipse img").attr("src", "Content/Blog/images/bot-Ellipse-blue.png");
+                         $(".top-ellipse img").attr("src", "Content/Blog/images/top-Ellipse-blue.png");
+                     }
+                     if (obj.CSSStyle === "Content/Blog/css/category-list-green.css")
+                     {
+                         $(".bot-ellipse img").attr("src", "Content/Blog/images/bot-Ellipse.png");
+                         $(".top-ellipse img").attr("src", "Content/Blog/images/top-Ellipse.png");
+                     }
+                     return;
+               },
+               error: function () {
+                   alert("Error");
+               }
+            });
+        }
+    </script>
+</body>
+</html>

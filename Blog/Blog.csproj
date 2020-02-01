@@ -202,6 +202,7 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -237,7 +238,7 @@
     <Content Include="Content\Blog\images\bot-Ellipse-blue.png" />
     <Content Include="Content\Blog\images\bot-Ellipse.png" />
     <Content Include="Content\Blog\images\comment-avatar.png" />
-    <Content Include="Content\Blog\images\Entertainment-vectorbg.png" />
+    <Content Include="Content\Images\CategoryImages\Entertainment-vectorbg.png" />
     <Content Include="Content\Blog\images\full-blog-bg.jpg" />
     <Content Include="Content\Blog\images\H-blog-bg-horizontal.png" />
     <Content Include="Content\Blog\images\H-blog-small.png" />
@@ -252,7 +253,7 @@
     <Content Include="Content\Blog\images\sound-on-blue.png" />
     <Content Include="Content\Blog\images\sound-on-green.png" />
     <Content Include="Content\Blog\images\sound-on.png" />
-    <Content Include="Content\Blog\images\sports-vectorbg.png" />
+    <Content Include="Content\Images\CategoryImages\sports-vectorbg.png" />
     <Content Include="Content\Blog\images\top-Ellipse-blue.png" />
     <Content Include="Content\Blog\images\top-Ellipse.png" />
     <Content Include="Content\Blog\js\bootstrap.min.js" />
@@ -539,8 +540,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Shared\_BlogLayout.cshtml" />
-    <Content Include="Views\Home\Category.cshtml" />
+    <Content Include="Views\Home\BlogsCategory.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -548,7 +549,6 @@
     <Folder Include="Content\Images\AurthorImages\" />
     <Folder Include="Content\Images\blogBanners\" />
     <Folder Include="Content\Images\blogImages\" />
-    <Folder Include="Content\Images\CategoryImages\" />
     <Folder Include="Content\Images\thumbnails\" />
   </ItemGroup>
   <ItemGroup>

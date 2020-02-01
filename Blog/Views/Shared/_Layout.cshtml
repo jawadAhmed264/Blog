@@ -1,71 +1,142 @@
 ﻿<!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Choose Category</title>
+    <title>@ViewBag.Title</title>
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/Blog/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/Blog/css/style.css" rel="stylesheet" />
-    <link href="~/Content/Blog/css/category-list-blue.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/e74ee50f7e.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
-    <div class="top-ellipse">
-        <img src="~/Content/Blog/images/top-Ellipse-blue.png" />
-    </div>
     <!--HEADER SECTION STARTS-->
     <header class="header">
         <div class="container-fluid">
             <div class="row">
                 <div class="container">
                     <div class="header-box row">
+                        <!--SOUND BOX-->
+                        <div class="sound-box col-lg-4 col-sm-4">
+                            <div class="float-left">
+                                <div class="sound-bg">
+                                    <img src="~/Content/Blog/images/sound-on.png" class="sound-on" alt="sound on">
+                                    <img src="~/Content/Blog/images/sound-off.png" class="sound-off" alt="sound on">
+                                </div>
+                            </div>
+                        </div>
                         <!--LOGO BOX-->
-                        <div class="logo col-lg-12 col-sm-12">
-                            <div class="text-center cat-logo">
+                        <div class="logo col-lg-4 col-sm-4">
+                            <div class="text-center">
                                 <h2><strong>Today's Trending</strong></h2>
                             </div>
                         </div>
-
+                        <!--MENUBAR-->
+                        <div class="menubar col-lg-4 col-sm-4">
+                            <div class="float-right">
+                                <div class="logo-bg">
+                                    <img src="~/Content/Blog/images/menu-icon.png" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="overlay"></div>
+                                <div class="sidebar"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
     <!--HEADER SECTION ENDS-->
-    <div>
-        @RenderBody()
-    </div>
-    <!--ASIDE BAR CATEGORY-->
-    <aside>
-        <div class="aside-slider">
-            <div class="aside-slider-box">
-                <div class="slider-content">
-                    <h6>Choose category</h6>
-                    <div class="slider-menu">
-                        <ul>
-                            <li><a href="">Sports</a></li>
-                            <li><a href="" class="slide-active">Entertainment</a></li>
-                        </ul>
+    @RenderBody()
+    <!--FOOTER SECTION STARTS-->
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="footer-content">
+                        <div class="row">
+                            <!--ABOUT COMPANY SECTION-->
+                            <div class="col-lg-6">
+                                <div class="hero-heading">
+                                    <h1>Today’sTrending</h1>
+                                    <p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                        when an unknown printer took a galley of type and scrambled it to make a type
+                                        specimen book. It has survived not only five centuries, but also the leap into electronic
+                                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+                                        release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                        with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!--SUBSCRIBTION LETTER SECTION-->
+                            <div class="col-lg-6">
+                                <div class="Subscribe-box">
+                                    <div class="subscribe-content">
+                                        <h2>Subscribe to our newsletter</h2>
+                                        <!--SUBSCRIBE FORM-->
+                                        <div class="row">
+                                            <div class="col-lg-12 pt-3">
+                                                <form action="">
+                                                    <input type="text" class="subscribe-form">
+                                                    <input type="submit" value="Subscribe" class="subscribe-btn">
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!--SOCIAL LINKS-->
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="social-links">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="fb">
+                                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fab fa-facebook-f"></i> <span>Facebook</span></a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="in">
+                                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fab fa-instagram"></i> <span>Instagram</span></a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="dri">
+                                                                <a href=""><i class="fab fa-dribbble"></i> <span>Dribbble</span></a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-last">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <p>Copyright &copy; @DateTime.Now.Year All rights reserved | Today's Trending</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </aside>
-    <!--ASIDE BAR CATEGORY ENDS-->
-    <div class="bot-ellipse">
-        <img src="~/Content/Blog/images/bot-Ellipse-blue.png" />
-    </div>
-
+    </footer>
+    <!--FOOTER SECTION ENDS-->
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Content/Blog/js/bootstrap.min.js"></script>
     <script src="~/Content/Blog/js/script.js"></script>
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
-
 
 @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">

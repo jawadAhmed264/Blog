@@ -69,6 +69,7 @@
     <Compile Include="AdminViewModels\CategoryViewModels\CategoryViewModel.cs" />
     <Compile Include="AuthorViewModels\AuthorViewModel.cs" />
     <Compile Include="BlogContentViewModels\BlogContentViewModel.cs" />
+    <Compile Include="ClientSideViewModels\ChooseCategoryViewModel.cs" />
     <Compile Include="Enums\MediaTypeEnum.cs" />
     <Compile Include="LogViewModel.cs" />
     <Compile Include="MediaFileViewModels\MediaFileViewModel.cs" />
