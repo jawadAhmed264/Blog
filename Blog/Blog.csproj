@@ -542,6 +542,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\BlogsCategory.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Home\_BlogHeaderPartial.cshtml" />
+    <Content Include="Views\Home\_TopPostPartial.cshtml" />
+    <Content Include="Views\Home\_FeaturedPostPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

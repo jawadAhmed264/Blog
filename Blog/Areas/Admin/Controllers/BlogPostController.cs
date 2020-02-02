@@ -147,7 +147,7 @@ namespace Blog.Areas.Admin.Controllers
                 ViewBag.ErrorMessage = "Invalid Form Validation";
                 return View(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

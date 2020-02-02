@@ -69,7 +69,6 @@
     <Compile Include="AdminViewModels\CategoryViewModels\CategoryViewModel.cs" />
     <Compile Include="AuthorViewModels\AuthorViewModel.cs" />
     <Compile Include="BlogContentViewModels\BlogContentViewModel.cs" />
-    <Compile Include="ClientSideViewModels\ChooseCategoryViewModel.cs" />
     <Compile Include="Enums\MediaTypeEnum.cs" />
     <Compile Include="LogViewModel.cs" />
     <Compile Include="MediaFileViewModels\MediaFileViewModel.cs" />
@@ -79,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientSideViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
