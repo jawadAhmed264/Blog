@@ -286,6 +286,8 @@
     <Content Include="Areas\Admin\Content\images\search-icon.png" />
     <Content Include="Areas\Admin\Content\images\writeapost-icon.png" />
     <Content Include="Areas\Admin\Content\js\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\js\script.js" />
     <Content Include="Areas\Admin\Content\tinymce\changelog.txt" />
     <Content Include="Areas\Admin\Content\tinymce\js\tinymce\jquery.tinymce.min.js" />
