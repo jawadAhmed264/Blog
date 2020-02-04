@@ -42,6 +42,14 @@
     display:none;
 }
 
+.success strong {
+    padding: 0 10px;
+}
+
+.alert strong {
+    padding: 0 10px;
+}
+
 .alert {
     padding: 20px;
     background-color: #f44336;

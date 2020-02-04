@@ -178,7 +178,7 @@ namespace Blog.Areas.Admin.Controllers
             {
                 foreach (HtmlNode img in ImageTags)
                 {
-                    img.SetAttributeValue("src", mediafiles[count].Url + mediafiles[count].FileName);
+                    img.SetAttributeValue("src", "/Content/Images/blogImages/"+ mediafiles[count].FileName);
                     count++;
                 }
                 count = 0;
@@ -244,16 +244,14 @@ namespace Blog.Areas.Admin.Controllers
                     }
                     else
                     {
-                        if (model.BannerUrl != "/Content/Images/defaultBanner.jpg")
+                        mediafiles.Add(new MediaFileViewModel()
                         {
-                            mediafiles.Add(new MediaFileViewModel()
-                            {
-                                MediaType = MediaTypeEnum.Banner.ToString(),
-                                Url = model.BannerUrl,
-                                FileName = model.BannerUrl,
-                                Description = ""
-                            });
-                        }
+                            MediaType = MediaTypeEnum.Banner.ToString(),
+                            Url = model.BannerUrl,
+                            FileName = model.BannerUrl,
+                            Description = ""
+                        });
+
                     }
                     //Populate Model
                     model.MediaFiles = mediafiles;
@@ -297,37 +295,40 @@ namespace Blog.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(long Id)
         {
-            string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
-            string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
-            string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
-
-            IList<MediaFileViewModel> files = mediaFileService.GetAllMediaFilesByBlogId(Id).ToList();
             int res = blogService.DeleteBlog(Id);
             if (res > 0)
             {
-                if (files.Count > 0)
-                {
-                    if (files.Any(m => m.MediaType == MediaTypeEnum.Banner.ToString()))
-                    {
-                        string bannerName = files.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).FileName;
-                        if (System.IO.File.Exists(bannerPath + bannerName)) { System.IO.File.Delete(bannerPath + bannerName); }
-                    }
-                    foreach (var file in files)
-                    {
-                        if (file.MediaType == MediaTypeEnum.BlogImage.ToString())
-                        {
-                            if (System.IO.File.Exists(blogPath + file.FileName)) { System.IO.File.Delete(blogPath + file.FileName); }
-                        }
-                    }
-                }
+                DeleteBlogImages(Id);
             }
             else
             {
                 throw new InvalidOperationException("Error while deleting blog");
             }
-
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
             return PartialView("_partialBlogList", model);
+        }
+        private void DeleteBlogImages(long blogId)
+        {
+            string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
+            string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
+            string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
+
+            IList<MediaFileViewModel> files = mediaFileService.GetAllMediaFilesByBlogId(blogId).ToList();
+            if (files.Count > 0)
+            {
+                if (files.Any(m => m.MediaType == MediaTypeEnum.Banner.ToString()))
+                {
+                    string bannerName = files.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).FileName;
+                    if (System.IO.File.Exists(bannerPath + bannerName)) { System.IO.File.Delete(bannerPath + bannerName); }
+                }
+                foreach (var file in files)
+                {
+                    if (file.MediaType == MediaTypeEnum.BlogImage.ToString())
+                    {
+                        if (System.IO.File.Exists(blogPath + file.FileName)) { System.IO.File.Delete(blogPath + file.FileName); }
+                    }
+                }
+            }
         }
         [HttpPost]
         public ActionResult Publish(long Id)
@@ -336,7 +337,6 @@ namespace Blog.Areas.Admin.Controllers
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
             return PartialView("_partialBlogList", model);
         }
-
         private void SaveBannerImage(HttpPostedFileBase bannerImage, string bannerPath, string blogTitle, out string error, out string url)
         {
             if (bannerImage != null)
@@ -431,7 +431,7 @@ namespace Blog.Areas.Admin.Controllers
                     MediaFileViewModel mf = new MediaFileViewModel()
                     {
                         MediaType = MediaTypeEnum.BlogImage.ToString(),
-                        Url = "/Content/Images/blogImages/",
+                        Url = img,
                         FileName = img,
                         Description = Description,
                     };

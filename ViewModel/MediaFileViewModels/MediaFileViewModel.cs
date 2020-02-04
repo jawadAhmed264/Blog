@@ -10,8 +10,8 @@ namespace ViewModel.MediaFileViewModels
     {
         public MediaFileViewModel() 
         {
-            Url = "/Content/Images/defaultBanner.jpg";
-            FileName = "default";  
+            Url = "defaultBanner.jpg";
+            FileName = "defaultBanner.jpg";  
         }
         public long MediaFileId { get; set; }
         public string FileName { get; set; }
