@@ -178,7 +178,7 @@ namespace Blog.Areas.Admin.Controllers
             {
                 foreach (HtmlNode img in ImageTags)
                 {
-                    img.SetAttributeValue("src", "/Content/Images/blogImages/"+ mediafiles[count].FileName);
+                    img.SetAttributeValue("src", "/Content/Images/blogImages/" + mediafiles[count].FileName);
                     count++;
                 }
                 count = 0;
@@ -307,6 +307,55 @@ namespace Blog.Areas.Admin.Controllers
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
             return PartialView("_partialBlogList", model);
         }
+
+        [HttpPost]
+        //Upload for TinyMCE
+        public ActionResult Upload()
+        {
+            var file = Request.Files["file"];
+
+            string extension = Path.GetExtension(file.FileName);
+            string fileid = Guid.NewGuid().ToString();
+            fileid = Path.ChangeExtension(fileid, extension);
+
+            var draft = new { location = "" };
+
+            if (file != null && file.ContentLength > 0)
+            {
+                const int megabyte = 1024 * 1024;
+
+                if (!file.ContentType.StartsWith("image/"))
+                {
+                    throw new InvalidOperationException("Invalid MIME content type.");
+                }
+
+                string[] extensions = { ".gif", ".jpg", ".png" };
+                if (!extensions.Contains(extension))
+                {
+                    throw new InvalidOperationException("Invalid file extension.");
+                }
+
+                if (file.ContentLength > (8 * megabyte))
+                {
+                    throw new InvalidOperationException("File size limit exceeded.");
+                }
+
+                string path = ConfigurationManager.AppSettings["blogImagesPath"].ToString();
+                string savePath = Server.MapPath(@"/" + path + fileid);
+                file.SaveAs(savePath);
+
+                draft = new { location = Path.Combine("/" + path, fileid).Replace('\\', '/') };
+            }
+
+
+            return Json(draft, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Publish(long Id)
+        {
+            int res = blogService.Publish(Id);
+            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
+            return PartialView("_partialBlogList", model);
+        }
         private void DeleteBlogImages(long blogId)
         {
             string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
@@ -329,13 +378,6 @@ namespace Blog.Areas.Admin.Controllers
                     }
                 }
             }
-        }
-        [HttpPost]
-        public ActionResult Publish(long Id)
-        {
-            int res = blogService.Publish(Id);
-            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
-            return PartialView("_partialBlogList", model);
         }
         private void SaveBannerImage(HttpPostedFileBase bannerImage, string bannerPath, string blogTitle, out string error, out string url)
         {
@@ -480,47 +522,6 @@ namespace Blog.Areas.Admin.Controllers
                 }
             }
             return srcList;
-        }
-        //Upload for TinyMCE
-        public ActionResult Upload()
-        {
-            var file = Request.Files["file"];
-
-            string extension = Path.GetExtension(file.FileName);
-            string fileid = Guid.NewGuid().ToString();
-            fileid = Path.ChangeExtension(fileid, extension);
-
-            var draft = new { location = "" };
-
-            if (file != null && file.ContentLength > 0)
-            {
-                const int megabyte = 1024 * 1024;
-
-                if (!file.ContentType.StartsWith("image/"))
-                {
-                    throw new InvalidOperationException("Invalid MIME content type.");
-                }
-
-                string[] extensions = { ".gif", ".jpg", ".png" };
-                if (!extensions.Contains(extension))
-                {
-                    throw new InvalidOperationException("Invalid file extension.");
-                }
-
-                if (file.ContentLength > (8 * megabyte))
-                {
-                    throw new InvalidOperationException("File size limit exceeded.");
-                }
-
-                string path = ConfigurationManager.AppSettings["blogImagesPath"].ToString();
-                string savePath = Server.MapPath(@"/" + path + fileid);
-                file.SaveAs(savePath);
-
-                draft = new { location = Path.Combine("/" + path, fileid).Replace('\\', '/') };
-            }
-
-
-            return Json(draft, JsonRequestBehavior.AllowGet);
         }
         //ImageThumbnail
         private void CreateThumbnail(int ThumbnailMax, string OriginalImagePath, string ThumbnailImagePath)
