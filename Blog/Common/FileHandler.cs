@@ -33,7 +33,7 @@ namespace Blog.Common
                         return;
                     }
 
-                    string[] extensions = { ".gif", ".jpg", ".png" };
+                    string[] extensions = {".jpg", ".png" };
                     if (!extensions.Contains(extension))
                     {
                         error = "Invalid file extension";
