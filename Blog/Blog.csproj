@@ -423,6 +423,7 @@
     <Content Include="Content\Blog\font\sofiapro-light-webfont.woff2" />
     <Content Include="Content\Blog\font\sofiapro\Fonts\sofiapro-light.otf" />
     <Content Include="Content\Blog\font\sofiapro\Reference\sofiapro-userguide.pdf" />
+    <Content Include="Areas\Admin\Views\Profile\Author.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -558,7 +559,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Profile\" />
     <Folder Include="Content\Images\AurthorImages\" />
     <Folder Include="Content\Images\blogBanners\" />
     <Folder Include="Content\Images\blogImages\" />

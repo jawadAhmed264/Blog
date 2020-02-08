@@ -8,8 +8,7 @@ namespace Blog.Areas.Admin.Controllers
 {
     public class ProfileController : Controller
     {
-        // GET: Admin/Profile
-        public ActionResult Index()
+        public ActionResult Author()
         {
             return View();
         }

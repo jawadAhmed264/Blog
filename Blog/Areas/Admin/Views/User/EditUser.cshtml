@@ -98,7 +98,7 @@
                                         <div class="slider-td">
                                             <label class="switch">
                                                 @Html.HiddenFor(model => model.Active, new { @id = "IsActive", @class = "hdncheck" })
-                                                <input name="Active" id="Active" type="checkbox" value="false">
+                                                <input name="Active" id="Active" type="checkbox" checked="@Model.Active">
                                                 <div class="slider round togglecheckbox"></div>
                                             </label>
                                         </div>
