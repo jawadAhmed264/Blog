@@ -1,4 +1,5 @@
-﻿using Blog.Service.BlogContentService;
+﻿using Blog.Common;
+using Blog.Service.BlogContentService;
 using Blog.Service.BlogServices;
 using Blog.Service.CategoryServices;
 using Blog.Service.MediaFileService;
@@ -8,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -76,8 +76,8 @@ namespace Blog.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    List<string> imageSrc = getImageSourceList(model.Content);
-                    List<string> imageName = getImageNames(imageSrc);
+                    List<string> imageSrc = ImageHandling.getImageSourceList(model.Content);
+                    List<string> imageName = ImageHandling.getImageNames(imageSrc);
                     List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "", null);
                     List<TagViewModel> tags = InsertTagsinModel(model.Tags, null);
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
@@ -87,7 +87,7 @@ namespace Blog.Areas.Admin.Controllers
                     string Error, bannerUrl;
 
                     //Save BannerImage
-                    SaveBannerImage(model.BannerImage, bannerPath, model.Title, out Error, out bannerUrl);
+                    FileHandler.SaveImage(model.BannerImage, 4, 700, 1440, bannerPath, out Error, out bannerUrl);
 
                     if (Error != null)
                     {
@@ -198,8 +198,8 @@ namespace Blog.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    List<string> imageSrc = getImageSourceList(model.Content);
-                    List<string> imageName = getImageNames(imageSrc);
+                    List<string> imageSrc = ImageHandling.getImageSourceList(model.Content);
+                    List<string> imageName = ImageHandling.getImageNames(imageSrc);
                     List<MediaFileViewModel> mediafiles = InsertMediaFilesInModel(imageName, "", BlogId);
                     List<TagViewModel> tags = InsertTagsinModel(model.Tags, BlogId);
                     string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
@@ -212,7 +212,7 @@ namespace Blog.Areas.Admin.Controllers
                     //Save BannerImage
                     if (model.BannerImage != null)
                     {
-                        SaveBannerImage(model.BannerImage, bannerPath, model.Title, out Error, out bannerUrl);
+                        FileHandler.SaveImage(model.BannerImage, 4, 700, 1440, bannerPath, out Error, out bannerUrl);
 
                         if (Error != null)
                         {
@@ -307,12 +307,21 @@ namespace Blog.Areas.Admin.Controllers
             IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
             return PartialView("_partialBlogList", model);
         }
-
         [HttpPost]
+        public ActionResult Publish(long Id)
+        {
+            int res = blogService.Publish(Id);
+            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
+            return PartialView("_partialBlogList", model);
+        }
         //Upload for TinyMCE
         public ActionResult Upload()
         {
             var file = Request.Files["file"];
+
+            Image img = Image.FromStream(file.InputStream, true, true);
+            int width = img.Width;
+            int height = img.Height;
 
             string extension = Path.GetExtension(file.FileName);
             string fileid = Guid.NewGuid().ToString();
@@ -335,9 +344,14 @@ namespace Blog.Areas.Admin.Controllers
                     throw new InvalidOperationException("Invalid file extension.");
                 }
 
-                if (file.ContentLength > (8 * megabyte))
+                if (file.ContentLength > (4 * megabyte))
                 {
                     throw new InvalidOperationException("File size limit exceeded.");
+                }
+
+                if (width <= 1200 && height <= 675)
+                {
+                    throw new InvalidOperationException("Image size must be equal or less then (1200*675)");
                 }
 
                 string path = ConfigurationManager.AppSettings["blogImagesPath"].ToString();
@@ -350,97 +364,10 @@ namespace Blog.Areas.Admin.Controllers
 
             return Json(draft, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Publish(long Id)
-        {
-            int res = blogService.Publish(Id);
-            IEnumerable<IndexBlogViewModel> model = blogService.getAllBlogs().ToList();
-            return PartialView("_partialBlogList", model);
-        }
-        private void DeleteBlogImages(long blogId)
-        {
-            string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
-            string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
-            string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
 
-            IList<MediaFileViewModel> files = mediaFileService.GetAllMediaFilesByBlogId(blogId).ToList();
-            if (files.Count > 0)
-            {
-                if (files.Any(m => m.MediaType == MediaTypeEnum.Banner.ToString()))
-                {
-                    string bannerName = files.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).FileName;
-                    if (System.IO.File.Exists(bannerPath + bannerName)) { System.IO.File.Delete(bannerPath + bannerName); }
-                }
-                foreach (var file in files)
-                {
-                    if (file.MediaType == MediaTypeEnum.BlogImage.ToString())
-                    {
-                        if (System.IO.File.Exists(blogPath + file.FileName)) { System.IO.File.Delete(blogPath + file.FileName); }
-                    }
-                }
-            }
-        }
-        private void SaveBannerImage(HttpPostedFileBase bannerImage, string bannerPath, string blogTitle, out string error, out string url)
-        {
-            if (bannerImage != null)
-            {
-                HttpPostedFileBase file = bannerImage;
-                string extension = Path.GetExtension(file.FileName);
-                string fileid = Guid.NewGuid().ToString();
-                fileid = Path.ChangeExtension(fileid, extension);
+        //------------------------------------------------Private Methods-----------------------------------------------------------------
 
-                Image img = Image.FromStream(bannerImage.InputStream, true, true);
-                int width = img.Width;
-                int height = img.Height;
-
-                var draft = new { location = "" };
-
-                if (file != null && file.ContentLength > 0)
-                {
-                    const int megabyte = 1024 * 1024;
-
-                    if (!file.ContentType.StartsWith("image/"))
-                    {
-                        error = "Invalid MIME content type";
-                        url = null;
-                        return;
-                    }
-
-                    string[] extensions = { ".gif", ".jpg", ".png" };
-                    if (!extensions.Contains(extension))
-                    {
-                        error = "Invalid file extension";
-                        url = null;
-                        return;
-                    }
-
-                    if (file.ContentLength > (8 * megabyte))
-                    {
-                        error = "File size limit exceeded";
-                        url = null;
-                        return;
-                    }
-
-                    if (width != 1440 && height != 700)
-                    {
-                        error = "Background dimension must be 1440*700";
-                        url = null;
-                        return;
-                    }
-
-                    string savePath = bannerPath + fileid;
-                    file.SaveAs(savePath);
-                    error = null;
-                    url = fileid;
-                    return;
-                }
-                error = null;
-                url = null;
-                return;
-            }
-            error = null;
-            url = null;
-            return;
-        }
+        //Method for populating Tag List
         private List<TagViewModel> InsertTagsinModel(string tags, long? BlogId)
         {
             List<TagViewModel> list = new List<TagViewModel>();
@@ -461,6 +388,8 @@ namespace Blog.Areas.Admin.Controllers
             }
             return list;
         }
+
+        //Method for populating Media Files List
         private List<MediaFileViewModel> InsertMediaFilesInModel(List<string> imageName, string Description, long? BlogId)
         {
             List<MediaFileViewModel> list = new List<MediaFileViewModel>();
@@ -487,74 +416,30 @@ namespace Blog.Areas.Admin.Controllers
             }
             return list;
         }
-        private List<string> getImageNames(List<string> imageSrc)
-        {
-            List<string> ImageNames = new List<string>();
-            ImageNames.Clear();
-            if (imageSrc != null)
-            {
-                ImageNames.Clear();
-                foreach (string name in imageSrc)
-                {
-                    string[] splitArray = name.Split('/');
-                    string ImageName = splitArray.Last();
-                    ImageNames.Add(ImageName);
-                }
-                return ImageNames;
-            }
-            return ImageNames;
-        }
-        private List<string> getImageSourceList(string html)
-        {
 
-            List<string> srcList = new List<string>();
-            srcList.Clear();
-            srcList.Clear();
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(@"" + html);
-            var ImageTags = doc.DocumentNode.SelectNodes("//img[@src]");
-            if (ImageTags != null)
+        //Method for Deleting all media files related to specific Blog By blogId (Used in Delete Action)
+        private void DeleteBlogImages(long blogId)
+        {
+            string blogPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogImagesPath"]);
+            string bannerPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["blogBannerPath"]);
+            string thumbnailPath = Server.MapPath(@"/" + ConfigurationManager.AppSettings["thumbnailsPath"]);
+
+            IList<MediaFileViewModel> files = mediaFileService.GetAllMediaFilesByBlogId(blogId).ToList();
+            if (files.Count > 0)
             {
-                foreach (HtmlNode link in ImageTags)
+                if (files.Any(m => m.MediaType == MediaTypeEnum.Banner.ToString()))
                 {
-                    string src = link.GetAttributeValue("src", "").ToString();
-                    srcList.Add(src);
+                    string bannerName = files.FirstOrDefault(m => m.MediaType == MediaTypeEnum.Banner.ToString()).FileName;
+                    if (System.IO.File.Exists(bannerPath + bannerName)) { System.IO.File.Delete(bannerPath + bannerName); }
+                }
+                foreach (var file in files)
+                {
+                    if (file.MediaType == MediaTypeEnum.BlogImage.ToString())
+                    {
+                        if (System.IO.File.Exists(blogPath + file.FileName)) { System.IO.File.Delete(blogPath + file.FileName); }
+                    }
                 }
             }
-            return srcList;
-        }
-        //ImageThumbnail
-        private void CreateThumbnail(int ThumbnailMax, string OriginalImagePath, string ThumbnailImagePath)
-        {
-            // Loads original image from file
-            Image imgOriginal = Image.FromFile(OriginalImagePath);
-            // Finds height and width of original image
-            float OriginalHeight = imgOriginal.Height;
-            float OriginalWidth = imgOriginal.Width;
-            // Finds height and width of resized image
-            int ThumbnailWidth;
-            int ThumbnailHeight;
-            if (OriginalHeight > OriginalWidth)
-            {
-                ThumbnailHeight = ThumbnailMax;
-                ThumbnailWidth = (int)((OriginalWidth / OriginalHeight) * (float)ThumbnailMax);
-            }
-            else
-            {
-                ThumbnailWidth = ThumbnailMax;
-                ThumbnailHeight = (int)((OriginalHeight / OriginalWidth) * (float)ThumbnailMax);
-            }
-            // Create new bitmap that will be used for thumbnail
-            Bitmap ThumbnailBitmap = new Bitmap(ThumbnailWidth, ThumbnailHeight);
-            Graphics ResizedImage = Graphics.FromImage(ThumbnailBitmap);
-            // Resized image will have best possible quality
-            ResizedImage.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            ResizedImage.CompositingQuality = CompositingQuality.HighQuality;
-            ResizedImage.SmoothingMode = SmoothingMode.HighQuality;
-            // Draw resized image
-            ResizedImage.DrawImage(imgOriginal, 0, 0, ThumbnailWidth, ThumbnailHeight);
-            // Save thumbnail to file
-            ThumbnailBitmap.Save(ThumbnailImagePath);
         }
     }
 }
