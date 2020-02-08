@@ -563,6 +563,7 @@
     <Folder Include="Content\Images\blogBanners\" />
     <Folder Include="Content\Images\blogImages\" />
     <Folder Include="Content\Images\thumbnails\" />
+    <Folder Include="Content\Images\UserImages\" />
     <Folder Include="Views\Image\" />
   </ItemGroup>
   <ItemGroup>

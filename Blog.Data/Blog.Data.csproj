@@ -139,6 +139,7 @@
       <DependentUpon>BlogModel.edmx</DependentUpon>
       <LastGenOutput>BlogModel.cs</LastGenOutput>
     </Content>
+    <Content Include="SQLScripts\AlterAuthorUser.sql" />
     <Content Include="SQLScripts\BlogScript-first.sql" />
   </ItemGroup>
   <ItemGroup>

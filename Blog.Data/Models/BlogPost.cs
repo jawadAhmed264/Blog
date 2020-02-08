@@ -18,8 +18,8 @@ namespace Blog.Data.Models
         public BlogPost()
         {
             this.BlogContents = new HashSet<BlogContent>();
-            this.Tags = new HashSet<Tag>();
             this.MediaFiles = new HashSet<MediaFile>();
+            this.Tags = new HashSet<Tag>();
         }
     
         public long Id { get; set; }
@@ -38,8 +38,8 @@ namespace Blog.Data.Models
         public virtual ICollection<BlogContent> BlogContents { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tag> Tags { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaFile> MediaFiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tag> Tags { get; set; }
     }
 }
