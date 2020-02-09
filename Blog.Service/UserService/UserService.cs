@@ -25,22 +25,27 @@ namespace Blog.Service.UserService
         {
             try
             {
-                
-                    User user = new User()
-                    {
-                        Active = model.Active,
-                        CreateBy = model.CreateBy,
-                        CreateDate = model.CreateDate,
-                        AspnetUser = model.AspnetUser,
-                        Email = model.Email,
-                        Name = model.Name,
-                        Description = model.Description,
-                        JoinDate = model.JoinDate,
-                    };
-                    DbContext.Users.Add(user);
-                    int res = DbContext.SaveChanges();
-                    return res;
-                
+
+                User user = new User()
+                {
+                    Active = model.Active,
+                    CreateBy = model.CreateBy,
+                    CreateDate = model.CreateDate,
+                    AspnetUser = model.AspnetUser,
+                    Email = model.Email,
+                    Name = model.Name,
+                    Description = model.Description,
+                    JoinDate = model.JoinDate,
+                    Address = model.Address,
+                    Gender = model.Gender,
+                    Country = model.Country,
+                    City = model.City,
+                    ImageUrl = model.ImageUrl
+                };
+                DbContext.Users.Add(user);
+                int res = DbContext.SaveChanges();
+                return res;
+
             }
             catch (Exception)
             {
@@ -52,10 +57,10 @@ namespace Blog.Service.UserService
         {
             try
             {
-                    User user = DbContext.Users.Find(Id);
-                    DbContext.Users.Remove(user);
-                    int res = DbContext.SaveChanges();
-                    return res;
+                User user = DbContext.Users.Find(Id);
+                DbContext.Users.Remove(user);
+                int res = DbContext.SaveChanges();
+                return res;
             }
             catch (Exception)
             {
@@ -67,20 +72,25 @@ namespace Blog.Service.UserService
         {
             try
             {
-                
 
-                    User user = DbContext.Users.Find(Id);
-                    user.Active = model.Active;
-                    user.ModifyBy = model.ModifyBy;
-                    user.ModifyDate = model.ModifyDate;
-                    user.Email = model.Email;
-                    user.Name = model.Name;
-                    user.Description = model.Description;
-                    user.JoinDate = model.JoinDate;
-                    DbContext.Entry(user).State = EntityState.Modified;
-                    int res = DbContext.SaveChanges();
-                    return res;
-                
+
+                User user = DbContext.Users.Find(Id);
+                user.Active = model.Active;
+                user.ModifyBy = model.ModifyBy;
+                user.ModifyDate = model.ModifyDate;
+                user.Email = model.Email;
+                user.Name = model.Name;
+                user.Description = model.Description;
+                user.JoinDate = model.JoinDate;
+                user.Address = model.Address;
+                user.Gender = model.Gender;
+                user.Country = model.Country;
+                user.City = model.City;
+                user.ImageUrl = model.ImageUrl;
+                DbContext.Entry(user).State = EntityState.Modified;
+                int res = DbContext.SaveChanges();
+                return res;
+
             }
             catch (Exception)
             {
@@ -92,21 +102,26 @@ namespace Blog.Service.UserService
         {
             try
             {
-                    IList<UserViewModel> users = DbContext.Users.Select(user => new UserViewModel
-                    {
-                        Id = user.Id,
-                        Active = user.Active,
-                        CreateBy = user.CreateBy,
-                        CreateDate = user.CreateDate,
-                        ModifyBy = user.CreateBy,
-                        ModifyDate = user.CreateDate,
-                        AspnetUser = user.AspnetUser,
-                        Email = user.Email,
-                        Name = user.Name,
-                        Description = user.Description,
-                        JoinDate = user.JoinDate,
-                    }).ToList();
-                    return users;
+                IList<UserViewModel> users = DbContext.Users.Select(user => new UserViewModel
+                {
+                    Id = user.Id,
+                    Active = user.Active,
+                    CreateBy = user.CreateBy,
+                    CreateDate = user.CreateDate,
+                    ModifyBy = user.CreateBy,
+                    ModifyDate = user.CreateDate,
+                    AspnetUser = user.AspnetUser,
+                    Email = user.Email,
+                    Name = user.Name,
+                    Description = user.Description,
+                    JoinDate = user.JoinDate,
+                    Address = user.Address,
+                    Gender = user.Gender,
+                    Country = user.Country,
+                    City = user.City,
+                    ImageUrl = user.ImageUrl
+                }).ToList();
+                return users;
             }
             catch (Exception)
             {
@@ -119,28 +134,67 @@ namespace Blog.Service.UserService
         {
             try
             {
-               
-                    User user = DbContext.Users.Find(Id);
-                    UserViewModel model = new UserViewModel()
-                    {
-                        Id = user.Id,
-                        Active = user.Active,
-                        CreateBy = user.CreateBy,
-                        CreateDate = user.CreateDate,
-                        ModifyBy = user.CreateBy,
-                        ModifyDate = user.CreateDate,
-                        AspnetUser = user.AspnetUser,
-                        Email = user.Email,
-                        Name = user.Name,
-                        Description = user.Description,
-                        JoinDate = user.JoinDate
-                    };
-                    return model;
-                
+
+                User user = DbContext.Users.Find(Id);
+                UserViewModel model = new UserViewModel()
+                {
+                    Id = user.Id,
+                    Active = user.Active,
+                    CreateBy = user.CreateBy,
+                    CreateDate = user.CreateDate,
+                    ModifyBy = user.CreateBy,
+                    ModifyDate = user.CreateDate,
+                    AspnetUser = user.AspnetUser,
+                    Email = user.Email,
+                    Name = user.Name,
+                    Description = user.Description,
+                    JoinDate = user.JoinDate,
+                    Address = user.Address,
+                    Gender = user.Gender,
+                    Country = user.Country,
+                    City = user.City,
+                    ImageUrl = user.ImageUrl
+                };
+                return model;
+
             }
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        public UserViewModel GetUserByIdentityId(string Id)
+        {
+            try
+            {
+
+                User user = DbContext.Users.Where(m => m.AspnetUser == Id).SingleOrDefault();
+                UserViewModel model = new UserViewModel()
+                {
+                    Id = user.Id,
+                    Active = user.Active,
+                    CreateBy = user.CreateBy,
+                    CreateDate = user.CreateDate,
+                    ModifyBy = user.CreateBy,
+                    ModifyDate = user.CreateDate,
+                    AspnetUser = user.AspnetUser,
+                    Email = user.Email,
+                    Name = user.Name,
+                    Description = user.Description,
+                    JoinDate = user.JoinDate,
+                    Address = user.Address,
+                    Gender = user.Gender,
+                    Country = user.Country,
+                    City = user.City,
+                    ImageUrl = user.ImageUrl
+                };
+                return model;
+
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

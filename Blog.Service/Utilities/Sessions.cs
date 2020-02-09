@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,23 +8,23 @@ using System.Web;
 
 namespace Blog.Service.Utilities
 {
-    public class Session
+    public class Sessions
     {
         // private constructor
-        private Session()
+        private Sessions()
         {
            // FillOrder = new List<string>();
         }
 
         // Gets the current session.
-        public static Session Current
+        public static Sessions Current
         {
             get
             {
-                var session = (Session)HttpContext.Current.Session["__MySession__"];
+                var session = (Sessions)HttpContext.Current.Session["__MySession__"];
                 if (session == null)
                 {
-                    session = new Session();
+                    session = new Sessions();
                     HttpContext.Current.Session["__MySession__"] = session;
                 }
                 return session;
@@ -32,5 +33,10 @@ namespace Blog.Service.Utilities
 
         // **** add your session properties here, e.g like this:
         public int LoginId { get; set; }
+        public User UserInfo{ get; set; }
+        public string UserRole { get; set; }
+        public string Username { get; set; }
+        public string UserId{ get; set; }
+
     }
 }

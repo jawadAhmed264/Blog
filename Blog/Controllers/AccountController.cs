@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Blog.Models;
+using Blog.Service.Utilities;
+using Blog.Service.UserService;
+using ViewModel.UserViewModel;
 
 namespace Blog.Controllers
 {
@@ -17,9 +20,11 @@ namespace Blog.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserService _userService;
 
-        public AccountController()
+        public AccountController(IUserService userService)
         {
+            _userService = userService;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -79,6 +84,9 @@ namespace Blog.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Sessions session=Sessions.Current;
+                    var aspUser = UserManager.FindById(User.Identity.GetUserId());
+                    //UserViewModel loginUserInfo= _userService.
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

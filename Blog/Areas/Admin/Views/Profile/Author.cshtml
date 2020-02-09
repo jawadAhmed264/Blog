@@ -14,7 +14,7 @@
                         <div class="container profile-img">
                             <div class="row align-center">
                                 <div>
-                                    <img src="~/Areas/Admin/Content/images/avatar-icon-big.png" alt="">
+                                    <img src="~/Areas/Admin/Content/images/avatar-icon-big.png" id="profile-pic" alt="">
                                     <label for="img-upload" class="img-upload">
                                         <input type="file" title="Upload" value="Upload" id="img-upload">
                                         <div class="img-upload-btn">
@@ -115,3 +115,21 @@
         </div>
     </article>
 </main>
+
+@section scripts{
+
+    <script type="text/javascript">
+        document.getElementById("img-upload").onchange = function () {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                document.getElementById("profile-pic").src = e.target.result;
+            };
+
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        };
+    </script>
+
+}

@@ -10,6 +10,12 @@
     src: url('../font/sofiapro-light-webfont.woff2') format('woff2');
 }
 
+#profile-pic {
+  height:200px;
+  width:200px;
+  border-radius:50%;
+}
+
 .profile-description-box {
     padding: 0 2em;
 }
