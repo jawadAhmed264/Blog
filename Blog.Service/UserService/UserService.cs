@@ -36,7 +36,6 @@ namespace Blog.Service.UserService
                     Name = model.Name,
                     Description = model.Description,
                     JoinDate = model.JoinDate,
-                    Address = model.Address,
                     Gender = model.Gender,
                     Country = model.Country,
                     City = model.City,
@@ -82,7 +81,6 @@ namespace Blog.Service.UserService
                 user.Name = model.Name;
                 user.Description = model.Description;
                 user.JoinDate = model.JoinDate;
-                user.Address = model.Address;
                 user.Gender = model.Gender;
                 user.Country = model.Country;
                 user.City = model.City;
@@ -115,7 +113,6 @@ namespace Blog.Service.UserService
                     Name = user.Name,
                     Description = user.Description,
                     JoinDate = user.JoinDate,
-                    Address = user.Address,
                     Gender = user.Gender,
                     Country = user.Country,
                     City = user.City,
@@ -149,7 +146,6 @@ namespace Blog.Service.UserService
                     Name = user.Name,
                     Description = user.Description,
                     JoinDate = user.JoinDate,
-                    Address = user.Address,
                     Gender = user.Gender,
                     Country = user.Country,
                     City = user.City,
@@ -184,7 +180,6 @@ namespace Blog.Service.UserService
                     Name = user.Name,
                     Description = user.Description,
                     JoinDate = user.JoinDate,
-                    Address = user.Address,
                     Gender = user.Gender,
                     Country = user.Country,
                     City = user.City,
