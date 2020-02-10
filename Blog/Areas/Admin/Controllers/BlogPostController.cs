@@ -22,6 +22,7 @@ using ViewModel.TagViewModels;
 namespace Blog.Areas.Admin.Controllers
 {
     [RoutePrefix("BlogPost")]
+    [Authorize(Roles = "Admin,Author")]
     public class BlogPostController : Controller
     {
         private ICategoryService catService;

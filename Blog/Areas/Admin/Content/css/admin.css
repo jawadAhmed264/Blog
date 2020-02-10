@@ -701,7 +701,7 @@ input:checked + .slider:before {
 
 .form-bg {
     width: 90%;
-    height: 60%;
+    height: auto;
     margin: 21px auto;
     background: #fff;
     box-shadow: 1px 1px 10px 1px #ddd;

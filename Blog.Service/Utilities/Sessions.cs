@@ -1,10 +1,11 @@
-﻿using Blog.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ViewModel;
+using ViewModel.UserViewModel;
 
 namespace Blog.Service.Utilities
 {
@@ -13,7 +14,7 @@ namespace Blog.Service.Utilities
         // private constructor
         private Sessions()
         {
-           // FillOrder = new List<string>();
+            
         }
 
         // Gets the current session.
@@ -32,11 +33,9 @@ namespace Blog.Service.Utilities
         }
 
         // **** add your session properties here, e.g like this:
-        public int LoginId { get; set; }
-        public User UserInfo{ get; set; }
+        public string LoginId { get; set; }
+        public string LoginName { get; set; }
         public string UserRole { get; set; }
-        public string Username { get; set; }
-        public string UserId{ get; set; }
 
     }
 }

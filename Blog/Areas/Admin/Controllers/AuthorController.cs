@@ -17,6 +17,7 @@ using ViewModel.AuthorViewModels;
 namespace Blog.Areas.Admin.Controllers
 {
     [RoutePrefix("Author")]
+    [Authorize(Roles = "Admin")]
     public class AuthorController : Controller
     {
         private IAuthorService authorServices;

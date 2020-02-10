@@ -12,6 +12,7 @@ using ViewModel.UserViewModel;
 namespace Blog.Areas.Admin.Controllers
 {
     [RoutePrefix("User")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private IUserService userservice;
