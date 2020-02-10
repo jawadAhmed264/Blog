@@ -7,7 +7,7 @@
         margin: 10px 23px 8px 25px !important;
     }
     .form-bg {
-        height:800px !important;
+        height:1400px !important;
     }
     .submitbtn{
         height: auto;
@@ -67,13 +67,27 @@
                             <div class="row">
                                 <div class="container-half">
                                     <div class="form-txt">
+                                        <label for="">Gender</label>
+                                        @Html.DropDownListFor(m => m.Gender, new List<SelectListItem>{
+                                             new SelectListItem { Text="Female",Value="female"},
+                                             new SelectListItem { Text="Male",Value="male"}},
+                                             "Select Gender", new { @class = "textbox" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Third Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container-half">
+                                    <div class="form-txt">
                                         <label for="">Email Address</label>
                                         @Html.TextBox("Email", null, new { @class = "textbox" })
                                     </div>
                                 </div>
                             </div>
                         </div>
-                                                <!--Third Row-->
+                        <!--Fourth Row-->
                         <div class="container">
                             <div class="row">
                                 <div class="container-half">
@@ -84,7 +98,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--Fourth Row-->
+                        <!--Fifth Row-->
                         <div class="container">
                             <div class="row">
                                 <div class="container-half">
@@ -95,7 +109,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--Third Row-->
+                        <!--Sixth Row-->
                         <div class="container">
                             <div class="row">
                                 <div class="container-half">
@@ -108,7 +122,44 @@
                                 </div>
                             </div>
                         </div>
-                        <!--Fourth Row-->
+                        <!--Seven Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container-half">
+                                    <div class="form-txt">
+                                        <div class="form-txt">
+                                            <label for="">Country</label>
+                                            @Html.TextBox("Country", null, new { @class = "textbox" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Eight Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container-half">
+                                    <div class="form-txt">
+                                        <div class="form-txt">
+                                            <label for="">City</label>
+                                            @Html.TextBox("City", null, new { @class = "textbox" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Ninth Row-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="container">
+                                    <div class="form-txt">
+                                        <label for="">Address</label>
+                                        @Html.TextArea("Address", null, new { @class = "textbox", @rows = "5", @cols = "20" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Tenth Row-->
                         <div class="container">
                             <div class="row">
                                 <div class="container">
@@ -119,7 +170,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--fifth Row-->
+                        <!--Eleven Row-->
                         <div class="container">
                             <div class="row">
                                 <div class="container-half">
@@ -136,7 +187,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--sixth Row-->
+                        <!--Twelve Row-->
                         <div class="container">
                             <div class="right">
                                 <input type="submit" class="blog-btn submitbtn" title="Create" />

@@ -17,10 +17,20 @@
             {
                 @Html.AntiForgeryToken()
                 <ul>
-                    <li>
-                        <a href="@Url.Action("Author","Profile",new { Area="Admin"})">Profile</a>
-                    </li>
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @*<li>
+                            <a href="@Url.Action("Admin","Profile",new { Area="Admin"})">Profile</a>
+                        </li>*@
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    }
+                    @if (User.IsInRole("Author"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Author","Profile",new { Area="Admin"})">Profile</a>
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    }
                 </ul>
             }
         }
