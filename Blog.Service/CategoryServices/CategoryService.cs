@@ -22,21 +22,20 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                
-                    Category category = new Category()
-                    {
-                        Active = model.Active,
-                        CreateBy = model.CreateBy,
-                        CreateDate = model.CreateDate,
-                        CategoryName = model.CategoryName,
-                        CSSStyle = model.CSSStyle,
-                        Description = model.Description,
-                        ImageUrl = model.ImageUrl,
-                    };
-                    DbContext.Categories.Add(category);
-                    int res = DbContext.SaveChanges();
-                    return res;
-                
+
+                Category category = new Category()
+                {
+                    Active = model.Active,
+                    CreateBy = model.CreateBy,
+                    CreateDate = model.CreateDate,
+                    CategoryName = model.CategoryName,
+                    Description = model.Description,
+                    ImageUrl = model.ImageUrl,
+                };
+                DbContext.Categories.Add(category);
+                int res = DbContext.SaveChanges();
+                return res;
+
             }
             catch (Exception)
             {
@@ -48,12 +47,12 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                
-                    Category category = DbContext.Categories.Find(Id);
-                    DbContext.Categories.Remove(category);
-                    int res = DbContext.SaveChanges();
-                    return res;
-                
+
+                Category category = DbContext.Categories.Find(Id);
+                DbContext.Categories.Remove(category);
+                int res = DbContext.SaveChanges();
+                return res;
+
             }
             catch (Exception)
             {
@@ -65,19 +64,17 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                
-                    Category category = DbContext.Categories.Find(Id);
-                    category.Active = model.Active;
-                    category.ModifyBy = model.ModifyBy;
-                    category.ModifyDate = model.ModifyDate;
-                    category.CategoryName = model.CategoryName;
-                    category.CSSStyle = model.CSSStyle;
-                    category.Description = model.Description;
-                    category.ImageUrl = model.ImageUrl;
-                    DbContext.Entry(category).State = EntityState.Modified;
-                    int res = DbContext.SaveChanges();
-                    return res;
-                
+
+                Category category = DbContext.Categories.Find(Id);
+                category.Active = model.Active;
+                category.ModifyBy = model.ModifyBy;
+                category.ModifyDate = model.ModifyDate;
+                category.CategoryName = model.CategoryName;
+                category.Description = model.Description;
+                category.ImageUrl = model.ImageUrl;
+                DbContext.Entry(category).State = EntityState.Modified;
+                int res = DbContext.SaveChanges();
+                return res;
             }
             catch (Exception)
             {
@@ -90,21 +87,20 @@ namespace Blog.Service.CategoryServices
             try
             {
                 IEnumerable<CategoryViewModel> list = new List<CategoryViewModel>();
-                
-                    list = DbContext.Categories.ToList().Select(m => new CategoryViewModel
-                    {
-                        CategoryId = m.Id,
-                        CategoryName = m.CategoryName,
-                        Description = m.Description,
-                        CreateBy = m.CreateBy,
-                        CreateDate = m.CreateDate,
-                        ModifyBy = m.ModifyBy,
-                        ModifyDate = m.ModifyDate,
-                        Active = m.Active,
-                        CSSStyle = m.CSSStyle,
-                        ImageUrl = m.ImageUrl
-                    });
-                
+
+                list = DbContext.Categories.ToList().Select(m => new CategoryViewModel
+                {
+                    CategoryId = m.Id,
+                    CategoryName = m.CategoryName,
+                    Description = m.Description,
+                    CreateBy = m.CreateBy,
+                    CreateDate = m.CreateDate,
+                    ModifyBy = m.ModifyBy,
+                    ModifyDate = m.ModifyDate,
+                    Active = m.Active,
+                    ImageUrl = m.ImageUrl
+                });
+
                 return list;
             }
             catch (Exception)
@@ -118,24 +114,23 @@ namespace Blog.Service.CategoryServices
         {
             try
             {
-                
-                    var model = DbContext.Categories.SingleOrDefault(cat => cat.Id == Id);
 
-                    CategoryViewModel category = new CategoryViewModel
-                    {
-                        CategoryId = model.Id,
-                        CategoryName = model.CategoryName,
-                        Description = model.Description,
-                        CreateBy = model.CreateBy,
-                        CreateDate = model.CreateDate,
-                        ModifyBy = model.ModifyBy,
-                        ModifyDate = model.ModifyDate,
-                        Active = model.Active,
-                        CSSStyle = model.CSSStyle,
-                        ImageUrl = model.ImageUrl
-                    };
-                    return category;
-                
+                var model = DbContext.Categories.SingleOrDefault(cat => cat.Id == Id);
+
+                CategoryViewModel category = new CategoryViewModel
+                {
+                    CategoryId = model.Id,
+                    CategoryName = model.CategoryName,
+                    Description = model.Description,
+                    CreateBy = model.CreateBy,
+                    CreateDate = model.CreateDate,
+                    ModifyBy = model.ModifyBy,
+                    ModifyDate = model.ModifyDate,
+                    Active = model.Active,
+                    ImageUrl = model.ImageUrl
+                };
+                return category;
+
             }
             catch (Exception)
             {

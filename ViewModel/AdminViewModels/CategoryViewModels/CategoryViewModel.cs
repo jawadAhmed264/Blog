@@ -12,7 +12,7 @@ namespace ViewModel.AdminViewModels.CategoryViewModels
         public string CategoryName { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
-        public string CSSStyle { get; set; }
+        //public string CSSStyle { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
         public Nullable<System.DateTime> ModifyDate { get; set; }

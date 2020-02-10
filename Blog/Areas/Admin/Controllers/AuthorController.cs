@@ -1,16 +1,9 @@
 ﻿using Blog.Models;
 using Blog.Service.AuthorService;
-using Blog.Service.BlogContentService;
-using Blog.Service.BlogServices;
-using Blog.Service.CategoryServices;
-using Blog.Service.MediaFileService;
-using Blog.Service.TagService;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using ViewModel.AuthorViewModels;
 
