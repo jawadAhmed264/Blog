@@ -245,6 +245,8 @@
     <Content Include="Content\Blog\images\bot-Ellipse-blue.png" />
     <Content Include="Content\Blog\images\bot-Ellipse.png" />
     <Content Include="Content\Blog\images\comment-avatar.png" />
+    <Content Include="Content\Images\AurthorImages\default-m.png" />
+    <Content Include="Content\Images\AurthorImages\default-f.png" />
     <Content Include="Content\Images\CategoryImages\Entertainment-vectorbg.png" />
     <Content Include="Content\Blog\images\full-blog-bg.jpg" />
     <Content Include="Content\Blog\images\H-blog-bg-horizontal.png" />
@@ -293,6 +295,8 @@
     <Content Include="Areas\Admin\Content\images\search-icon.png" />
     <Content Include="Areas\Admin\Content\images\writeapost-icon.png" />
     <Content Include="Areas\Admin\Content\js\jquery-3.4.1.min.js" />
+    <Content Include="Content\Images\UserImages\default-m.png" />
+    <Content Include="Content\Images\UserImages\default-f.png" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\js\script.js" />
@@ -559,11 +563,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Content\Images\AurthorImages\" />
     <Folder Include="Content\Images\blogBanners\" />
     <Folder Include="Content\Images\blogImages\" />
     <Folder Include="Content\Images\thumbnails\" />
-    <Folder Include="Content\Images\UserImages\" />
     <Folder Include="Views\Image\" />
   </ItemGroup>
   <ItemGroup>
