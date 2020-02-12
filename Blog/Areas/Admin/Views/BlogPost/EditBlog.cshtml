@@ -4,7 +4,7 @@
     ViewBag.Title = "EditBlog";
 }
 
-<link href="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet" />
 
 @if (ViewBag.Error == true)
 {
@@ -16,7 +16,7 @@
 }
 <article class="article">
     <div class="main-bg">
-        @using (Html.BeginForm("EditBlog", "BlogPost",new { BlogId=Model.BlogPostId},FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("EditBlog", "BlogPost", new { BlogId = Model.BlogPostId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div class="main-header">
@@ -33,7 +33,7 @@
                             @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "CategoryId", "CategoryName"), "Select Category", new { @class = "" })
                             @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "errorMessage" })
                             <label class="custom-file-upload">
-                                @Html.HiddenFor(m=>m.BannerUrl)
+                                @Html.HiddenFor(m => m.BannerUrl)
                                 <input type="file" name="BannerImage" id="BannerImage" accept="image/jpeg, image/png" />
                                 <i class="fa fa-cloud-upload"></i> <span class="coverImg">Upload Backgroung</span>
                             </label>
@@ -59,8 +59,8 @@
 </article>
 
 @section scripts{
-    <script src="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js"></script>
-    <script src="~/Areas/Admin/Content/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="~/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="~/Content/tinymce/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
         $(function () {
 

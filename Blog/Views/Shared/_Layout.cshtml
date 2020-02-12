@@ -1,116 +1,116 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@ViewBag.Title</title>
+    <title>@ViewBag.Title - Todays Trending</title>
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/Blog/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/Blog/css/style.css" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/e74ee50f7e.js" crossorigin="anonymous"></script>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style2.css" rel="stylesheet" />
+    @*<link href="~/Content/css/style.css" rel="stylesheet" />*@
+    <link href="~/Content/css/slick.css" rel="stylesheet" />
+    <link href="~/Content/css/slick-theme.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    @RenderSection("scriptsTop", required: false)
 </head>
 <body>
-    <!--HEADER SECTION STARTS-->
-    <header class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="container">
-                    <div class="header-box row">
-                        <!--SOUND BOX-->
-                        <div class="sound-box col-lg-4 col-sm-4">
-                            <div class="float-left">
-                                <div class="sound-bg">
-                                    <img src="~/Content/Blog/images/sound-on.png" class="sound-on" alt="sound on">
-                                    <img src="~/Content/Blog/images/sound-off.png" class="sound-off" alt="sound on">
-                                </div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="header">
+                <div class="header---box">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3">
+                            <div class="logo">
+                                <a href="">
+                                    <p><span class="primary-color">Today’s</span> Trending</p>
+                                </a>
                             </div>
                         </div>
-                        <!--LOGO BOX-->
-                        <div class="logo col-lg-4 col-sm-4">
-                            <div class="text-center">
-                                <h2><strong>Today's Trending</strong></h2>
-                            </div>
-                        </div>
-                        <!--MENUBAR-->
-                        <div class="menubar col-lg-4 col-sm-4">
-                            <div class="float-right">
-                                <div class="logo-bg">
-                                    <img src="~/Content/Blog/images/menu-icon.png" />
-                                </div>
-                            </div>
-                            <div>
-                                <div class="overlay"></div>
-                                <div class="sidebar"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!--HEADER SECTION ENDS-->
-    @RenderBody()
-    <!--FOOTER SECTION STARTS-->
-    <footer>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="container">
-                    <div class="footer-content">
-                        <div class="row">
-                            <!--ABOUT COMPANY SECTION-->
-                            <div class="col-lg-6">
-                                <div class="hero-heading">
-                                    <h1>Today’sTrending</h1>
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                        when an unknown printer took a galley of type and scrambled it to make a type
-                                        specimen book. It has survived not only five centuries, but also the leap into electronic
-                                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                                        release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                        with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="col-lg-9">
+                            <div class="float-right row">
 
-                            <!--SUBSCRIBTION LETTER SECTION-->
-                            <div class="col-lg-6">
-                                <div class="Subscribe-box">
-                                    <div class="subscribe-content">
-                                        <h2>Subscribe to our newsletter</h2>
-                                        <!--SUBSCRIBE FORM-->
+                                <div class="search---box">
+                                    <div class="search---bar">
                                         <div class="row">
-                                            <div class="col-lg-12 pt-3">
-                                                <form action="">
-                                                    <input type="text" class="subscribe-form">
-                                                    <input type="submit" value="Subscribe" class="subscribe-btn">
-                                                </form>
+                                            <img src="~/Content/Images/Others/search-icon.png" class="search-icon" alt="" />
+                                            <input type="search" class="header-search---bar" placeholder="Search Something">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="notification---box">
+                                    <img src="~/Content/Images/Others/notification-icon.png" />
+                                    <div class="dropdown---box">
+                                        <div class="notification---dropdown">
+                                            <div class="normal---area">
+                                                <div class="notification-card---box">
+                                                    <a href="">
+                                                        <div class="notification---card">
+                                                            <div class="row align-item-center">
+                                                                <div class="col-lg-2">
+                                                                    <img src="~/Content/Images/Others/avatar-icon.png" />
+                                                                </div>
+                                                                <div class="col-lg-10">
+                                                                    <p>Welcome to Today's Trending! Start by introducing yourself in welcome thread <span class="float-right">12:48pm</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="normal---area">
+                                                <hr>
+                                                <div class="notification-card---box">
+                                                    <a href="">
+                                                        <div class="notification---card">
+                                                            <div class="row align-item-center">
+                                                                <div class="col-lg-2">
+                                                                    <img src="~/Content/Images/Others/avatar-icon.png" />
+                                                                </div>
+                                                                <div class="col-lg-10">
+                                                                    <p>Someone reply to your comment<span class="float-right">12:48pm</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <!--SOCIAL LINKS-->
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="social-links">
-                                                    <ul>
-                                                        <li>
-                                                            <div class="fb">
-                                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fab fa-facebook-f"></i> <span>Facebook</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="in">
-                                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fab fa-instagram"></i> <span>Instagram</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="dri">
-                                                                <a href=""><i class="fab fa-dribbble"></i> <span>Dribbble</span></a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                    </div>
+                                </div>
+
+                                <div class="user---box">
+                                    <img src="~/Content/Images/Others/user-icon.png" />
+                                    <div class="dropdown---box">
+                                        <div class="user---dropdown">
+                                            <div class="user----area">
+                                                <h6>Faseeh Yasin</h6>
+                                                <span><a href="">faseeh12</a></span>
+                                                <p>become a member</p>
+                                            </div>
+                                            <div class="normal---area">
+                                                <hr>
+                                                <ul>
+                                                    <li><a href="">New story</a></li>
+                                                    <li><a href="">Series</a></li>
+                                                    <li><a href="">Stories</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="normal---area">
+                                                <hr>
+                                                <ul>
+                                                    <li><a href="">Partner program</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="normal---area">
+                                                <hr>
+                                                <ul>
+                                                    <li><a href="">Profile</a></li>
+                                                    <li><a href="">Settings</a></li>
+                                                    <li><a href="">Help</a></li>
+                                                    <li><a href="">Sign out</a></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -118,25 +118,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="footer-last">
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <p>Copyright &copy; @DateTime.Now.Year All rights reserved | Today's Trending</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
+            @Html.Partial("_headerMenuPartial")
+            @RenderBody()
         </div>
-    </footer>
-    <!--FOOTER SECTION ENDS-->
+    </div>
+
+
+    <!--Scripts Section-->
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Content/Blog/js/bootstrap.min.js"></script>
-    <script src="~/Content/Blog/js/script.js"></script>
+    <script src="~/Scripts/Blog/popper.js"></script>
+    <script src="~/Scripts/Blog/bootstrap.min.js"></script>
+    <script src="~/Scripts/Blog/slick.js"></script>
+    <script src="~/Scripts/Blog/script.js"></script>
     @RenderSection("scripts", required: false)
+    <!--End Scripts Section-->
 
 </body>
 </html>
+
 
 @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewBag.Title - Todays Trending</title>
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Areas/Admin/Content/css/admin.css" rel="stylesheet" />
+    <link href="~/Content/css/admin.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/e74ee50f7e.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -30,10 +30,10 @@
     <header class="header">
         <div class="header-left">
             <div class="menu">
-                <img src="~/Areas/Admin/Content/images/Menubar-icon.png" alt="">
+                <img src="~/Content/Images/Others/Admin/Menubar-icon.png" />
             </div>
             <div class="search">
-                <img src="~/Areas/Admin/Content/images/search-icon.png" alt="">
+                <img src="~/Content/Images/Others/Admin/search-icon.png" alt="">
                 <div class="search-box">
                     <Input type="search" placeholder="Search" />
                     <div class="hiddenbar-bg">
@@ -69,30 +69,30 @@
     <aside class="aside">
         <div class="logo">
             <a href="Dashboard.html">
-                <img src="~/Areas/Admin/Content/images/logo-icon.png" alt="">
+                <img src="~/Content/Images/Others/Admin/logo-icon.png" alt="">
             </a>
         </div>
         <div class="aside-menu">
             <ul>
                 @if (User.IsInRole("Admin"))
                 {
-                    <li class="active"><a href="@Url.Action("Index", "Dashboard", new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/dashboard-icon.png" alt=""></a></li>
-                    <li><a href="@Url.Action("Index", "BlogPost", new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/writeapost-icon.png" alt=""></a></li>
-                    <li><a href="@Url.Action("Index", "Author", new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/admin.png" alt=""></a></li>
-                    <li><a href="@Url.Action("Index", "User", new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/adminrole.png" alt=""></a></li>
-                    <li><a href="Categorylist.html"><img src="~/Areas/Admin/Content/images/categorylist.png" alt=""></a></li>
+                    <li class="active"><a href="@Url.Action("Index", "Dashboard", new { Area = "Admin" })"><img src="~/Content/Images/Others/Admin/dashboard-icon.png" alt=""></a></li>
+                    <li><a href="@Url.Action("Index", "BlogPost", new { Area = "Admin" })"><img src="~/Content/Images/Others/Admin/writeapost-icon.png" alt=""></a></li>
+                    <li><a href="@Url.Action("Index", "Author", new { Area = "Admin" })"><img src="~/Content/Images/Others/Admin/admin.png" alt=""></a></li>
+                    <li><a href="@Url.Action("Index", "User", new { Area = "Admin" })"><img src="~/Content/Images/Others/Admin/adminrole.png" alt=""></a></li>
+                    <li><a href="Categorylist.html"><img src="~/Content/Images/Others/Admin/categorylist.png" alt=""></a></li>
                 }
                 @if (User.IsInRole("Author"))
                 {
-                    <li class="active"><a href="@Url.Action("Index", "Dashboard", new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/dashboard-icon.png" alt=""></a></li>
-                    <li><a href="@Url.Action("Index", "BlogPost", new { Area = "Admin" })"><img src="~/Areas/Admin/Content/images/writeapost-icon.png" alt=""></a></li>
+                    <li class="active"><a href="@Url.Action("Index", "Dashboard", new { Area = "Admin" })"><img src="~/Content/Images/Others/Admin/images/dashboard-icon.png" alt=""></a></li>
+                    <li><a href="@Url.Action("Index", "BlogPost", new { Area = "Admin" })"><img src="~/Content/Images/Others/Admin/writeapost-icon.png" alt=""></a></li>
                 }
             </ul>
         </div>
     </aside>
 
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Areas/Admin/Content/js/script.js"></script>
+    <script src="~/Scripts/Admin/script.js"></script>
     @RenderSection("scripts", required: false)
 
 </body>

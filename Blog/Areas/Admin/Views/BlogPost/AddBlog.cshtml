@@ -3,16 +3,16 @@
 @{
     ViewBag.Title = "AddBlog";
 }
-<link href="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet" />
 
+<link href="~/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet" />
 
 @if (ViewBag.Error == true)
 {
-<div class="alert divError">
-    <span class="closebtn">&times;</span>
-    <strong>@ViewBag.ErrorMessage</strong><br />
-    @Html.ValidationSummary()
-</div>
+    <div class="alert divError">
+        <span class="closebtn">&times;</span>
+        <strong>@ViewBag.ErrorMessage</strong><br />
+        @Html.ValidationSummary()
+    </div>
 }
 
 <article class="article">
@@ -53,8 +53,8 @@
 </article>
 
 @section scripts{
-    <script src="~/Areas/Admin/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js"></script>
-    <script src="~/Areas/Admin/Content/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="~/Content/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="~/Content/tinymce/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
         $(function () {
 

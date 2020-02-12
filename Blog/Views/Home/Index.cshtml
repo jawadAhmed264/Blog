@@ -1,149 +1,278 @@
-﻿@using ViewModel.AdminViewModels.CategoryViewModels
-@model List<CategoryViewModel>
-
+﻿
 @{
-    Layout = null;
+    ViewBag.Title = "Home";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Choose Category</title>
-    @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/Blog/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/Blog/css/style.css" rel="stylesheet" />
-    <link href="~/Content/Blog/css/category-list-blue.css" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/e74ee50f7e.js" crossorigin="anonymous"></script>
-    <style>
-        li {
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="top-ellipse">
-        <img src="~/Content/Blog/images/top-Ellipse-blue.png" />
-    </div>
-    <!--HEADER SECTION STARTS-->
-    <header class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="container">
-                    <div class="header-box row">
-                        <!--LOGO BOX-->
-                        <div class="logo col-lg-12 col-sm-12">
-                            <div class="text-center cat-logo">
-                                <h2><strong>Today's Trending</strong></h2>
+<div class="headerContent">
+    <div class="headerContent---box">
+        <div class="row">
+            <!--Series Card-->
+            <div class="col-lg-4">
+                <div class="blog-card">
+                    <div class="blog-card---img">
+                        <img src="~/Content/Images/Others/blog-card.jpeg" />
+                    </div>
+                    <div class="blog-card---content">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="cardAuther---tag col-lg-8">
+                                    <a class="row align-items-center" href="#"><img src="~/Content/Images/Others/avatar-icon.png" class="pr-2" alt="">PandaDev Series</a>
+                                </div>
+                                <div class="cardAuther---icons row align-items-center col-lg-4">
+                                    <div>
+                                        <span><img src="~/Content/Images/Others/brain.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Likes"></span>
+                                        <span><img src="~/Content/Images/Others/eye.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Views"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row pt-3">
+                                <h3>Heading</h3>
+                            </div>
+
+                            <div class="row">
+                                <div class="Authername">
+                                    <p>auther name <span class="Authername---time">Feb 12 2019</span></p>
+                                    <p>
+                                        <span class="Authername---tags"><a href="">#tag1</a></span>
+                                        <span class="Authername---tags"><a href="">#tag2</a></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="blogPara">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Normal Card-->
+            <div class="col-lg-4">
+                <div class="blog-card">
+                    <div class="blog-card---img">
+                        <img src="~/Content/Images/Others/blog-card.jpeg" />
+                    </div>
+
+                    <div class="blog-card---content">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="cardAuther---icons row align-items-center col-lg-4 offset-8">
+                                    <div>
+                                        <span><img src="~/Content/Images/Others/brain.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Likes"></span>
+                                        <span><img src="~/Content/Images/Others/eye.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Views"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row pt-3">
+                                <h3>Heading</h3>
+                            </div>
+
+                            <div class="row">
+                                <div class="Authername">
+                                    <p>auther name <span class="Authername---time">Feb 12 2019</span></p>
+                                    <p>
+                                        <span class="Authername---tags"><a href="">#tag1</a></span>
+                                        <span class="Authername---tags"><a href="">#tag2</a></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="blogPara">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="blog-card">
+                    <div class="blog-card---img">
+                        <img src="~/Content/Images/Others/blog-card.jpeg" />
+                    </div>
+
+                    <div class="blog-card---content">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="cardAuther---icons row align-items-center col-lg-4 offset-8">
+                                    <div>
+                                        <span><img src="~/Content/Images/Others/brain.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Likes"></span>
+                                        <span><img src="~/Content/Images/Others/eye.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Views"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row pt-3">
+                                <h3>Heading</h3>
+                            </div>
+
+                            <div class="row">
+                                <div class="Authername">
+                                    <p>auther name <span class="Authername---time">Feb 12 2019</span></p>
+                                    <p>
+                                        <span class="Authername---tags"><a href="">#tag1</a></span>
+                                        <span class="Authername---tags"><a href="">#tag2</a></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="blogPara">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
-    <!--HEADER SECTION ENDS-->
-    <div>
-        <main class="cat-main">
-            <div class="cat-main-bg">
-                <!-- 822x573 -->
-                <img src="@Model[0].ImageUrl" class="cat-img" />
-            </div>
-            <div class="cat-main-content">
-                <div>
-                    <h5>Simple and productive</h5>
-                </div>
-                <div class="pt-2 pb-4">
-                    <h3>A directory of wonderful things</h3>
-                </div>
-                <div>
-                    <h4>Read what you want to</h4>
-                </div>
-                <div>
-                    <a href="@Url.Action("BlogsCategory","Home",new { id=Model[0].CategoryId,category=Model[0].CategoryName})" class="cat-link">Go to <span class="link-text">@Model[0].CategoryName</span> blogs <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </main>
     </div>
-    <!--ASIDE BAR CATEGORY-->
-    <aside>
-        <div class="aside-slider">
-            <div class="aside-slider-box">
-                <div class="slider-content">
-                    <h6>Choose category</h6>
-                    <div class="slider-menu">
-                        <ul>
-                            @if (Model.ToList().Count == 0)
-                            {
-                                <li>No Categories</li>
-                            }
-                            else
-                            {
-                                foreach (var item in Model)
-                                {
-                                    <li class="category-select_@item.CategoryId" onclick="changetheme(@item.CategoryId)">@item.CategoryName</li>
-                                }
-                            }
-
-                            @*<li><a href="" class="slide-active">Entertainment</a></li>
-                                <li><a href="">Sports</a></li>*@
-                        </ul>
+</div>
+<div class="main---content">
+    <hr>
+    <div class="maincard---box">
+        <div class="pt-4 pb-4">
+            <a href="#">
+                <div class="main-card">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="~/Content/Images/Others/blog-card.jpeg" />
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="maincard---content">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <h3>Heading</h3>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-right">
+                                            <p>auther name <span class="Authername---time">Feb 12 2019</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                <div class="cardAuther---icons row align-items-center col-lg-4 pt-3">
+                                    <div>
+                                        <span><img src="~/Content/Images/Others/brain.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Likes"></span>
+                                        <span><img src="~/Content/Images/Others/eye.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Views"></span>
+                                        <span><img src="~/Content/Images/Others/comments.png" alt="" data-toggle="tooltip" data-placement="top" title="100 Commnts"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </a>
+        </div>
+        <div class="pt-4 pb-4">
+            <a href="#">
+                <div class="main-card">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="~/Content/Images/Others/blog-card.jpeg" />
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="maincard---content">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <h3>Heading</h3>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-right">
+                                            <p>auther name <span class="Authername---time">Feb 12 2019</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                <div class="cardAuther---icons row align-items-center col-lg-4 pt-3">
+                                    <div>
+                                        <span><img src="~/Content/Images/Others/brain.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Likes"></span>
+                                        <span><img src="~/Content/Images/Others/eye.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Views"></span>
+                                        <span><img src="~/Content/Images/Others/comments.png" alt="" data-toggle="tooltip" data-placement="top" title="100 Commnts"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <img src="~/Content/Images/Others/banner-ads-amazon.jpg" />
             </div>
         </div>
-    </aside>
-    <!--ASIDE BAR CATEGORY ENDS-->
-    <div class="bot-ellipse">
-        <img src="~/Content/Blog/images/bot-Ellipse-blue.png" />
+        <div class="pt-4 pb-4">
+            <a href="#">
+                <div class="main-card">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="~/Content/Images/Others/blog-card.jpeg" />
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="maincard---content">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <h3>Heading</h3>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-right">
+                                            <p>auther name <span class="Authername---time">Feb 12 2019</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                <div class="cardAuther---icons row align-items-center col-lg-4 pt-3">
+                                    <div>
+                                        <span><img src="~/Content/Images/Others/brain.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Likes"></span>
+                                        <span><img src="~/Content/Images/Others/eye.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Views"></span>
+                                        <span><img src="~/Content/Images/Others/comments.png" alt="" data-toggle="tooltip" data-placement="top" title="100 Commnts"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="pt-4 pb-4">
+            <a href="#">
+                <div class="main-card">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="~/Content/Images/Others/blog-card.jpeg" />
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="maincard---content">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <h3>Heading</h3>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-right">
+                                            <p>auther name <span class="Authername---time">Feb 12 2019</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                <div class="cardAuther---icons row align-items-center col-lg-4 pt-3">
+                                    <div>
+                                        <span><img src="~/Content/Images/Others/brain.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Likes"></span>
+                                        <span><img src="~/Content/Images/Others/eye.png" alt="" data-toggle="tooltip" data-placement="top" title="1000 Views"></span>
+                                        <span><img src="~/Content/Images/Others/comments.png" alt="" data-toggle="tooltip" data-placement="top" title="100 Commnts"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    <script src="~/Content/Blog/js/bootstrap.min.js"></script>
-    <script src="~/Content/Blog/js/script.js"></script>
-    <script>
-        $(function () {
-            $("li:first").addClass("slide-active");
-        });
-
-        function changetheme(id) {
-            var link = '@Url.Action("Category", "Home", new { id = "-1" })';
-            link = link.replace("-1", id);
-            $("li").removeClass("slide-active");
-            $(".category-select_" + id).addClass("slide-active");
-             $.ajax({
-                type: "GET",
-                url: link,
-                dataType: "json",
-                 success: function (response) {
-                     var obj = response;
-                     var catLink = '@Url.Action("BlogsCategory","Home",new { id="-1",category="-2"})';
-                     catLink = catLink.replace("-1", obj.CategoryId);
-                     catLink = catLink.replace("-2", obj.CategoryName);
-
-                     $(".catTheme").attr("href", obj.CSSStyle);
-                     $(".cat-img").attr("src", obj.ImageUrl);
-                     $(".link-text").text(obj.CategoryName);
-                     $(".cat-link").attr("href", catLink);
-                     if (obj.CSSStyle === "Content/Blog/css/category-list-blue.css")
-                     {
-                         $(".bot-ellipse img").attr("src", "Content/Blog/images/bot-Ellipse-blue.png");
-                         $(".top-ellipse img").attr("src", "Content/Blog/images/top-Ellipse-blue.png");
-                     }
-                     if (obj.CSSStyle === "Content/Blog/css/category-list-green.css")
-                     {
-                         $(".bot-ellipse img").attr("src", "Content/Blog/images/bot-Ellipse.png");
-                         $(".top-ellipse img").attr("src", "Content/Blog/images/top-Ellipse.png");
-                     }
-                     return;
-               },
-               error: function () {
-                   alert("Error");
-               }
-            });
-        }
-    </script>
-</body>
-</html>
+</div>

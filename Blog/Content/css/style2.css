@@ -1,0 +1,318 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default padding */
+ul,
+ol {
+  padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  position: relative;
+}
+
+/* Remove list styles on ul, ol elements with a class attribute */
+ul[class],
+ol[class] {
+  list-style: none;
+}
+ul li{
+    list-style: none;
+}
+
+/*Anchor tag color*/
+a{
+    color: unset;
+}
+a:hover{
+    color: unset;
+}
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Natural flow and rhythm in articles by default */
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*Search bar placeholder color changes here*/
+input::placeholder{
+    color: #888;
+}
+
+/* clears the 'X' from Internet Explorer */
+input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+
+/* clears the 'X' from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*HEADER 2*/
+.header{
+    width: 100%;
+}
+.header---box {
+    padding: 15px 0;
+}
+.logo{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 28px;
+    font-weight: 900;
+}
+.logo a{
+    text-decoration: none;
+}
+.primary-color{
+    color: #2372EA;
+}
+.search---box{
+    margin: 0 20px;
+    cursor: pointer;
+}
+.notification---box {
+    /* border-radius: 100px; */
+    /* border: 2px solid #8888; */
+    /* padding: 4px 5px; */
+    margin: 0 20px;
+    cursor: pointer;
+}
+.user---box{
+    margin: 0 20px;
+    cursor: pointer;
+}
+.dropdown---box {
+    position: relative;
+}
+.user----area {
+    text-align: left;
+}
+.user----area span a{
+    color: #888 ;
+}
+.user----area p{
+    color: #2372EA;
+    font-weight: 600;
+}
+.user---dropdown {
+    display:none;
+    position: absolute;
+    top: 10px;
+    right: 2px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    width: 200px;
+    box-shadow: 0 0 3px 0 #dddd;
+    z-index: 1;
+}
+.normal---area ul li{
+    padding: 5px 0;
+}
+.normal---area ul li a{
+    color: #888;
+    font-size: 14px;
+}
+.notification---dropdown {
+    display:none;
+    position: absolute;
+    top: 10px;
+    right: 2px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    width: 500px;
+    box-shadow: 0 0 3px 0 #dddd;
+    z-index: 1;
+}
+.notification-card---box {
+    width: 100%;
+    position: relative;
+}
+.notification-card---box a{
+    color: unset;
+}
+.notification---card span{
+    padding: 14px 0;
+    font-size: 12px;
+    color: #8888;
+}
+.notification---card img{
+    width: 100%;
+}
+.header-search---bar {
+    display: none;
+    height: 25px;
+    margin: 0 10px;
+    border: none;
+    outline: none;
+}
+.headerslide-menu {
+    width: 78%;
+    margin: 0 auto;
+}
+.slick-next {
+    right: -30px !important;
+}
+.slick-prev {
+    left: -40px !important;
+}
+.slick-prev, .slick-next{
+    width: 30px !important;
+    height: 30px !important;
+    background: #2372EA !important;
+    border-radius: 20px;
+}
+.slick-prev:before, .slick-next:before {
+    line-height: 0.5 !important;
+}
+.center{
+    padding: 35px 0;
+    font-size: 14px;
+}
+.headerContent {
+    width: 100%;
+    padding: 20px 0;
+}
+.blog-card {
+    position: relative;
+    background: #fff;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 #8888;
+}
+.blog-card---img img {
+    border-radius: 5px;
+}
+.blog-card---content {
+    padding: 20px 10px;
+}
+.cardAuther---tag {
+    width: auto;
+    padding: 0px 30px 0 15px;
+    border-radius: 16px;
+}
+.cardAuther---icons {
+    width: 58%;
+}
+.cardAuther---icons img{
+    position: relative;
+    width: 30px;
+    margin: 0 3px;
+    float: right;
+}
+.Authername {
+    padding: 10px 0;
+}
+.Authername p {
+    font-size: 18px;
+    padding: 10px 0px 10px;
+}
+.Authername---time {
+    font-size: 12px;
+    color: #888;
+    word-spacing: 0px;
+    padding: 0 5px;
+    border-left: 1px solid #888;
+}
+.Authername---tags {
+    background: #ddd;
+    padding: 0px 10px;
+    margin: 0 5px 0 0;
+    border-radius: 10px;
+    font-size: 14px;
+}
+.blogPara {
+    text-align: left;
+    width: 100%;
+    font-size: 14px;
+}
+.main---content {
+    width: 100%;
+    padding: 30px 0;
+}
+.maincard---box a{
+    text-decoration: none;
+}
+.main-card {
+    width: 100%;
+    height: auto;
+}
+.main-card:hover{
+    transition: 0.2s ease-in-out;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 #8888;
+}
+.main-card img{
+    border-radius: 10px 0px 0 10px;
+    padding: 0 0;
+}
+.maincard---content {
+    padding: 10px;
+}
+.maincard---content p{
+    padding: 10px 0;
+}
+.maincard---content span{
+
+}
+.maincard---content img {
+    
+}
