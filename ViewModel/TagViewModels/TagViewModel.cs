@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViewModel.TagViewModels
 {
-   public class TagViewModel
+    public class TagViewModel
     {
         public long Id { get; set; }
         public string TagName { get; set; }
