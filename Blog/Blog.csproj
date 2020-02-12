@@ -274,7 +274,6 @@
     <Content Include="fonts\sofiapro\Licenses\Desktop EULA 1.6.txt" />
     <Content Include="fonts\sofiapro\Reference\Release Notes.txt" />
     <Content Include="Scripts\Blog\bootstrap.min.js" />
-    <Content Include="Scripts\Blog\jquery-3.4.1.min.js" />
     <Content Include="Scripts\Blog\popper.js" />
     <Content Include="Scripts\Blog\script.js" />
     <Content Include="Scripts\Blog\slick.js" />
