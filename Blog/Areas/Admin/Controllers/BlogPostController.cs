@@ -1,10 +1,12 @@
 ﻿using Blog.Common;
+using Blog.Service.AuthorService;
 using Blog.Service.BlogContentService;
 using Blog.Service.BlogServices;
 using Blog.Service.CategoryServices;
 using Blog.Service.MediaFileService;
 using Blog.Service.TagService;
 using HtmlAgilityPack;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +16,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using ViewModel.AdminViewModels.BlogPostViewModels;
+using ViewModel.AuthorViewModels;
 using ViewModel.Enums;
 using ViewModel.MediaFileViewModels;
 using ViewModel.TagViewModels;
@@ -29,18 +32,21 @@ namespace Blog.Areas.Admin.Controllers
         private ITagService tagService;
         private IMediaFileService mediaFileService;
         private IBlogContentService blogContentService;
+        private IAuthorService authorService;
 
         public BlogPostController(ICategoryService _catService,
             IBlogService _blogService,
             ITagService _tagService,
             IMediaFileService _mediaFileService,
-            IBlogContentService _blogContentService)
+            IBlogContentService _blogContentService,
+            IAuthorService _authorService)
         {
             catService = _catService;
             blogService = _blogService;
             tagService = _tagService;
             mediaFileService = _mediaFileService;
             blogContentService = _blogContentService;
+            authorService = _authorService;
 
         }
 
@@ -127,9 +133,18 @@ namespace Blog.Areas.Admin.Controllers
                     {
                         model.Active = false;
                     }
-                    model.CreateBy = "Admin";
-                    model.CreateDate = DateTime.Now;
-
+                    if (User.IsInRole("Author"))
+                    {
+                        AuthorViewModel author = authorService.GetAuthorByIdentityId(User.Identity.GetUserId());
+                        model.CreateBy = author.Name;
+                        model.AutherId = author.Id;
+                        model.CreateDate = DateTime.Now;
+                    }
+                    if (User.IsInRole("Admin"))
+                    {
+                        model.CreateBy = "Admin";
+                        model.CreateDate = DateTime.Now;
+                    }
                     //Call blog Service
                     int res = blogService.AddBlog(model);
 
@@ -267,8 +282,18 @@ namespace Blog.Areas.Admin.Controllers
                         model.Active = false;
                     }
 
-                    model.ModifyBy = "Admin";
-                    model.ModifyDate = DateTime.Now;
+                    if (User.IsInRole("Author"))
+                    {
+                        AuthorViewModel author = authorService.GetAuthorByIdentityId(User.Identity.GetUserId());
+                        model.ModifyBy = author.Name;
+                        model.AutherId = author.Id;
+                        model.ModifyDate = DateTime.Now;
+                    }
+                    if (User.IsInRole("Admin"))
+                    {
+                        model.ModifyBy = "Admin";
+                        model.ModifyDate = DateTime.Now;
+                    }
 
                     //Call blog Service
                     int res = blogService.EditBlog(model, BlogId);

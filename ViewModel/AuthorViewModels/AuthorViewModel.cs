@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace ViewModel.AuthorViewModels
 {
@@ -26,6 +27,7 @@ namespace ViewModel.AuthorViewModels
         [DataType(DataType.PhoneNumber)]
         public string Contact { get; set; }
         public string ImageUrl { get; set; }
+        public HttpPostedFileBase AuthorImage { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> JoinDate { get; set; }
         public Nullable<System.DateTime> LeaveDate { get; set; }

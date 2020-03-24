@@ -10,105 +10,120 @@
             <div class="container">
                 <div class="row">
                     <div class="profile-box">
-                        <!--Image insert box-->
-                        <div class="container profile-img">
-                            <div class="row align-center">
-                                <div>
-                                    <img src="~/Content/Images/Others/Admin/avatar-icon-big.png" id="profile-pic" alt="">
-                                    <label for="img-upload" class="img-upload">
-                                        <input type="file" title="Upload" value="Upload" id="img-upload">
-                                        <div class="img-upload-btn">
-                                            <i class="fas fa-user-edit white-icon"></i>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="profile-description-box">
-                                    <h2>Jose Marlin</h2>
-                                    <p>Karachi, Pakistan</p>
-                                    <p>Editor</p>
+                        @using (Html.BeginForm("Author", "Profile", FormMethod.Post, new { @class="user-form",enctype = "multipart/form-data" }))
+                        {
+                            <!--Image insert box-->
+                            <div class="container profile-img">
+                                <div class="row align-center">
+                                    <div>
+                                        <img src="~/Content/Images/Others/Admin/avatar-icon-big.png" id="profile-pic" alt="">
+                                        <label for="img-upload" class="img-upload">
+                                            <input type="file" title="Upload" value="Upload" id="img-upload" name="AuthorImage" accept="image/jpeg, image/png">
+                                            <div class="img-upload-btn">
+                                                <i class="fas fa-user-edit white-icon"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="profile-description-box">
+                                        <h2>@Model.Name</h2>
+                                        <p>@Model.City, @Model.Country</p>
+                                        <p>Editor</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!--Profile Form-->
-                        <div class="container">
-                            <div class="row">
-                                <form action="" class="user-form">
-                                    <!--First Row-->
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="container-half">
-                                                <div class="form-txt">
-                                                    <label for="">Name</label>
-                                                    <input type="text" class="textbox">
-                                                </div>
-                                            </div>
-                                            <div class="container-half">
-                                                <div class="form-txt">
-                                                    <label for="">Full name</label>
-                                                    <input type="text" class="textbox">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!--Second Row-->
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="container-half">
-                                                <div class="form-txt">
-                                                    <label for="">Email</label>
-                                                    <input type="text" class="textbox">
-                                                </div>
-                                            </div>
-                                            <div class="container-half">
-                                                <div class="form-txt">
-                                                    <label for="">Mobile number</label>
-                                                    <input type="text" class="textbox">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!--Third Row-->
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="container-half">
-                                                <div class="form-txt">
+                            <!--Profile Form-->
+                            <div class="container">
+                                <div class="row">
+                                        <!--First Row-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-half">
                                                     <div class="form-txt">
-                                                        <label for="">Address</label>
-                                                        <input type="text" class="textbox">
+                                                        <label for="">Email</label>
+                                                        @Html.TextBoxFor(m => m.Name, new { @class = "textbox" })
+                                                    </div>
+                                                </div>
+                                                <div class="container-half">
+                                                    <div class="form-txt">
+                                                        <label for="">Gender</label>
+                                                        @Html.DropDownListFor(m => m.Gender, new List<SelectListItem>{
+                                             new SelectListItem { Text="Female",Value="female"},
+                                             new SelectListItem { Text="Male",Value="male"}},
+                                             "Select Gender", new { @class = "textbox" })
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="container-half">
-                                                <div class="form-txt">
-                                                    <label for="">Postal</label>
-                                                    <input type="text" class="textbox">
+                                        </div>
+
+                                        <!--Second Row-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-half">
+                                                    <div class="form-txt">
+                                                        <label for="">Email</label>
+                                                        @Html.TextBoxFor(m => m.Email, new { @class = "textbox" })
+                                                    </div>
+                                                </div>
+                                                <div class="container-half">
+                                                    <div class="form-txt">
+                                                        <label for="">Mobile number</label>
+                                                        @Html.TextBoxFor(m => m.Contact, new { @class = "textbox" })
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!--Third Row-->
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="form-txt">
-                                                <label for="">About You</label>
-                                                <textarea name="" id="" cols="196" rows="10" class="textarea"></textarea>
+                                        <!--Third Row-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-half">
+                                                    <div class="form-txt">
+                                                        <div class="form-txt">
+                                                            <label for="">Country</label>
+                                                            @Html.TextBoxFor(m => m.Country, new { @class = "textbox" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container-half">
+                                                    <div class="form-txt">
+                                                        <label for="">City</label>
+                                                        @Html.TextBoxFor(m => m.Email, new { @class = "textbox" })
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!--Fourth Row-->
-                                    <div class="container">
-                                        <div class="right">
-                                            <a class="blog-btn">Save</a>
+                                        <!--Fourth Row-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="form-txt">
+                                                    <label for="">Address</label>
+                                                    @Html.TextAreaFor(m => m.Address, new { cols = "196", rows = "10", @class = "textarea" })
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+
+                                        <!--Fifth Row-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="form-txt">
+                                                    <label for="">About You</label>
+                                                    @Html.TextAreaFor(m => m.Description, new { cols = "196", rows = "10", @class = "textarea" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--Sixth Row-->
+                                        <div class="container">
+                                            <div class="right">
+                                                <a class="blog-btn">Save</a>
+                                            </div>
+                                        </div>
+                                </div>
                             </div>
-                        </div>
+                        }
+
                     </div>
                 </div>
             </div>
