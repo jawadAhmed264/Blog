@@ -4,11 +4,11 @@
 }
 <style>
     .fa-cloud-upload {
-        margin: 10px 23px 8px 25px !important;
+        margin: 10px 23px 8px 25px;
     }
 
     .form-bg {
-        height: 995px  !important;
+        height: 775px;
     }
 
     .submitbtn {
@@ -58,7 +58,7 @@
                         <!--First Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">User name</label>
                                         @Html.TextBox("Name", null, new { @class = "textbox" })
@@ -69,7 +69,7 @@
                         <!--Second Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Email Address</label>
                                         @Html.TextBox("Email", null, new { @class = "textbox" })
@@ -80,7 +80,7 @@
                         <!--Third Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Password</label>
                                         @Html.PasswordFor(model => model.Password, new { @class = "textbox" })
@@ -91,7 +91,7 @@
                         <!--Fourth Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Confirm Password</label>
                                         @Html.PasswordFor(model => model.ConfirmPassword, new { @class= "textbox" })
@@ -105,7 +105,7 @@
                                 <div class="container">
                                     <div class="form-txt">
                                         <label for="">Description</label>
-                                        @Html.TextArea("Description", null, new { @class = "textbox", @rows = "5", @cols = "20" })
+                                        @Html.TextArea("Description", null, new { @class = "textarea", @rows = "5", @cols = "20" })
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                         <!--Sixth Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt showbtn">
                                         <label for="">User IsActive</label>
                                         <div class="slider-td">

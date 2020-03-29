@@ -5,11 +5,11 @@
 }
 <style>
     .fa-cloud-upload {
-        margin: 10px 23px 8px 25px !important;
+        margin: 10px 23px 8px 25px;
     }
 
     .form-bg {
-        height: 800px !important;
+        height: 700px;
     }
 
     .submitbtn {
@@ -58,7 +58,7 @@
                         <!--First Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Author name</label>
                                         @Html.TextBox("Name", null, new { @class = "textbox" })
@@ -70,7 +70,7 @@
                         <!--Second Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Email Address</label>
                                         @Html.TextBox("Email", null, new { @class = "textbox" })
@@ -81,7 +81,7 @@
                         <!--Third Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <div class="form-txt">
                                             <label for="">Contact</label>
@@ -97,7 +97,7 @@
                                 <div class="container">
                                     <div class="form-txt">
                                         <label for="">Description</label>
-                                        @Html.TextArea("Description", null, new { @class = "textbox", @rows = "5", @cols = "20" })
+                                        @Html.TextArea("Description", null, new { @class = "textarea", @rows = "5", @cols = "20" })
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                         <!--fifth Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt showbtn">
                                         <label for="">Author IsActive</label>
                                         <div class="slider-td">

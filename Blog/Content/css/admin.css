@@ -9,7 +9,9 @@
     font-family: 'sofiapro-light-webfont';
     src: url('../../font/sofiapro-light-webfont.woff2') format('woff2');
 }
-
+body{
+    overflow-x: hidden;
+}
 #profile-pic {
   height:200px;
   width:200px;
@@ -355,15 +357,16 @@ p {
         }
 
 .main {
-    width: 93%;
-    margin: 0% 7% auto;
+    width: 100%;
+    margin: 0% 2% auto;
     padding: 21px 0;
     height: 100%;
 }
 
 .article {
-    width: 100%;
+    width: 95%;
     height: 100%;
+    margin: 0 auto;
 }
 
 .main-bg {
@@ -701,7 +704,7 @@ input:checked + .slider:before {
 
 .form-bg {
     width: 90%;
-    height: auto;
+    height: 1280px;
     margin: 21px auto;
     background: #fff;
     box-shadow: 1px 1px 10px 1px #ddd;
@@ -731,7 +734,8 @@ input:checked + .slider:before {
 
 .textbox {
     padding: 10px 10px 10px 5px;
-    width: 93.5%;
+    /*width: 93.5%;*/
+    width: 100%;
     border-radius: 5px;
     outline: none;
     border: 1px solid #ddd;
@@ -739,13 +743,12 @@ input:checked + .slider:before {
 }
 
 .textarea {
-    width: 99.6%;
+    width: 98%;
     border-radius: 5px;
     outline: none;
     border: 1px solid #ddd;
-    color: #7c777f;
+    color: #7c777f
 }
-
 
 .tags-input {
     display: flex;
@@ -971,4 +974,10 @@ input:checked + .slider:before {
     background: #333;
     opacity: 0.5;
     z-index: 2;
+}
+.text-box-width{
+    width: 98%;
+}
+.select-width {
+    width: 99.5%;\
 }

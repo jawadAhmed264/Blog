@@ -7,10 +7,6 @@
         margin: 10px 23px 8px 25px !important;
     }
 
-    .form-bg {
-        height: 1400px !important;
-    }
-
     .submitbtn {
         height: auto;
     }
@@ -57,7 +53,7 @@
                         <!--First Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Author Name</label>
                                         @Html.TextBox("Name", null, new { @class = "textbox" })
@@ -68,7 +64,7 @@
                         <!--Second Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="select-width">
                                     <div class="form-txt">
                                         <label for="">Gender</label>
                                         @Html.DropDownListFor(m => m.Gender, new List<SelectListItem>{
@@ -82,7 +78,7 @@
                         <!--Third Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Email Address</label>
                                         @Html.TextBox("Email", null, new { @class = "textbox" })
@@ -93,7 +89,7 @@
                         <!--Fourth Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Password</label>
                                         @Html.PasswordFor(model => model.Password, new { @class = "textbox" })
@@ -104,7 +100,7 @@
                         <!--Fifth Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <label for="">Confirm Password</label>
                                         @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "textbox" })
@@ -115,7 +111,7 @@
                         <!--Sixth Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <div class="form-txt">
                                             <label for="">Contact</label>
@@ -128,7 +124,7 @@
                         <!--Seven Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <div class="form-txt">
                                             <label for="">Country</label>
@@ -141,7 +137,7 @@
                         <!--Eight Row-->
                         <div class="container">
                             <div class="row">
-                                <div class="container-half">
+                                <div class="text-box-width">
                                     <div class="form-txt">
                                         <div class="form-txt">
                                             <label for="">City</label>
@@ -157,7 +153,7 @@
                                 <div class="container">
                                     <div class="form-txt">
                                         <label for="">Address</label>
-                                        @Html.TextArea("Address", null, new { @class = "textbox", @rows = "5", @cols = "20" })
+                                        @Html.TextArea("Address", null, new { @class = "textarea", @rows = "5", @cols = "20" })
                                     </div>
                                 </div>
                             </div>
@@ -168,7 +164,7 @@
                                 <div class="container">
                                     <div class="form-txt">
                                         <label for="">Description</label>
-                                        @Html.TextArea("Description", null, new { @class = "textbox", @rows = "5", @cols = "20" })
+                                        @Html.TextArea("Description", null, new { @class = "textarea", @rows = "5", @cols = "20" })
                                     </div>
                                 </div>
                             </div>
